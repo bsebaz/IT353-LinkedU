@@ -1,7 +1,7 @@
-Tue Nov 27 17:23:18 CST 2018 : Apache Derby Network Server - 10.10.2.0 - (1582446) started and ready to accept connections on port 1527
+Tue Nov 27 20:03:23 CST 2018 : Apache Derby Network Server - 10.10.2.0 - (1582446) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Tue Nov 27 17:24:26 CST 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0167-577b-ebe7-ffffd3920acf 
+Tue Nov 27 20:03:23 CST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0167-580e-7b17-ffffd3920acf 
 on database directory C:\Users\slfx7\OneDrive\School\College\2018 - 2019 Senior\IT 353\IT 353 Group Project\IT353-LinkedU\db\LinkedUDB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
 Loaded from file:/C:/Program%20Files/glassfish-4.1.1/javadb/lib/derby.jar
 java.vendor=Oracle Corporation

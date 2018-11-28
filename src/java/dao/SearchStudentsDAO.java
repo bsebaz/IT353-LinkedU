@@ -16,7 +16,7 @@ import model.Student;
  *
  * @author Bailey
  */
-public class SearchStudentsDAO implements DAOInterface {
+public class SearchStudentsDAO implements DAOInterface, java.io.Serializable {
     public List<Student> getStudents(String searchTerm) throws SQLException{
             
         List<Student> students = new ArrayList<Student>();
