@@ -54,6 +54,6 @@ public class HomeController {
     }
     
     public String navToUniversity(int id) {
-        return "profile?faces-redirect=true";
+        return "universityDetail?faces-redirect=true&universityId="+id;
     }
 }

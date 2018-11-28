@@ -7,6 +7,7 @@
     <h:head>
         <title>LinkedU</title>
         <h:outputStylesheet name="css/bootstrap.min.css"/>
+        <h:outputStylesheet name="css/LinkedU.css"/>
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
     </h:head>
@@ -57,13 +58,13 @@
                 </ul>
             </nav>
         </h:form>
-        <div class="container my-3">
+        <div class="container my-4">
             <div class="row">
-                <div class="col-8">
+                <div class="col-8 homeCards">
                     <h2>Featured Universities</h2>
                     <ui:repeat value="#{homeController.featuredUniversities}" var="university">
                         <h:form>
-                            <div class="card my-1">
+                            <div class="card my-4">
                                 <div class="card-img-top" style="border: 1px solid black; height: 64px;">Banner Placeholder</div>
                                 <div class="card-body">
                                     <h5 class="card-title"><h:outputText value="#{university.name}"/></h5>
@@ -80,7 +81,7 @@
                         </h:form>
                     </ui:repeat>
                 </div>
-                <div class="col">
+                <div class="col-4">
                     <!-- Sidebar Content -->
 
                 </div>
