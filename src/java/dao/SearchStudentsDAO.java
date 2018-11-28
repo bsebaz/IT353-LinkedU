@@ -52,7 +52,7 @@ public class SearchStudentsDAO implements DAOInterface {
                     pstmt.setString( 2, "%"+searchTerm.toUpperCase()+"%");
                 }
             }
-            String stmt = pstmt.toString();
+            
             ResultSet rs = pstmt.executeQuery();
             
             while(rs.next()){

@@ -43,40 +43,42 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </nav>
+        
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div>
                         <h:form class="form-inline my-2 my-lg-0">
-                            <h:inputText class="form-control mr-sm-2" id="searchInput" value="#{searchStudentsController.searchTerm}" />
-                            <h:commandButton class="btn btn-outline-success my-2 my-sm-0" value="Search" action="#{searchStudentsController.renderStudentList()}" />
+                            <h:inputText class="form-control mr-sm-2" id="searchInput" value="#{searchUniversitiesController.searchTerm}" />
+                            <h:commandButton class="btn btn-outline-success my-2 my-sm-0" value="Search" action="#{searchUniversitiesController.renderUniversitiesList()}" />
                         </h:form>
                     </div>
                     <div>
-                        <h:dataTable value = "#{searchStudentsController.renderStudentList()}" var = "students"
+                        <h:dataTable value = "#{searchUniversitiesController.renderUniversitiesList()}" var = "universities"
                             styleClass = "table table-bordered table-striped">
 
                             <h:column>    				
-                               <f:facet name = "header">Student Name</f:facet>    				
-                               #{students.get(0)} #{students.get(1)}
+                               <f:facet name = "header">First Name</f:facet>    				
+                               #{universities.get(0)}
+                            </h:column>
+
+                            <h:column>
+                               <f:facet name = "header">Last Name</f:facet>
+                               #{universities.get(1)}
                             </h:column>
 
                             <h:column>
                                <f:facet name = "header">Age</f:facet>
-                               #{students.get(2)}
+                               #{universities.get(2)}
                             </h:column>
 
                             <h:column>
                                <f:facet name = "header">School</f:facet>
-                               #{students.get(3)}
+                               #{universities.get(3)}
                             </h:column>
                             <h:column>
                                <f:facet name = "header">Year Graduated</f:facet>
-                               #{students.get(4)}
-                            </h:column>
-                            <h:column>
-                               <f:facet name = "header">GPA</f:facet>
-                               #{students.get(5)}
+                               #{universities.get(4)}
                             </h:column>
                          </h:dataTable>
                     </div>
