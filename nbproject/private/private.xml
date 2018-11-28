@@ -5,8 +5,8 @@
         <group>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/resources/css/bootstrap.css</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/controller/AccountController.java</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/db/CreateUniversitiesTable.sql.sql</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/controller/SearchUniversitiesController.java</file>
+            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/db/CreateUniversitiesTable.sql</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/dao/SearchStudentsDAO.java</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/model/User.java</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/applications.xhtml</file>
@@ -16,6 +16,7 @@
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/controller/HomeController.java</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/model/Student.java</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/resources/css/LinkedU.css</file>
+            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/controller/StudentDetailController.java</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/login.xhtml</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/dao/DBHelper.java</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/dao/DAOInterface.java</file>
@@ -24,7 +25,6 @@
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/model/University.java</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/dao/SearchUniversitiesDAO.java</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/universityDetail.xhtml</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/profile.xhtml</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/studentDetail.xhtml</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/model/Posting.java</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/db/CreateStudentTable.sql</file>
