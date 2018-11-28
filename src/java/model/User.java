@@ -12,6 +12,7 @@ package model;
 public class User implements java.io.Serializable {
     private String username;
     private String password;
+    private int userID;
     private boolean admin;
     private String accountType;
 
@@ -20,6 +21,7 @@ public class User implements java.io.Serializable {
         username = "";
         password = "";
         accountType = "";
+        userID = -1;
     }
     
     /**
@@ -72,9 +74,23 @@ public class User implements java.io.Serializable {
     }
 
     /**
-     * @param AccountType the AccountType to set
+     * @param accountType the AccountType to set
      */
     public void setAccountType(String accountType) {
         this.accountType = accountType;
+    }
+
+    /**
+     * @return the userID
+     */
+    public int getUserID() {
+        return userID;
+    }
+
+    /**
+     * @param userID the userID to set
+     */
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 }

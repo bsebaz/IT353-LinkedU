@@ -7,25 +7,24 @@ package controller;
 
 import dao.HomeDAO;
 import java.sql.SQLException;
-import java.text.NumberFormat;
 import model.University;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author slfx7
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class HomeController {
 
     private ArrayList<University> featuredUniversities;
     private University selectedUniversity1;
     private University selectedUniversity2;
     private final HomeDAO DB;
-    
+
     public HomeController() {
         DB = new HomeDAO();
         try {
@@ -51,10 +50,6 @@ public class HomeController {
      */
     public void setFeaturedUniversities(ArrayList<University> featuredUniversities) {
         this.featuredUniversities = featuredUniversities;
-    }
- 
-    public String navToUniversity(int id) {
-        return "profile?faces-redirect=true";
     }
 
     /**

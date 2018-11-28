@@ -12,18 +12,20 @@ import java.util.ArrayList;
  * @author slfx7
  */
 public class University implements java.io.Serializable {
+
     private int universityId;
     private String name;
     private String city;
     private String state;
     private String studentPopulation;
     private String cost;
+    private boolean featured;
 
-    public University(){
-        
+    public University() {
+
     }
-    
-    public University(int universityId, String name, String city, String state, String studentPopulation, String cost){
+
+    public University(int universityId, String name, String city, String state, String studentPopulation, String cost) {
         this.universityId = universityId;
         this.name = name;
         this.city = city;
@@ -31,7 +33,12 @@ public class University implements java.io.Serializable {
         this.studentPopulation = studentPopulation;
         this.cost = cost;
     }
-    
+
+    public University(int universityId, String name, String city, String state, String studentPopulation, String cost, boolean featured) {
+        this(universityId, name, city, state, studentPopulation, cost);
+        this.featured = featured;
+    }
+
     /**
      * @return the universityId
      */
@@ -115,5 +122,19 @@ public class University implements java.io.Serializable {
     public void setCost(String cost) {
         this.cost = cost;
     }
-    
+
+    /**
+     * @return the featured
+     */
+    public boolean isFeatured() {
+        return featured;
+    }
+
+    /**
+     * @param featured the featured to set
+     */
+    public void setFeatured(boolean featured) {
+        this.featured = featured;
+    }
+
 }

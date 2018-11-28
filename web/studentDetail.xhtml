@@ -12,7 +12,7 @@
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
     </h:head>
     <h:body>
-        <h:form style="width: 100%;">
+        <h:form>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <h:commandLink class="navbar-brand" action="home?faces-redirect=true">
                     <h:graphicImage name="image/logo.png" height="32"/>
@@ -23,7 +23,16 @@
                             <h:commandLink class="nav-link" value="Home" action="home?faces-redirect=true"/>
                         </li>
                         <li class="nav-item">
-                            <h:commandLink class="nav-link" value="#{accountController.user.username}" action="profile?faces-redirect=true"/>
+                            <c:if test="#{accountController.user.accountType == 'student'}">
+                                <h:commandLink class="nav-link" value="#{accountController.user.username}" action="studentDetail?faces-redirect=true">
+                                    <f:param name="studentId" value="#{accountController.user.userID}"/>
+                                </h:commandLink>
+                            </c:if>
+                            <c:if test="#{accountController.user.accountType == 'recruiter'}">
+                                <h:commandLink class="nav-link" value="#{accountController.user.username}" action="universityDetail?faces-redirect=true">
+                                    <f:param name="universityId" value="#{accountController.user.userID}"/>
+                                </h:commandLink>
+                            </c:if>
                         </li>
                         <c:if test="#{accountController.user.accountType == 'student'}">
                             <li class="nav-item">
@@ -58,32 +67,44 @@
                 </ul>
             </nav>
         </h:form>
-        
+
         <div class="container">
             <div class="row">
                 <div class="col-md-12 detailInfo">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="studentDetailImage">
-                                
+
                             </div>
                         </div>
                         <div class="col-md-9" style="border-left: solid 1px #777">
-                            Bruce Macklin, 17<br></br> 
-                            SC Prep, 2018<br></br>
-                            4.0<br></br>
+                            <h:form rendered="#{!(studentDetailController.student == null)}">
+                                <h2>
+                                    <h:outputText value="#{studentDetailController.student.firstName} "/>
+                                    <h:outputText value="#{studentDetailController.student.lastName}, "/>
+                                    <h:outputText value="#{studentDetailController.student.age}"/><br></br>
+                                </h2>
+                                <h5>
+                                    <h:outputText value="#{studentDetailController.student.school}, "/>
+                                    <h:outputText value="#{studentDetailController.student.graduationYear}"/><br></br>
+                                    <h:outputText value="#{studentDetailController.student.gpa} GPA"/><br></br>
+                                </h5>
+                            </h:form>
+                            <h:form rendered="#{(studentDetailController.student == null)}">
+                                <h1>Student Not Found</h1>
+                            </h:form>
                         </div>
                     </div>
                     <div class="row">
                         <div class="detailDescription">
                             <h3>Description</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum malesuada orci, vel finibus ante cursus eget. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
-                            Mauris sed maximus ex, nec imperdiet diam. Vestibulum ullamcorper nunc sit amet sem dapibus, eu placerat nunc mollis. Aenean eget interdum nulla. Maecenas suscipit varius neque, blandit volutpat purus posuere vitae. 
-                            Maecenas odio augue, varius vel ultricies sit amet, gravida sed lectus.</p>
-                            
+                                Mauris sed maximus ex, nec imperdiet diam. Vestibulum ullamcorper nunc sit amet sem dapibus, eu placerat nunc mollis. Aenean eget interdum nulla. Maecenas suscipit varius neque, blandit volutpat purus posuere vitae. 
+                                Maecenas odio augue, varius vel ultricies sit amet, gravida sed lectus.</p>
+
                             <p>Aenean eget laoreet quam. Nam id vulputate velit. Sed dui est, consequat vel nisi id, sollicitudin egestas enim. Nullam interdum, odio eget aliquet consequat, neque risus faucibus ligula, vel suscipit lacus 
-                            tortor ac lacus. Nam bibendum turpis ut feugiat accumsan. Aliquam dictum at tortor non efficitur. Sed condimentum diam non quam euismod egestas. Mauris consequat, neque in dignissim porta, massa enim 
-                            consectetur enim, eget tincidunt tortor felis quis nisl.</p>
+                                tortor ac lacus. Nam bibendum turpis ut feugiat accumsan. Aliquam dictum at tortor non efficitur. Sed condimentum diam non quam euismod egestas. Mauris consequat, neque in dignissim porta, massa enim 
+                                consectetur enim, eget tincidunt tortor felis quis nisl.</p>
                         </div>
                     </div>    
                     <div class="row">

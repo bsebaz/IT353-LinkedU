@@ -64,10 +64,12 @@ public class AccountController {
 
     public String login() {
         //TO-DO provide authentication logic
-        loggedIn = true; //Remove later
+        loggedIn = true;
+        //Remove later
         user.setUsername("TestAccount");
         user.setAdmin(true);
         user.setAccountType("student");
+        user.setUserID(1);
         return "home?faces-redirect=true";
     }
 
