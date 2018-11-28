@@ -58,27 +58,29 @@
                             styleClass = "table table-bordered table-striped">
 
                             <h:column>    				
-                               <f:facet name = "header">First Name</f:facet>    				
-                               #{universities.get(0)}
+                               <f:facet name = "header">Name</f:facet>
+                               <a href="universityDetail.xhtml?universityId=#{universities.universityId}">
+                                   #{universities.name}
+                               </a>
                             </h:column>
 
                             <h:column>
-                               <f:facet name = "header">Last Name</f:facet>
-                               #{universities.get(1)}
+                               <f:facet name = "header">City</f:facet>
+                               #{universities.city}
                             </h:column>
 
                             <h:column>
-                               <f:facet name = "header">Age</f:facet>
-                               #{universities.get(2)}
+                               <f:facet name = "header">State</f:facet>
+                               #{universities.state}
                             </h:column>
 
                             <h:column>
-                               <f:facet name = "header">School</f:facet>
-                               #{universities.get(3)}
+                               <f:facet name = "header">Student Population</f:facet>
+                               #{universities.studentPopulation}
                             </h:column>
                             <h:column>
-                               <f:facet name = "header">Year Graduated</f:facet>
-                               #{universities.get(4)}
+                               <f:facet name = "header">Cost</f:facet>
+                               #{universities.cost}
                             </h:column>
                          </h:dataTable>
                     </div>

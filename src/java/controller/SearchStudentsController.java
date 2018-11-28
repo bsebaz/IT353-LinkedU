@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import model.Student;
 
 /**
  *
@@ -36,7 +37,7 @@ public class SearchStudentsController {
         this.searchTerm = searchTerm;
     }
     
-    public List<List<String>> renderStudentList() throws SQLException{
+    public List<Student> renderStudentList() throws SQLException{
         
         SearchStudentsDAO searchStudentDAO = new SearchStudentsDAO();    // Creating a new object each time.
         List students = searchStudentDAO.getStudents(searchTerm);

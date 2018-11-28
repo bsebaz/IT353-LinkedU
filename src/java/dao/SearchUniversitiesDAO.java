@@ -10,15 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.University;
 
 /**
  *
  * @author Bailey
  */
 public class SearchUniversitiesDAO implements DAOInterface {
-    public List<List<String>> getUniversities(String searchTerm) throws SQLException{
+    public List<University> getUniversities(String searchTerm) throws SQLException{
             
-        List<List<String>> students = new ArrayList<List<String>>();
+        List<University> universities = new ArrayList<University>();
         
         try (Connection DBConn = connect()) {
             String insertString = "";
@@ -42,19 +43,13 @@ public class SearchUniversitiesDAO implements DAOInterface {
             ResultSet rs = pstmt.executeQuery();
             
             while(rs.next()){
-                ArrayList<String> singleStudent = new ArrayList<String>();
-                singleStudent.add(rs.getString("name"));
-                singleStudent.add(rs.getString("city"));
-                singleStudent.add(rs.getString("state"));
-                singleStudent.add(rs.getString("studentPopulation"));
-                singleStudent.add(rs.getString("cost"));
-                
-                students.add(singleStudent);
+                University university = new University(rs.getInt("universityId"), rs.getString("name"), rs.getString("city"), rs.getString("state"), rs.getString("studentPopulation"), rs.getString("cost"));
+                universities.add(university);
             }
             
             DBConn.close();
         }
         
-        return students;
+        return universities;
     }
 }

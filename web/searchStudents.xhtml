@@ -58,25 +58,27 @@
 
                             <h:column>    				
                                <f:facet name = "header">Student Name</f:facet>    				
-                               #{students.get(0)} #{students.get(1)}
+                               <a href="studentDetails.xhtml?studentId=#{students.studentId}">
+                                #{students.firstName} #{students.lastName}
+                               </a>  
                             </h:column>
 
                             <h:column>
                                <f:facet name = "header">Age</f:facet>
-                               #{students.get(2)}
+                               #{students.age}
                             </h:column>
 
                             <h:column>
                                <f:facet name = "header">School</f:facet>
-                               #{students.get(3)}
+                               #{students.school}
                             </h:column>
                             <h:column>
                                <f:facet name = "header">Year Graduated</f:facet>
-                               #{students.get(4)}
+                               #{students.graduationYear}
                             </h:column>
                             <h:column>
                                <f:facet name = "header">GPA</f:facet>
-                               #{students.get(5)}
+                               #{students.gpa}
                             </h:column>
                          </h:dataTable>
                     </div>
