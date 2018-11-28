@@ -47,10 +47,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div>
-                        <form class="form-inline my-2 my-lg-0">
+                        <h:form class="form-inline my-2 my-lg-0">
                             <h:inputText class="form-control mr-sm-2" id="searchInput" value="#{searchStudentsController.searchTerm}" />
                             <h:commandButton class="btn btn-outline-success my-2 my-sm-0" value="Search" action="#{searchStudentsController.renderStudentList()}" />
-                        </form>
+                        </h:form>
                     </div>
                     <div>
                         <h:dataTable value = "#{searchStudentsController.renderStudentList()}" var = "students"
