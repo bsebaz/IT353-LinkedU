@@ -67,7 +67,7 @@ public class AccountController {
         loggedIn = true; //Remove later
         user.setUsername("TestAccount");
         user.setAdmin(true);
-        user.setAccountType("Student");
+        user.setAccountType("student");
         return "home?faces-redirect=true";
     }
 
