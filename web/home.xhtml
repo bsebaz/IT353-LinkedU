@@ -70,33 +70,49 @@
         </h:form>
         <div class="container my-4">
             <div class="row">
-                <div class="col-8 homeCards">
-                    <h2>Featured Universities</h2>
-                    <ui:repeat value="#{homeController.featuredUniversities}" var="university">
-                        <h:form>
-                            <div class="card my-3">
-                                <div class="card-img-top bg-primary" style="height: 64px;"></div>
-                                <div class="card-body">
-                                    <h5 class="card-title"><h:outputText value="#{university.name}"/></h5>
-                                    <p>
-                                        <h:outputText value="#{university.name}"/> is located in
-                                        <h:outputText value="#{university.city}"/>, <h:outputText value="#{university.state}"/>.
-                                        Most recently, student enrollment was <h:outputText value="#{universalController.formatNumber(university.studentPopulation)}"/>.
-                                        The average tuition at <h:outputText value="#{university.name}"/> is currently $<h:outputText value="#{universalController.formatNumber(university.cost)}"/>.
-                                    </p>
-                                    <h:button class="btn btn-primary" value="Profile" outcome="universityDetail?faces-redirect=true">
-                                        <f:param name="universityId" value="#{university.universityId}"/>
-                                    </h:button>
-                                </div>
+                <div class="col-12 homeCards">
+                    <div class="row">
+                        <div class="col-8">
+                            <h2>Featured Universities</h2>
+                            <ui:repeat value="#{homeController.featuredUniversities}" var="university">
+                                <h:form>
+                                    <div class="card my-3">
+                                        <div class="card-img-top bg-primary" style="height: 64px;"></div>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><h:outputText value="#{university.name}"/></h5>
+                                            <p>
+                                                <h:outputText value="#{university.name}"/> is located in
+                                                <h:outputText value="#{university.city}"/>, <h:outputText value="#{university.state}"/>.
+                                                Most recently, student enrollment was <h:outputText value="#{universalController.formatNumber(university.studentPopulation)}"/>.
+                                                The average tuition at <h:outputText value="#{university.name}"/> is currently $<h:outputText value="#{universalController.formatNumber(university.cost)}"/>.
+                                            </p>
+                                            <h:button class="btn btn-primary" value="Profile" outcome="universityDetail?faces-redirect=true">
+                                                <f:param name="universityId" value="#{university.universityId}"/>
+                                            </h:button>
+                                        </div>
+                                    </div>
+                                </h:form>
+                            </ui:repeat>
+                        </div>
+                        <div class="col-4">
+                            <!-- Sidebar Content -->
+                            <div class="my-3" style="border-left: 1px solid #ccc; padding: 1em;">
+                                <h3>Suggested Universities</h3>
+                                <ul class="list-group my-3">
+                                    <ui:repeat value="#{homeController.featuredUniversities}" var="university">
+                                        <li class="list-group-item">
+                                            <a href="universityDetail.xhtml?universityId=#{university.universityId}">#{university.name}</a>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                                
+
+                                <h:form>
+                                    <h:commandButton class="btn btn-primary" value="Compare Universities" action="#{compareUniversityController.compare(homeController.selectedUniversity1, homeController.selectedUniversity2)}"/>
+                                </h:form>
                             </div>
-                        </h:form>
-                    </ui:repeat>
-                </div>
-                <div class="col-4">
-                    <!-- Sidebar Content -->
-                    <h:form>
-                        <h:commandButton class="btn btn-primary" value="Compare Universities" action="#{compareUniversityController.compare(homeController.selectedUniversity1, homeController.selectedUniversity2)}"/>
-                    </h:form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
