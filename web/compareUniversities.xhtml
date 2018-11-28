@@ -2,12 +2,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>LinkedU</title>
+        <title>University Compare</title>
         <h:outputStylesheet name="css/bootstrap.min.css"/>
-        <h:outputStylesheet name="css/LinkedU.css"/>
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
     </h:head>
@@ -67,49 +66,46 @@
                 </ul>
             </nav>
         </h:form>
-
-        <div class="container">
+        <div class="container my-3">
             <div class="row">
-                <div class="col-md-12 detailInfo">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="universityDetailBanner">
-
-                            </div>
-                            <h:form rendered="#{!(universityDetailController.university == null)}">
-                                <h2><h:outputText value="#{universityDetailController.university.name}"/></h2>
-                            </h:form>
-                            <h:form rendered="#{(universityDetailController.university == null)}">
-                                <h2>University Not Found</h2>
-                            </h:form>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="detailDescription">
-                            <h3>Description</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum malesuada orci, vel finibus ante cursus eget. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
-                                Mauris sed maximus ex, nec imperdiet diam. Vestibulum ullamcorper nunc sit amet sem dapibus, eu placerat nunc mollis. Aenean eget interdum nulla. Maecenas suscipit varius neque, blandit volutpat purus posuere vitae. 
-                                Maecenas odio augue, varius vel ultricies sit amet, gravida sed lectus.</p>
-
-                            <p>Aenean eget laoreet quam. Nam id vulputate velit. Sed dui est, consequat vel nisi id, sollicitudin egestas enim. Nullam interdum, odio eget aliquet consequat, neque risus faucibus ligula, vel suscipit lacus 
-                                tortor ac lacus. Nam bibendum turpis ut feugiat accumsan. Aliquam dictum at tortor non efficitur. Sed condimentum diam non quam euismod egestas. Mauris consequat, neque in dignissim porta, massa enim 
-                                consectetur enim, eget tincidunt tortor felis quis nisl.</p>
-                        </div>
-                    </div>    
-                    <div class="row">
-                        <div class="detailDescription">
-                            <h3>Colleges</h3>
-                            <ul>
-                                <li>College of Applied Science</li>
-                                <li>College of Arts and Sciences</li>
-                                <li>College of Business</li>
-                                <li>College of Education</li>
-                                <li>College of Fine Arts</li>
-                                <li>Interdisciplinary Studies</li>
-                                <li>Mennonite College of Nursing</li>
-                            </ul>
-                        </div>
-                    </div>    
+                <div class="col-md-12">
+                    <h:form rendered="#{compareUniversityController.renderTable()}">
+                        <h1>University Comparison</h1>
+                        <table class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <td/>
+                                    <td><h:outputText value="#{compareUniversityController.selectedUniversity1.name}"/></td>
+                                    <td><h:outputText value="#{compareUniversityController.selectedUniversity2.name}"/></td>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <th>Location</th>
+                                <td>
+                                    <h:outputText value="#{compareUniversityController.selectedUniversity1.city}"/>, 
+                                    <h:outputText value="#{compareUniversityController.selectedUniversity1.state}"/>
+                                </td>
+                                <td>
+                                    <h:outputText value="#{compareUniversityController.selectedUniversity2.city}"/>, 
+                                    <h:outputText value="#{compareUniversityController.selectedUniversity2.state}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Enrollment</th>
+                                <td><h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity1.studentPopulation)}"/></td>
+                                <td><h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity2.studentPopulation)}"/></td>
+                            </tr>
+                            <tr>
+                                <th>Tuition</th>
+                                <td>$<h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity1.cost)}"/></td>
+                                <td>$<h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity2.cost)}"/></td>
+                            </tr>
+                        </table>
+                    </h:form>
+                    <h:form rendered="#{!compareUniversityController.renderTable()}">
+                        <h1>Couldn't Compare Universities</h1><br/>
+                        <h4>Either no university or only one selected</h4>
+                    </h:form>
                 </div>
             </div>
         </div>

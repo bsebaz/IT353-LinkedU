@@ -7,24 +7,24 @@ package controller;
 
 import dao.HomeDAO;
 import java.sql.SQLException;
-import java.text.NumberFormat;
 import model.University;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author slfx7
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class HomeController {
 
     private ArrayList<University> featuredUniversities;
+    private University selectedUniversity1;
+    private University selectedUniversity2;
     private final HomeDAO DB;
-    private final NumberFormat NF = NumberFormat.getInstance();
-    
+
     public HomeController() {
         DB = new HomeDAO();
         try {
@@ -33,6 +33,9 @@ public class HomeController {
             System.out.println("Could not get featured Universities");
             featuredUniversities = new ArrayList();
         }
+        //Testing
+        selectedUniversity1 = featuredUniversities.get(0);
+        selectedUniversity2 = featuredUniversities.get(1);
     }
 
     /**
@@ -49,10 +52,27 @@ public class HomeController {
         this.featuredUniversities = featuredUniversities;
     }
 
-    public String formatNumber(String number) {
-        return NF.format(Double.parseDouble(number));
+    /**
+     * @return the selectedUniversity1
+     */
+    public University getSelectedUniversity1() {
+        return selectedUniversity1;
     }
-    
+
+    /**
+     * @param selectedUniversity1 the selectedUniversity1 to set
+     */
+    public void setSelectedUniversity1(University selectedUniversity1) {
+        this.selectedUniversity1 = selectedUniversity1;
+    }
+
+    /**
+     * @return the selectedUniversity2
+     */
+    public University getSelectedUniversity2() {
+        return selectedUniversity2;
+    }
+
     public String navToUniversity(int id) {
         return "universityDetail?faces-redirect=true&universityId="+id;
     }

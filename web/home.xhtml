@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>LinkedU</title>
         <h:outputStylesheet name="css/bootstrap.min.css"/>
@@ -23,7 +24,16 @@
                             <h:commandLink class="nav-link" value="Home" action="home?faces-redirect=true"/>
                         </li>
                         <li class="nav-item">
-                            <h:commandLink class="nav-link" value="#{accountController.user.username}" action="profile?faces-redirect=true"/>
+                            <c:if test="#{accountController.user.accountType == 'student'}">
+                                <h:commandLink class="nav-link" value="#{accountController.user.username}" action="studentDetail?faces-redirect=true">
+                                    <f:param name="studentId" value="#{accountController.user.userID}"/>
+                                </h:commandLink>
+                            </c:if>
+                            <c:if test="#{accountController.user.accountType == 'recruiter'}">
+                                <h:commandLink class="nav-link" value="#{accountController.user.username}" action="universityDetail?faces-redirect=true">
+                                    <f:param name="universityId" value="#{accountController.user.userID}"/>
+                                </h:commandLink>
+                            </c:if>
                         </li>
                         <c:if test="#{accountController.user.accountType == 'student'}">
                             <li class="nav-item">
@@ -64,18 +74,19 @@
                     <h2>Featured Universities</h2>
                     <ui:repeat value="#{homeController.featuredUniversities}" var="university">
                         <h:form>
-                            <div class="card my-4">
-                                <div class="card-img-top" style="border: 1px solid black; height: 64px;">Banner Placeholder</div>
+                            <div class="card my-3">
+                                <div class="card-img-top bg-primary" style="height: 64px;"></div>
                                 <div class="card-body">
                                     <h5 class="card-title"><h:outputText value="#{university.name}"/></h5>
                                     <p>
-                                        <h:outputText value="#{university.name}"/> is located in 
+                                        <h:outputText value="#{university.name}"/> is located in
                                         <h:outputText value="#{university.city}"/>, <h:outputText value="#{university.state}"/>.
-                                        Most recently, student enrollment was <h:outputText value="#{homeController.formatNumber(university.studentPopulation)}"/>.
-                                        The average tuition at <h:outputText value="#{university.name}"/> is currently $<h:outputText value="#{homeController.formatNumber(university.cost)}"/>.
+                                        Most recently, student enrollment was <h:outputText value="#{universalController.formatNumber(university.studentPopulation)}"/>.
+                                        The average tuition at <h:outputText value="#{university.name}"/> is currently $<h:outputText value="#{universalController.formatNumber(university.cost)}"/>.
                                     </p>
-
-                                    <h:commandButton class="btn btn-primary" value="Profile" action="#{homeController.navToUniversity(university.universityId)}"/>
+                                    <h:button class="btn btn-primary" value="Profile" outcome="universityDetail?faces-redirect=true">
+                                        <f:param name="universityId" value="#{university.universityId}"/>
+                                    </h:button>
                                 </div>
                             </div>
                         </h:form>
@@ -83,10 +94,11 @@
                 </div>
                 <div class="col-4">
                     <!-- Sidebar Content -->
-
+                    <h:form>
+                        <h:commandButton class="btn btn-primary" value="Compare Universities" action="#{compareUniversityController.compare(homeController.selectedUniversity1, homeController.selectedUniversity2)}"/>
+                    </h:form>
                 </div>
             </div>
         </div>
     </h:body>
 </html>
-
