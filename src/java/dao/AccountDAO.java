@@ -9,6 +9,6 @@ package dao;
  *
  * @author slfx7
  */
-public class AccountDAO {
+public class AccountDAO implements DAOInterface, java.io.Serializable {
     
 }

@@ -16,7 +16,7 @@ import model.University;
  *
  * @author Bailey
  */
-public class SearchUniversitiesDAO implements DAOInterface {
+public class SearchUniversitiesDAO implements DAOInterface, java.io.Serializable {
     public List<University> getUniversities(String searchTerm) throws SQLException{
             
         List<University> universities = new ArrayList<University>();

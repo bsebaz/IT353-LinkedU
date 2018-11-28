@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>LinkedU</title>
         <h:outputStylesheet name="css/bootstrap.min.css"/>
@@ -10,7 +11,7 @@
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
     </h:head>
     <h:body>
-        <h:form style="width: 100%;">
+        <h:form>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <h:commandLink class="navbar-brand" action="home?faces-redirect=true">
                     <h:graphicImage name="image/logo.png" height="32"/>
@@ -56,6 +57,35 @@
                 </ul>
             </nav>
         </h:form>
+        <div class="container my-3">
+            <div class="row">
+                <div class="col-8">
+                    <h2>Featured Universities</h2>
+                    <ui:repeat value="#{homeController.featuredUniversities}" var="university">
+                        <h:form>
+                            <div class="card my-1">
+                                <div class="card-img-top" style="border: 1px solid black; height: 64px;">Banner Placeholder</div>
+                                <div class="card-body">
+                                    <h5 class="card-title"><h:outputText value="#{university.name}"/></h5>
+                                    <p>
+                                        <h:outputText value="#{university.name}"/> is located in 
+                                        <h:outputText value="#{university.city}"/>, <h:outputText value="#{university.state}"/>.
+                                        Most recently, student enrollment was <h:outputText value="#{homeController.formatNumber(university.studentPopulation)}"/>.
+                                        The average tuition at <h:outputText value="#{university.name}"/> is currently $<h:outputText value="#{homeController.formatNumber(university.cost)}"/>.
+                                    </p>
+
+                                    <h:commandButton class="btn btn-primary" value="Profile" action="#{homeController.navToUniversity(university.universityId)}"/>
+                                </div>
+                            </div>
+                        </h:form>
+                    </ui:repeat>
+                </div>
+                <div class="col">
+                    <!-- Sidebar Content -->
+
+                </div>
+            </div>
+        </div>
     </h:body>
 </html>
 
