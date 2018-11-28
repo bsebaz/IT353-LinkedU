@@ -3,9 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>LinkedU</title>
+        <title>University Compare</title>
         <h:outputStylesheet name="css/bootstrap.min.css"/>
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
@@ -59,31 +59,43 @@
         </h:form>
         <div class="container my-3">
             <div class="row">
-                <div class="col-8">
-                    <h2>Featured Universities</h2>
-                    <ui:repeat value="#{homeController.featuredUniversities}" var="university">
-                        <h:form>
-                            <div class="card my-3">
-                                <div class="card-img-top bg-primary" style="height: 64px;"></div>
-                                <div class="card-body">
-                                    <h5 class="card-title"><h:outputText value="#{university.name}"/></h5>
-                                    <p>
-                                        <h:outputText value="#{university.name}"/> is located in 
-                                        <h:outputText value="#{university.city}"/>, <h:outputText value="#{university.state}"/>.
-                                        Most recently, student enrollment was <h:outputText value="#{universalController.formatNumber(university.studentPopulation)}"/>.
-                                        The average tuition at <h:outputText value="#{university.name}"/> is currently $<h:outputText value="#{universalController.formatNumber(university.cost)}"/>.
-                                    </p>
-
-                                    <h:commandButton class="btn btn-primary" value="Profile" action="#{homeController.navToUniversity(university.universityId)}"/>
-                                </div>
-                            </div>
-                        </h:form>
-                    </ui:repeat>
-                </div>
-                <div class="col">
-                    <!-- Sidebar Content -->
-                    <h:form>
-                        <h:commandButton class="btn btn-primary" value="Compare Universities" action="#{compareUniversityController.compare(homeController.selectedUniversity1, homeController.selectedUniversity2)}"/>
+                <div class="col-md-12">
+                    <h:form rendered="#{compareUniversityController.renderTable()}">
+                        <h1>University Comparison</h1>
+                        <table class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <td/>
+                                    <td><h:outputText value="#{compareUniversityController.selectedUniversity1.name}"/></td>
+                                    <td><h:outputText value="#{compareUniversityController.selectedUniversity2.name}"/></td>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <th>Location</th>
+                                <td>
+                                    <h:outputText value="#{compareUniversityController.selectedUniversity1.city}"/>, 
+                                    <h:outputText value="#{compareUniversityController.selectedUniversity1.state}"/>
+                                </td>
+                                <td>
+                                    <h:outputText value="#{compareUniversityController.selectedUniversity2.city}"/>, 
+                                    <h:outputText value="#{compareUniversityController.selectedUniversity2.state}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Enrollment</th>
+                                <td><h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity1.studentPopulation)}"/></td>
+                                <td><h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity2.studentPopulation)}"/></td>
+                            </tr>
+                            <tr>
+                                <th>Tuition</th>
+                                <td>$<h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity1.cost)}"/></td>
+                                <td>$<h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity2.cost)}"/></td>
+                            </tr>
+                        </table>
+                    </h:form>
+                    <h:form rendered="#{!compareUniversityController.renderTable()}">
+                        <h1>Couldn't Compare Universities</h1><br/>
+                        <h4>Either no university or only one selected</h4>
                     </h:form>
                 </div>
             </div>
