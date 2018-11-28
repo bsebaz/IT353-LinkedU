@@ -18,25 +18,42 @@ import model.User;
 @ManagedBean
 @SessionScoped
 public class AccountController {
-    User user;
-    boolean loggedIn;
-    boolean accessDenied;
+
+    private User user;
+    private boolean loggedIn;
+    private boolean accessDenied;
 
     public AccountController() {
+        user = new User();
         loggedIn = false;
         accessDenied = false;
     }
 
-    public void checkIfLoggedIn() {
+    /**
+     * Redirects the user to the login page if they try to access a login only page
+     */
+    public void checkIfNotLoggedIn() {
         if (!loggedIn) {
             accessDenied = true;
             FacesContext fc = FacesContext.getCurrentInstance();
             ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
-            nav.performNavigation("login");
+            nav.performNavigation("login?faces-redirect=true");
         }
     }
-    
-        public void checkIfAdmin() {
+
+    /**
+     * Redirects the user to the home page if they try to access a "not logged in" page
+     */
+    public void checkIfAlreadyLoggedIn() {
+        if (!loggedIn) {
+            accessDenied = true;
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
+            nav.performNavigation("home?faces-redirect=true");
+        }
+    }
+
+    public void checkIfAdmin() {
         if (!user.isAdmin()) {
             accessDenied = true;
             FacesContext fc = FacesContext.getCurrentInstance();
@@ -47,10 +64,57 @@ public class AccountController {
 
     public String login() {
         //TO-DO provide authentication logic
+        loggedIn = true; //Remove later
+        user.setUsername("TestAccount");
+        user.setAdmin(true);
+        user.setAccountType("Student");
         return "home?faces-redirect=true";
     }
 
-    public void logout() {
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); // the above is unnecessary once the session is invalidated
+        return "home?faces-redirect=true";
+    }
 
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
+     * @return the loggedIn
+     */
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    /**
+     * @param loggedIn the loggedIn to set
+     */
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    /**
+     * @return the accessDenied
+     */
+    public boolean isAccessDenied() {
+        return accessDenied;
+    }
+
+    /**
+     * @param accessDenied the accessDenied to set
+     */
+    public void setAccessDenied(boolean accessDenied) {
+        this.accessDenied = accessDenied;
     }
 }
