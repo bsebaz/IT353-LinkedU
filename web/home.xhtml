@@ -26,12 +26,12 @@
                         </li>
                         <c:if test="#{accountController.user.accountType == 'student'}">
                             <li class="nav-item">
-                                <h:commandLink class="nav-link" value="University Search" action="home?faces-redirect=true"/>
+                                <h:commandLink class="nav-link" value="University Search" action="searchUniversities.xhtml?faces-redirect=true"/>
                             </li>
                         </c:if>
                         <c:if test="#{accountController.user.accountType == 'recruiter'}">
                             <li class="nav-item">
-                                <h:commandLink class="nav-link" value="Student Search" action="home?faces-redirect=true"/>
+                                <h:commandLink class="nav-link" value="Student Search" action="searchStudents.xhtml?faces-redirect=true"/>
                             </li>
                         </c:if>
                         <c:if test="#{(accountController.user.admin) and (accountController.user.accountType == 'student')}">
