@@ -61,46 +61,41 @@
         
         <div class="container">
             <div class="row">
-                <div class="col-md-12 searchBox">
-                    
-                    <h2>Search Students</h2>
-                    
-                    <div class="searchBar">
-                        <h:form class="form-inline my-2 my-lg-0">
-                            <h:inputText class="form-control mr-sm-2" id="searchInput" value="#{searchStudentsController.searchTerm}" />
-                            <h:commandButton class="btn btn-outline-success my-2 my-sm-0" value="Search" action="#{searchStudentsController.renderStudentList()}" />
-                        </h:form>
+                <div class="col-md-12 detailInfo">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="studentDetailImage">
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-9" style="border-left: solid 1px #777">
+                            Bruce Macklin, 17<br></br> 
+                            SC Prep, 2018<br></br>
+                            4.0<br></br>
+                        </div>
                     </div>
-                    <div class="listDisplay">
-                        <h:dataTable value = "#{searchStudentsController.renderStudentList()}" var = "students"
-                            styleClass = "table table-bordered table-striped">
-
-                            <h:column>    				
-                               <f:facet name = "header">Student Name</f:facet>    				
-                               <a href="studentDetail.xhtml?studentId=#{students.studentId}">
-                                #{students.firstName} #{students.lastName}
-                               </a>  
-                            </h:column>
-
-                            <h:column>
-                               <f:facet name = "header">Age</f:facet>
-                               #{students.age}
-                            </h:column>
-
-                            <h:column>
-                               <f:facet name = "header">School</f:facet>
-                               #{students.school}
-                            </h:column>
-                            <h:column>
-                               <f:facet name = "header">Year Graduated</f:facet>
-                               #{students.graduationYear}
-                            </h:column>
-                            <h:column>
-                               <f:facet name = "header">GPA</f:facet>
-                               #{students.gpa}
-                            </h:column>
-                         </h:dataTable>
-                    </div>
+                    <div class="row">
+                        <div class="detailDescription">
+                            <h3>Description</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum malesuada orci, vel finibus ante cursus eget. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+                            Mauris sed maximus ex, nec imperdiet diam. Vestibulum ullamcorper nunc sit amet sem dapibus, eu placerat nunc mollis. Aenean eget interdum nulla. Maecenas suscipit varius neque, blandit volutpat purus posuere vitae. 
+                            Maecenas odio augue, varius vel ultricies sit amet, gravida sed lectus.</p>
+                            
+                            <p>Aenean eget laoreet quam. Nam id vulputate velit. Sed dui est, consequat vel nisi id, sollicitudin egestas enim. Nullam interdum, odio eget aliquet consequat, neque risus faucibus ligula, vel suscipit lacus 
+                            tortor ac lacus. Nam bibendum turpis ut feugiat accumsan. Aliquam dictum at tortor non efficitur. Sed condimentum diam non quam euismod egestas. Mauris consequat, neque in dignissim porta, massa enim 
+                            consectetur enim, eget tincidunt tortor felis quis nisl.</p>
+                        </div>
+                    </div>    
+                    <div class="row">
+                        <div class="detailDescription">
+                            <h3>Interests</h3>
+                            <ul>
+                                <li>Rock Climbing</li>
+                                <li>Bowling</li>
+                                <li>Tennis</li>
+                            </ul>
+                        </div>
+                    </div>    
                 </div>
             </div>
         </div>
