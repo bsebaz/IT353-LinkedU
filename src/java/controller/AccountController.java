@@ -5,6 +5,9 @@
  */
 package controller;
 
+import dao.AccountDAO;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -19,14 +22,30 @@ import model.User;
 @SessionScoped
 public class AccountController {
 
+    /**
+     * @return the badLogin
+     */
+    public boolean isBadLogin() {
+        return badLogin;
+    }
+
+    /**
+     * @param badLogin the badLogin to set
+     */
+    public void setBadLogin(boolean badLogin) {
+        this.badLogin = badLogin;
+    }
+
     private User user;
     private boolean loggedIn;
     private boolean accessDenied;
+    private boolean badLogin;
 
     public AccountController() {
         user = new User();
         loggedIn = false;
         accessDenied = false;
+        badLogin = false;
     }
 
     /**
@@ -63,14 +82,57 @@ public class AccountController {
     }
 
     public String login() {
-        //TO-DO provide authentication logic
-        loggedIn = true;
+        
+        boolean isGood;
+        String returnString = "login?faces-redirect=true";
+        try
+        {
+            isGood = verifyUser();
+        }
+        
+        catch(SQLException e)
+        {
+            isGood = false;    
+        }
+        if(isGood == true)
+        {
+            loggedIn = true;
+            returnString = "home?faces-redirect=true";
+            return returnString;
+        }
         //Remove later
-        user.setUsername("TestAccount");
-        user.setAdmin(true);
-        user.setAccountType("student");
-        user.setUserID(1);
-        return "home?faces-redirect=true";
+//        user.setUsername("TestAccount");
+//        user.setAdmin(true);
+//        user.setAccountType("student");
+//        user.setUserID(1);
+        return returnString;
+    }
+    
+    public boolean verifyUser() throws SQLException {
+        AccountDAO anAccountDAO = new AccountDAO();    // Creating a new object each time.
+        ResultSet result = anAccountDAO.findUser(user.getUsername()); // Doing anything with the object after this?
+//        user = AccountDAO.findUser(user.getUserID());
+        
+        if (!result.first())
+        {
+            badLogin = true;
+            return false; 
+        }
+        else
+        {
+            String tempPass = result.getString("PASSWORD");
+            
+            if(!user.getPassword().equals(tempPass))
+            {
+                badLogin = true;
+                return false;
+            }
+            else
+            {
+                setLoggedIn(true);
+                return true;
+            }
+        }
     }
 
     public String logout() {
