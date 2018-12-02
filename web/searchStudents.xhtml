@@ -2,71 +2,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>LinkedU</title>
         <h:outputStylesheet name="css/bootstrap.min.css"/>
         <h:outputStylesheet name="css/LinkedU.css"/>
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
+        <h:outputScript name="js/compare.js"/>
     </h:head>
     <h:body>
-        <h:form>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <h:commandLink class="navbar-brand" action="home?faces-redirect=true">
-                    <h:graphicImage name="image/logo.png" height="32"/>
-                </h:commandLink>
-                <ul class="navbar-nav mr-auto">
-                    <c:if test="#{accountController.loggedIn}">
-                        <li class="nav-item active">
-                            <h:commandLink class="nav-link" value="Home" action="home?faces-redirect=true"/>
-                        </li>
-                        <li class="nav-item">
-                            <c:if test="#{accountController.user.accountType == 'student'}">
-                                <h:commandLink class="nav-link" value="#{accountController.user.username}" action="studentDetail?faces-redirect=true">
-                                    <f:param name="studentId" value="#{accountController.user.userID}"/>
-                                </h:commandLink>
-                            </c:if>
-                            <c:if test="#{accountController.user.accountType == 'recruiter'}">
-                                <h:commandLink class="nav-link" value="#{accountController.user.username}" action="universityDetail?faces-redirect=true">
-                                    <f:param name="universityId" value="#{accountController.user.userID}"/>
-                                </h:commandLink>
-                            </c:if>
-                        </li>
-                        <c:if test="#{accountController.user.accountType == 'student'}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="University Search" action="searchUniversities.xhtml?faces-redirect=true"/>
-                            </li>
-                        </c:if>
-                        <c:if test="#{accountController.user.accountType == 'recruiter'}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="Student Search" action="searchStudents.xhtml?faces-redirect=true"/>
-                            </li>
-                        </c:if>
-                        <c:if test="#{(accountController.user.admin) and (accountController.user.accountType == 'student')}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="View as Recruiter" action="#{accountController.user.setAccountType('recruiter')}"/>
-                            </li>
-                        </c:if>
-                        <c:if test="#{(accountController.user.admin) and (accountController.user.accountType == 'recruiter')}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="View as Student" action="#{accountController.user.setAccountType('student')}"/>
-                            </li>
-                        </c:if>
-                    </c:if>
-                </ul>
-                <ul class="navbar-nav">
-                    <c:if test="#{!accountController.loggedIn}">
-                        <h:commandButton class="btn btn-primary" value="Sign Up" action="createAccount?faces-redirect=true"/>&nbsp;
-                        <h:commandButton class="btn btn-primary" value="Log In" action="login?faces-redirect=true"/>
-                    </c:if>
-                    <c:if test="#{accountController.loggedIn}">
-                        <h:commandLink class="btn btn-primary" value="Log Out" action="#{accountController.logout()}"/>
-                    </c:if>
-                </ul>
-            </nav>
-        </h:form>
+        <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
 
         <div class="container">
             <div class="row">
@@ -74,42 +22,54 @@
 
                     <h2>Search Students</h2>
 
-                    <div class="searchBar">
-                        <h:form class="form-inline my-2 my-lg-0">
+                    <div class="searchBar d-flex">
+                        <h:form class="form-inline mr-auto my-2 my-lg-0">
                             <h:inputText class="form-control mr-sm-2" id="searchInput" value="#{searchStudentsController.searchTerm}" />
-                            <h:commandButton class="btn btn-outline-success my-2 my-sm-0" value="Search" action="#{searchStudentsController.renderStudentList()}" />
+                            <h:commandButton class="btn btn-outline-success my-2 my-sm-0" value="Search"/>
+                        </h:form>
+                        <h:form>
+                            <h:commandButton class="btn btn-primary compare-btn" value="Compare Selected" action="#{searchStudentsController.compare()}"/>
                         </h:form>
                     </div>
-                    <div class="listDisplay">
-                        <h:dataTable value = "#{searchStudentsController.renderStudentList()}" var = "students"
-                                     styleClass = "table table-bordered table-striped">
+                    <h:form id="tableForm">
+                        <div class="listDisplay">
+                            <h:outputText value="#{searchStudentsController.renderStudentList()}"/>
+                            <h:dataTable value = "#{searchStudentsController.students}" var = "students"
+                                         styleClass = "table table-bordered table-striped" id="studentTable">
 
-                            <h:column>    				
-                                <f:facet name = "header">Student Name</f:facet>    				
-                                <a href="studentDetail.xhtml?studentId=#{students.studentId}">
-                                    #{students.firstName} #{students.lastName}
-                                </a>  
-                            </h:column>
+                                <h:column>    				
+                                    <f:facet name = "header">Student Name</f:facet>    				
+                                    <a href="studentDetail.xhtml?studentId=#{students.studentId}">
+                                        #{students.firstName} #{students.lastName}
+                                    </a>  
+                                </h:column>
 
-                            <h:column>
-                                <f:facet name = "header">Age</f:facet>
-                                    #{students.age}
-                            </h:column>
+                                <h:column>
+                                    <f:facet name = "header">Age</f:facet>
+                                        #{students.age}
+                                </h:column>
 
-                            <h:column>
-                                <f:facet name = "header">School</f:facet>
-                                    #{students.school}
-                            </h:column>
-                            <h:column>
-                                <f:facet name = "header">Year Graduated</f:facet>
-                                    #{students.graduationYear}
-                            </h:column>
-                            <h:column>
-                                <f:facet name = "header">GPA</f:facet>
-                                    #{students.gpa}
-                            </h:column>
-                        </h:dataTable>
-                    </div>
+                                <h:column>
+                                    <f:facet name = "header">School</f:facet>
+                                        #{students.school}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name = "header">Year Graduated</f:facet>
+                                        #{students.graduationYear}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name = "header">GPA</f:facet>
+                                        #{students.gpa}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Select</f:facet>
+                                    <h:selectBooleanCheckbox class="compare" value="#{searchStudentsController.checked[students.studentId]}">
+                                        <f:ajax event="valueChange" render=":tableForm:studentTable"/>
+                                    </h:selectBooleanCheckbox>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+                    </h:form>
                 </div>
             </div>
         </div>

@@ -20,7 +20,7 @@ import model.User;
  */
 @ManagedBean
 @SessionScoped
-public class AccountController {
+public class AccountController implements java.io.Serializable {
 
     /**
      * @return the badLogin
