@@ -16,40 +16,39 @@
         <div class="container my-3">
             <div class="row">
                 <div class="col-md-12">
-                    <h:form rendered="#{compareUniversityController.renderTable()}">
-                        <h1>University Comparison</h1>
+                    <h:form rendered="#{compareStudentsController.renderTable()}">
+                        <h1>Student Comparison</h1>
                         <table class="table table-hover table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <td/>
-                                    <th><h:outputText value="#{compareUniversityController.selectedUniversity1.name}"/></th>
-                                    <th><h:outputText value="#{compareUniversityController.selectedUniversity2.name}"/></th>
+                                    <th>
+                                        <h:outputLink value="studentDetail.xhtml">
+                                            <h:outputText value="#{compareStudentsController.selectedStudent1.firstName} #{compareStudentsController.selectedStudent1.lastName}"/>
+                                            <f:param name="studentId" value="#{compareStudentsController.selectedStudent1.studentId}"/>
+                                        </h:outputLink>
+                                    </th>
+                                    <th>
+                                        <h:outputLink value="studentDetail.xhtml">
+                                            <h:outputText value="#{compareStudentsController.selectedStudent2.firstName} #{compareStudentsController.selectedStudent2.lastName}"/>
+                                            <f:param name="studentId" value="#{compareStudentsController.selectedStudent2.studentId}"/>
+                                        </h:outputLink>
+                                    </th>
                                 </tr>
                             </thead>
                             <tr>
-                                <th>Location</th>
-                                <td>
-                                    <h:outputText value="#{compareUniversityController.selectedUniversity1.city}"/>, 
-                                    <h:outputText value="#{compareUniversityController.selectedUniversity1.state}"/>
-                                </td>
-                                <td>
-                                    <h:outputText value="#{compareUniversityController.selectedUniversity2.city}"/>, 
-                                    <h:outputText value="#{compareUniversityController.selectedUniversity2.state}"/>
-                                </td>
+                                <th>School</th>
+                                <td><h:outputText value="#{compareStudentsController.selectedStudent1.school}"/></td>
+                                <td><h:outputText value="#{compareStudentsController.selectedStudent2.school}"/></td>
                             </tr>
                             <tr>
-                                <th>Enrollment</th>
-                                <td><h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity1.studentPopulation)}"/></td>
-                                <td><h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity2.studentPopulation)}"/></td>
-                            </tr>
-                            <tr>
-                                <th>Tuition</th>
-                                <td>$<h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity1.cost)}"/></td>
-                                <td>$<h:outputText value="#{universalController.formatNumber(compareUniversityController.selectedUniversity2.cost)}"/></td>
+                                <th>GPA</th>
+                                <td><h:outputText value="#{compareStudentsController.selectedStudent1.gpa}"/></td>
+                                <td><h:outputText value="#{compareStudentsController.selectedStudent2.gpa}"/></td>
                             </tr>
                         </table>
                     </h:form>
-                    <h:form rendered="#{!compareUniversityController.renderTable()}">
+                    <h:form rendered="#{!compareStudentsController.renderTable()}">
                         <h1>Couldn't Compare Universities</h1><br/>
                         <h4>Either no university or only one selected</h4>
                     </h:form>

@@ -11,6 +11,7 @@
         <h:outputStylesheet name="css/LinkedU.css"/>
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
+        <h:outputScript name="js/compare.js"/>
     </h:head>
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
@@ -21,42 +22,54 @@
 
                     <h2>Search Students</h2>
 
-                    <div class="searchBar">
-                        <h:form class="form-inline my-2 my-lg-0">
+                    <div class="searchBar d-flex">
+                        <h:form class="form-inline mr-auto my-2 my-lg-0">
                             <h:inputText class="form-control mr-sm-2" id="searchInput" value="#{searchStudentsController.searchTerm}" />
-                            <h:commandButton class="btn btn-outline-success my-2 my-sm-0" value="Search" action="#{searchStudentsController.renderStudentList()}" />
+                            <h:commandButton class="btn btn-outline-success my-2 my-sm-0" value="Search"/>
+                        </h:form>
+                        <h:form>
+                            <h:commandButton class="btn btn-primary compare-btn" value="Compare Selected" action="#{searchStudentsController.compare()}"/>
                         </h:form>
                     </div>
-                    <div class="listDisplay">
-                        <h:dataTable value = "#{searchStudentsController.renderStudentList()}" var = "students"
-                                     styleClass = "table table-bordered table-striped">
+                    <h:form id="tableForm">
+                        <div class="listDisplay">
+                            <h:outputText value="#{searchStudentsController.renderStudentList()}"/>
+                            <h:dataTable value = "#{searchStudentsController.students}" var = "students"
+                                         styleClass = "table table-bordered table-striped" id="studentTable">
 
-                            <h:column>    				
-                                <f:facet name = "header">Student Name</f:facet>    				
-                                <a href="studentDetail.xhtml?studentId=#{students.studentId}">
-                                    #{students.firstName} #{students.lastName}
-                                </a>  
-                            </h:column>
+                                <h:column>    				
+                                    <f:facet name = "header">Student Name</f:facet>    				
+                                    <a href="studentDetail.xhtml?studentId=#{students.studentId}">
+                                        #{students.firstName} #{students.lastName}
+                                    </a>  
+                                </h:column>
 
-                            <h:column>
-                                <f:facet name = "header">Age</f:facet>
-                                    #{students.age}
-                            </h:column>
+                                <h:column>
+                                    <f:facet name = "header">Age</f:facet>
+                                        #{students.age}
+                                </h:column>
 
-                            <h:column>
-                                <f:facet name = "header">School</f:facet>
-                                    #{students.school}
-                            </h:column>
-                            <h:column>
-                                <f:facet name = "header">Year Graduated</f:facet>
-                                    #{students.graduationYear}
-                            </h:column>
-                            <h:column>
-                                <f:facet name = "header">GPA</f:facet>
-                                    #{students.gpa}
-                            </h:column>
-                        </h:dataTable>
-                    </div>
+                                <h:column>
+                                    <f:facet name = "header">School</f:facet>
+                                        #{students.school}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name = "header">Year Graduated</f:facet>
+                                        #{students.graduationYear}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name = "header">GPA</f:facet>
+                                        #{students.gpa}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Select</f:facet>
+                                    <h:selectBooleanCheckbox class="compare" value="#{searchStudentsController.checked[students.studentId]}">
+                                        <f:ajax event="valueChange" render=":tableForm:studentTable"/>
+                                    </h:selectBooleanCheckbox>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+                    </h:form>
                 </div>
             </div>
         </div>

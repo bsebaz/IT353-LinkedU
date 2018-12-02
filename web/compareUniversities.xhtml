@@ -22,8 +22,18 @@
                             <thead>
                                 <tr>
                                     <td/>
-                                    <th><h:outputText value="#{compareUniversityController.selectedUniversity1.name}"/></th>
-                                    <th><h:outputText value="#{compareUniversityController.selectedUniversity2.name}"/></th>
+                                    <th>
+                                        <h:outputLink value="universityDetail.xhtml">
+                                            <h:outputText value="#{compareUniversityController.selectedUniversity1.name}"/>
+                                            <f:param name="universityId" value="#{compareUniversityController.selectedUniversity1.universityId}"/>
+                                        </h:outputLink>
+                                    </th>
+                                    <th>
+                                        <h:outputLink value="universityDetail.xhtml">
+                                            <h:outputText value="#{compareUniversityController.selectedUniversity2.name}"/>
+                                            <f:param name="universityId" value="#{compareUniversityController.selectedUniversity2.universityId}"/>
+                                        </h:outputLink>
+                                    </th>
                                 </tr>
                             </thead>
                             <tr>

@@ -38,6 +38,26 @@ public class SearchUniversitiesController {
         }
     }
 
+    public void renderUniversitiesList() throws SQLException {
+        universities = searchUniversitiesDAO.getUniversities(searchTerm);
+        searchTerm = "";
+    }
+
+    public String compare() {
+        int[] selectedIDs = new int[2];
+        int added = 0;
+        for (Entry<Integer, Boolean> entry : checked.entrySet()) {
+            if (entry.getValue()) {
+                selectedIDs[added++] = entry.getKey();
+                if (added == 2) {
+                    break;
+                }
+            }
+        }
+        checked.clear();
+        return "compareUniversities?faces-redirect=true&universityId1=" + selectedIDs[0] + "&universityId2=" + selectedIDs[1];
+    }
+
     /**
      * @return the searchTerm
      */
@@ -50,11 +70,6 @@ public class SearchUniversitiesController {
      */
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
-    }
-
-    public void renderUniversitiesList() throws SQLException {
-        universities = searchUniversitiesDAO.getUniversities(searchTerm);
-        searchTerm = "";
     }
 
     /**
@@ -83,19 +98,5 @@ public class SearchUniversitiesController {
      */
     public void setUniversities(List<University> universities) {
         this.universities = universities;
-    }
-
-    public String compare() {
-        int[] selectedIDs = new int[2];
-        int added = 0;
-        for (Entry<Integer, Boolean> entry : checked.entrySet()) {
-            if (entry.getValue()) {
-                selectedIDs[added++] = entry.getKey();
-                if (added == 2) {
-                    break;
-                }
-            }
-        }
-        return "compareUniversities?faces-redirect=true&universityId1=" + selectedIDs[0] + "&universityId2=" + selectedIDs[1];
     }
 }

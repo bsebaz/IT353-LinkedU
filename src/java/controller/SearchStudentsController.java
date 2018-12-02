@@ -6,13 +6,17 @@
 package controller;
 
 import dao.SearchStudentsDAO;
+import dao.SearchUniversitiesDAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import model.Student;
+import model.University;
 
 /**
  *
@@ -21,7 +25,41 @@ import model.Student;
 @ManagedBean
 @SessionScoped
 public class SearchStudentsController {
+
     private String searchTerm;
+    private Map<Integer, Boolean> checked;
+    private List<Student> students;
+    SearchStudentsDAO searchStudentsDAO;
+
+    public SearchStudentsController() {
+        searchStudentsDAO = new SearchStudentsDAO();
+        checked = new HashMap();
+        try {
+            students = searchStudentsDAO.getStudents(searchTerm);
+        } catch (SQLException e) {
+            System.out.println("Unable to load universities");
+        }
+    }
+
+    public void renderStudentList() throws SQLException {
+        students = searchStudentsDAO.getStudents(searchTerm);
+        searchTerm = "";
+    }
+
+    public String compare() {
+        int[] selectedIDs = new int[2];
+        int added = 0;
+        for (Map.Entry<Integer, Boolean> entry : checked.entrySet()) {
+            if (entry.getValue()) {
+                selectedIDs[added++] = entry.getKey();
+                if (added == 2) {
+                    break;
+                }
+            }
+        }
+        checked.clear();
+        return "compareStudents?faces-redirect=true&studentId1=" + selectedIDs[0] + "&studentId2=" + selectedIDs[1];
+    }
 
     /**
      * @return the searchTerm
@@ -36,12 +74,32 @@ public class SearchStudentsController {
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
     }
-    
-    public List<Student> renderStudentList() throws SQLException{
-        
-        SearchStudentsDAO searchStudentDAO = new SearchStudentsDAO();    // Creating a new object each time.
-        List students = searchStudentDAO.getStudents(searchTerm);
-        
+
+    /**
+     * @return the checked
+     */
+    public Map<Integer, Boolean> getChecked() {
+        return checked;
+    }
+
+    /**
+     * @param checked the checked to set
+     */
+    public void setChecked(Map<Integer, Boolean> checked) {
+        this.checked = checked;
+    }
+
+    /**
+     * @return the students
+     */
+    public List<Student> getStudents() {
         return students;
+    }
+
+    /**
+     * @param students the students to set
+     */
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }

@@ -33,42 +33,44 @@
                     </div>
                     <div>
                         <h:form id="tableForm">
-                            <h:outputText value="#{searchUniversitiesController.renderUniversitiesList()}"/>
-                            <h:dataTable value = "#{searchUniversitiesController.universities}" var = "universities"
-                                         styleClass = "table table-bordered table-striped" id="universityTable">
+                            <div class="listDisplay">
+                                <h:outputText value="#{searchUniversitiesController.renderUniversitiesList()}"/>
+                                <h:dataTable value = "#{searchUniversitiesController.universities}" var = "universities"
+                                             styleClass = "table table-bordered table-striped" id="universityTable">
 
-                                <h:column>    				
-                                    <f:facet name = "header">Name</f:facet>
-                                    <a href="universityDetail.xhtml?universityId=#{universities.universityId}">
-                                        #{universities.name}
-                                    </a>
-                                </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">Name</f:facet>
+                                        <a href="universityDetail.xhtml?universityId=#{universities.universityId}">
+                                            #{universities.name}
+                                        </a>
+                                    </h:column>
 
-                                <h:column>
-                                    <f:facet name = "header">City</f:facet>
-                                        #{universities.city}
-                                </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">City</f:facet>
+                                            #{universities.city}
+                                    </h:column>
 
-                                <h:column>
-                                    <f:facet name = "header">State</f:facet>
-                                        #{universities.state}
-                                </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">State</f:facet>
+                                            #{universities.state}
+                                    </h:column>
 
-                                <h:column>
-                                    <f:facet name = "header">Student Population</f:facet>
-                                        #{universities.studentPopulation}
-                                </h:column>
-                                <h:column>
-                                    <f:facet name = "header">Cost</f:facet>
-                                        #{universities.cost}
-                                </h:column>
-                                <h:column>
-                                    <f:facet name = "header">Select</f:facet>
-                                    <h:selectBooleanCheckbox class="compare" value="#{searchUniversitiesController.checked[universities.universityId]}">
-                                        <f:ajax event="valueChange" render=":tableForm:universityTable"/>
-                                    </h:selectBooleanCheckbox>
-                                </h:column>
-                            </h:dataTable>
+                                    <h:column>
+                                        <f:facet name = "header">Student Population</f:facet>
+                                            #{universities.studentPopulation}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">Cost</f:facet>
+                                            #{universities.cost}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">Select</f:facet>
+                                        <h:selectBooleanCheckbox class="compare" value="#{searchUniversitiesController.checked[universities.universityId]}">
+                                            <f:ajax event="valueChange" render=":tableForm:universityTable"/>
+                                        </h:selectBooleanCheckbox>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
                         </h:form>
                     </div>
                 </div>

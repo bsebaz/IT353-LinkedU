@@ -15,7 +15,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class UniversalController {
+public class UniversalController implements java.io.Serializable {
 
     private final NumberFormat NF = NumberFormat.getInstance();
 

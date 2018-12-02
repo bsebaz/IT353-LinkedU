@@ -6,15 +6,9 @@
 
 var checked = 0;
 $(document).ready(function () {
-    checked = $("input.compare:checkbox:checked").length;
-    if (checked === 2) {
-        $("input.compare:checkbox:not(:checked)").attr("disabled", true);
-        $(".compare-btn").removeAttr("disabled");
-    }
-    else {
-        $(".compare-btn").attr("disabled", true);
-    }
-    $(".compare").click(increment);
+    $('input.compare:checkbox').prop('checked', false);
+    $("input.compare-btn").attr("disabled", true);
+    $("input.compare").click(increment);
 });
 
 function increment() {
@@ -22,13 +16,13 @@ function increment() {
         checked++;
         if (checked === 2) {
             $("input.compare:checkbox:not(:checked)").attr("disabled", true);
-            $(".compare-btn").removeAttr("disabled"); 
+            $("input.compare-btn").removeAttr("disabled"); 
         }
     } else {
         checked--;
         if (checked < 2) {
             $("input.compare:checkbox:not(:checked)").removeAttr("disabled");
-            $(".compare-btn").attr("disabled", true);
+            $("input.compare-btn").attr("disabled", true);
         }
     }
 }
