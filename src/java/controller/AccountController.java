@@ -17,7 +17,7 @@ import model.User;
  */
 @ManagedBean
 @SessionScoped
-public class AccountController {
+public class AccountController implements java.io.Serializable {
 
     private User user;
     private boolean loggedIn;

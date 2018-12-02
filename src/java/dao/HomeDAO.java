@@ -26,7 +26,16 @@ public class HomeDAO implements DAOInterface, java.io.Serializable {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                University featured = new University(rs.getInt("universityId"), rs.getString("name"), rs.getString("city"), rs.getString("state"), rs.getString("studentPopulation"), rs.getString("cost"), true);
+                University featured = new University(
+                        rs.getInt("universityId"),
+                        rs.getString("name"),
+                        rs.getString("city"),
+                        rs.getString("state"),
+                        rs.getString("studentPopulation"),
+                        rs.getString("cost"),
+                        rs.getString("accentColor"),
+                        true
+                );
                 featuredUniversities.add(featured);
             }
             

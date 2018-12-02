@@ -6,10 +6,11 @@
 package controller;
 
 import dao.SearchUniversitiesDAO;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import model.University;
@@ -21,7 +22,21 @@ import model.University;
 @ManagedBean
 @SessionScoped
 public class SearchUniversitiesController {
+
     private String searchTerm;
+    private Map<Integer, Boolean> checked;
+    private List<University> universities;
+    SearchUniversitiesDAO searchUniversitiesDAO;
+
+    public SearchUniversitiesController() {
+        searchUniversitiesDAO = new SearchUniversitiesDAO();
+        checked = new HashMap();
+        try {
+            universities = searchUniversitiesDAO.getUniversities(searchTerm);
+        } catch (SQLException e) {
+            System.out.println("Unable to load universities");
+        }
+    }
 
     /**
      * @return the searchTerm
@@ -36,12 +51,51 @@ public class SearchUniversitiesController {
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
     }
-    
-    public List<University> renderUniversitiesList() throws SQLException{
-        
-        SearchUniversitiesDAO searchUniversitiesDAO = new SearchUniversitiesDAO();    // Creating a new object each time.
-        List universities = searchUniversitiesDAO.getUniversities(searchTerm);
-        
+
+    public void renderUniversitiesList() throws SQLException {
+        universities = searchUniversitiesDAO.getUniversities(searchTerm);
+        searchTerm = "";
+    }
+
+    /**
+     * @return the selected
+     */
+    public Map<Integer, Boolean> getChecked() {
+        return checked;
+    }
+
+    /**
+     * @param selected the selected to set
+     */
+    public void setChecked(Map<Integer, Boolean> selected) {
+        this.checked = selected;
+    }
+
+    /**
+     * @return the universities
+     */
+    public List<University> getUniversities() {
         return universities;
+    }
+
+    /**
+     * @param universities the universities to set
+     */
+    public void setUniversities(List<University> universities) {
+        this.universities = universities;
+    }
+
+    public String compare() {
+        int[] selectedIDs = new int[2];
+        int added = 0;
+        for (Entry<Integer, Boolean> entry : checked.entrySet()) {
+            if (entry.getValue()) {
+                selectedIDs[added++] = entry.getKey();
+                if (added == 2) {
+                    break;
+                }
+            }
+        }
+        return "compareUniversities?faces-redirect=true&universityId1=" + selectedIDs[0] + "&universityId2=" + selectedIDs[1];
     }
 }

@@ -19,6 +19,7 @@ public class University implements java.io.Serializable {
     private String state;
     private String studentPopulation;
     private String cost;
+    private String accentColor;
     private boolean featured;
 
     public University() {
@@ -34,8 +35,9 @@ public class University implements java.io.Serializable {
         this.cost = cost;
     }
 
-    public University(int universityId, String name, String city, String state, String studentPopulation, String cost, boolean featured) {
+    public University(int universityId, String name, String city, String state, String studentPopulation, String cost, String accentColor, boolean featured) {
         this(universityId, name, city, state, studentPopulation, cost);
+        this.accentColor = accentColor;
         this.featured = featured;
     }
 
@@ -135,6 +137,20 @@ public class University implements java.io.Serializable {
      */
     public void setFeatured(boolean featured) {
         this.featured = featured;
+    }
+
+    /**
+     * @return the accentColor
+     */
+    public String getAccentColor() {
+        return accentColor;
+    }
+
+    /**
+     * @param accentColor the accentColor to set
+     */
+    public void setAccentColor(String accentColor) {
+        this.accentColor = accentColor;
     }
 
 }

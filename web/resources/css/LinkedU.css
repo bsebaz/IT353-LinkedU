@@ -13,7 +13,7 @@ and open the template in the editor.
 
 .homeCards{
     border: 1px solid #aaa;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #ccc;
     border-radius: 7px;
 /*    border-top-right-radius: 0px;
     border-top-left-radius: 0px;*/
@@ -61,5 +61,13 @@ and open the template in the editor.
     margin-bottom: 1em;
     border: solid 1px #555;
     border-radius: 5px;
-    box-shadow: px 5px 10px #999;
+    box-shadow: 5px 5px 10px #999;
+}
+
+.homeCardTop {
+    height: 64px;
+}
+
+.homeCardButton {
+    color: white;
 }

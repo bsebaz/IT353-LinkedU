@@ -37,6 +37,7 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
                         rs.getString("state"),
                         rs.getString("studentPopulation"),
                         rs.getString("cost"),
+                        rs.getString("accentColor"),
                         rs.getBoolean("featured")
                 );
             }

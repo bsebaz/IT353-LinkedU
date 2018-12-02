@@ -5,7 +5,6 @@
  */
 package controller;
 
-import static com.sun.xml.ws.security.impl.policy.Constants.logger;
 import dao.UniversityDetailDAO;
 import java.sql.SQLException;
 import java.util.Map;
