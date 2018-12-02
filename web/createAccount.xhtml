@@ -66,6 +66,47 @@
                 </ul>
             </nav>
         </h:form>
+        
+        <div id="signup">
+            <h:form style="width: 340px; margin: 50px auto;">
+                <h2 style="text-align: left;">Student Sign Up</h2>       
+                <div class="form-group">
+                    <h:outputLabel for="username" value="Username"/>
+                    <h:inputText id="username" class="form-control" value = "#{accountController.user.username}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="password" value="Password"/>
+                    <h:inputSecret id="password" class="form-control" value = "#{accountController.user.password}">
+                        <!-- Validator here, if any -->
+                    </h:inputSecret>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="confirmPass" value="Confirm Password"/>
+                    <h:inputSecret id="confirmPass" class="form-control" value = "#{accountController.user.password}">
+                        <!-- Validator here, if any -->
+                    </h:inputSecret>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="fname" value="First Name"/>
+                    <h:inputText id="fname" class="form-control" value = "#{studentDetailController.student.firstName}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="lname" value="Last Name"/>
+                    <h:inputText id="lname" class="form-control" value = "#{studentDetailController.student.lastName}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:commandButton class="btn btn-primary btn-block" value="Sign Up" /> <!--add back action=-->
+                </div>
+            </h:form>
+        </div>
+        
+        
     </h:body>
 </html>
 
