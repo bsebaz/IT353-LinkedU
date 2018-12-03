@@ -32,7 +32,7 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
             if (rs.next()) {
                 //User was found, get password from DB
                 String dbUsername = rs.getString("USERNAME");
-                String dbPassword = rs.getString("USERPASSWORD");
+                String dbPassword = rs.getString("PASSWORD");
                 if (dbUsername.equals(username) && dbPassword.equals(password)) {
                     //Login was successful, set the user's attributes
                     int dbUserID = rs.getInt("ACCOUNTID");
