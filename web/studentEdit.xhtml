@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>LinkedU</title>
+        <h:outputStylesheet name="css/bootstrap.min.css"/>
+        <h:outputStylesheet name="css/LinkedU.css"/>
+        <h:outputScript name="js/bootstrap.min.js"/>
+        <h:outputScript name="js/jquery-3.3.1.min.js"/>
+    </h:head>
+    <h:body>
+        <h:form>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <h:commandLink class="navbar-brand" action="home?faces-redirect=true">
+                    <h:graphicImage name="image/logo.png" height="32"/>
+                </h:commandLink>
+                <ul class="navbar-nav mr-auto">
+                    <c:if test="#{accountController.loggedIn}">
+                        <li class="nav-item active">
+                            <h:commandLink class="nav-link" value="Home" action="home?faces-redirect=true"/>
+                        </li>
+                        <li class="nav-item">
+                            <c:if test="#{accountController.user.accountType == 'student'}">
+                                <h:commandLink class="nav-link" value="#{accountController.user.username}" action="studentDetail?faces-redirect=true">
+                                    <f:param name="studentId" value="#{accountController.user.userID}"/>
+                                </h:commandLink>
+                            </c:if>
+                            <c:if test="#{accountController.user.accountType == 'recruiter'}">
+                                <h:commandLink class="nav-link" value="#{accountController.user.username}" action="universityDetail?faces-redirect=true">
+                                    <f:param name="universityId" value="#{accountController.user.userID}"/>
+                                </h:commandLink>
+                            </c:if>
+                        </li>
+                        <c:if test="#{accountController.user.accountType == 'student'}">
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link" value="University Search" action="searchUniversities.xhtml?faces-redirect=true"/>
+                            </li>
+                        </c:if>
+                        <c:if test="#{accountController.user.accountType == 'recruiter'}">
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link" value="Student Search" action="searchStudents.xhtml?faces-redirect=true"/>
+                            </li>
+                        </c:if>
+                        <c:if test="#{(accountController.user.admin) and (accountController.user.accountType == 'student')}">
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link" value="View as Recruiter" action="#{accountController.user.setAccountType('recruiter')}"/>
+                            </li>
+                        </c:if>
+                        <c:if test="#{(accountController.user.admin) and (accountController.user.accountType == 'recruiter')}">
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link" value="View as Student" action="#{accountController.user.setAccountType('student')}"/>
+                            </li>
+                        </c:if>
+                    </c:if>
+                </ul>
+                <ul class="navbar-nav">
+                    <c:if test="#{!accountController.loggedIn}">
+                        <h:commandButton class="btn btn-primary" value="Sign Up" action="createAccount?faces-redirect=true"/>&nbsp;
+                        <h:commandButton class="btn btn-primary" value="Log In" action="login?faces-redirect=true"/>
+                    </c:if>
+                    <c:if test="#{accountController.loggedIn}">
+                        <h:commandLink class="btn btn-primary" value="Log Out" action="#{accountController.logout()}"/>
+                    </c:if>
+                </ul>
+            </nav>
+        </h:form>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 detailInfo">
+                    <h:form rendered="#{!(studentDetailController.student == null)}" id="studentEdit">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="studentDetailImage">
+
+                                </div>
+                            </div>
+                            <div class="col-md-9" style="border-left: solid 1px #777">
+
+                                <div class="form-group">
+                                    <h:inputHidden class="form-control input-sm" id="success" value="#{studentDetailController.student.studentId}"/>
+                                    <h:message for="success" style="color:green" />
+                                    <h:inputHidden class="form-control input-sm" id="error" value="#{studentDetailController.student.studentId}"/>
+                                    <h:message for="error" style="color:red" />
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <h:outputLabel for="firstName" value="First Name"/>
+                                        <h:inputText id="firstName" class="form-control" value="#{studentDetailController.student.firstName}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <h:outputLabel for="lastName" value="Last Name"/>
+                                        <h:inputText id="lastName" class="form-control" value="#{studentDetailController.student.lastName}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <h:outputLabel for="age" value="Age"/>
+                                        <h:inputText id="age" class="form-control" value="#{studentDetailController.student.age}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <h:outputLabel for="school" value="School"/>
+                                        <h:inputText id="school" class="form-control" value="#{studentDetailController.student.school}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <h:outputLabel for="graduationYear" value="Graduation Year"/>
+                                        <h:inputText id="graduationYear" class="form-control" value="#{studentDetailController.student.graduationYear}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <h:outputLabel for="gpa" value="GPA"/>
+                                        <h:inputText id="gpa" class="form-control" value="#{studentDetailController.student.gpa}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <h:commandLink class="btn btn-primary" value="Save" action="#{studentDetailController.updateStudent()}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="detailDescription">
+                                <h3>Description</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum malesuada orci, vel finibus ante cursus eget. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+                                    Mauris sed maximus ex, nec imperdiet diam. Vestibulum ullamcorper nunc sit amet sem dapibus, eu placerat nunc mollis. Aenean eget interdum nulla. Maecenas suscipit varius neque, blandit volutpat purus posuere vitae. 
+                                    Maecenas odio augue, varius vel ultricies sit amet, gravida sed lectus.</p>
+
+                                <p>Aenean eget laoreet quam. Nam id vulputate velit. Sed dui est, consequat vel nisi id, sollicitudin egestas enim. Nullam interdum, odio eget aliquet consequat, neque risus faucibus ligula, vel suscipit lacus 
+                                    tortor ac lacus. Nam bibendum turpis ut feugiat accumsan. Aliquam dictum at tortor non efficitur. Sed condimentum diam non quam euismod egestas. Mauris consequat, neque in dignissim porta, massa enim 
+                                    consectetur enim, eget tincidunt tortor felis quis nisl.</p>
+                            </div>
+                        </div>    
+                        <div class="row">
+                            <div class="detailDescription">
+                                <h3>Interests</h3>
+                                <ul>
+                                    <li>Rock Climbing</li>
+                                    <li>Bowling</li>
+                                    <li>Tennis</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <ui:repeat value="#{studentDetailController.studentDetails()}" var="details">
+                            <div class="row">
+                                <div class="detailDescription">
+                                    <div class="form-group">
+                                        <h:outputLabel for="detailName" value="Detail Name"/>
+                                        <h:inputText id="detailName" class="form-control" value="#{details.detailName}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                    <div class="form-group">
+                                        <h:outputLabel for="detailType" value="Detail Type"/>
+                                        <h:selectOneMenu value="#{details.detailType}">
+                                            <f:selectItem itemValue="text" itemLabel="Text" />
+                                            <f:selectItem itemValue="list" itemLabel="List" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <h:outputLabel for="detailContent" value="Detail Content"/>
+                                        <h:inputText id="detailContent" class="form-control" value="#{details.detailContent}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                        <div>
+                            <div class="float-right">
+                                <h:commandLink class="btn btn-primary" value="Add New Detail" action="#{studentDetailController.addNewDetail()}"/>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

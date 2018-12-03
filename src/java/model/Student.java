@@ -11,6 +11,7 @@ package model;
  */
 public class Student implements java.io.Serializable {
     private int studentId;
+    private int userId;
     private String firstName;
     private String lastName;
     private String age;
@@ -22,7 +23,8 @@ public class Student implements java.io.Serializable {
         
     }
     
-    public Student(int studentId, String firstName, String lastName, String age, String school, String graduationYear, String gpa){
+    public Student(int userId, int studentId, String firstName, String lastName, String age, String school, String graduationYear, String gpa){
+        this.userId = userId;
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -128,6 +130,20 @@ public class Student implements java.io.Serializable {
      */
     public void setGpa(String gpa) {
         this.gpa = gpa;
+    }
+
+    /**
+     * @return the userId
+     */
+    public int getUserId() {
+        return userId;
+    }
+
+    /**
+     * @param userId the userId to set
+     */
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
     
 }
