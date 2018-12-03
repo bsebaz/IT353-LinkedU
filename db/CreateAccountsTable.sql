@@ -11,12 +11,11 @@
 drop table LinkedUDB.accounts;
 
 CREATE TABLE LinkedUDB.accounts (
-  accountId         INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+  accountId            INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
   username             VARCHAR(50) UNIQUE,
   password             VARCHAR(50),
   accountType          VARCHAR(20), --student/recruiter
   isAdmin              SMALLINT
-  
 );
 
 INSERT INTO LinkedUDB.accounts(username, password, accountType, isAdmin) VALUES ('user', 'password', 'student', 1);

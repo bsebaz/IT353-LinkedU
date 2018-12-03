@@ -51,12 +51,22 @@
                                         </li>
                                     </ui:repeat>
                                 </ul>
-                                <h:form>
-                                    <h:button class="btn btn-primary" value="Compare Universities" outcome="compareUniversities?faces-redirect=true">
-                                        <f:param name="universityId1" value="#{homeController.selectedUniversity1.universityId}"/>
-                                        <f:param name="universityId2" value="#{homeController.selectedUniversity2.universityId}"/>
-                                    </h:button>
-                                </h:form>
+                            
+                                <!--(accountController.user.admin) or (accountController.user.accountType == 'recruiter')-->
+                                <c:if test="#{accountController.loggedIn}">
+                                    <br/><br/>
+                                    <!-- Application Forms Content (visible only by admin or University Recruiter) -->
+                                    <h3>Application Forms</h3>
+                                    <ul class="list-group my-3" style="list-style-type: none;">
+                                        <ui:repeat value="#{homeController.featuredUniversities}" var="application_form">
+                                            <li style="padding:3px;">
+                                                <!-- todo: navigation to applicationFormEditor-->
+                                                <!-- make button ~30 characters with ... at the end (if longer, pad otherwise)-->
+                                                <h:button class="btn btn-primary" style="width: 100%; text-align: left;" value="#{application_form.name}" outcome="applicationFormEditor?faces-redirect=true"/>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </c:if>
                             </div>
                         </div>
                     </div>

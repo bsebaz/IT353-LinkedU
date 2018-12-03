@@ -12,62 +12,7 @@
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
     </h:head>
     <h:body>
-        <h:form>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <h:commandLink class="navbar-brand" action="home?faces-redirect=true">
-                    <h:graphicImage name="image/logo.png" height="32"/>
-                </h:commandLink>
-                <ul class="navbar-nav mr-auto">
-                    <c:if test="#{accountController.loggedIn}">
-                        <li class="nav-item active">
-                            <h:commandLink class="nav-link" value="Home" action="home?faces-redirect=true"/>
-                        </li>
-                        <li class="nav-item">
-                            <c:if test="#{accountController.user.accountType == 'student'}">
-                                <h:commandLink class="nav-link" value="#{accountController.user.username}" action="studentDetail?faces-redirect=true">
-                                    <f:param name="studentId" value="#{accountController.user.userID}"/>
-                                </h:commandLink>
-                            </c:if>
-                            <c:if test="#{accountController.user.accountType == 'recruiter'}">
-                                <h:commandLink class="nav-link" value="#{accountController.user.username}" action="universityDetail?faces-redirect=true">
-                                    <f:param name="universityId" value="#{accountController.user.userID}"/>
-                                </h:commandLink>
-                            </c:if>
-                        </li>
-                        <c:if test="#{accountController.user.accountType == 'student'}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="University Search" action="searchUniversities.xhtml?faces-redirect=true"/>
-                            </li>
-                        </c:if>
-                        <c:if test="#{accountController.user.accountType == 'recruiter'}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="Student Search" action="searchStudents.xhtml?faces-redirect=true"/>
-                            </li>
-                        </c:if>
-                        <c:if test="#{(accountController.user.admin) and (accountController.user.accountType == 'student')}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="View as Recruiter" action="#{accountController.user.setAccountType('recruiter')}"/>
-                            </li>
-                        </c:if>
-                        <c:if test="#{(accountController.user.admin) and (accountController.user.accountType == 'recruiter')}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="View as Student" action="#{accountController.user.setAccountType('student')}"/>
-                            </li>
-                        </c:if>
-                    </c:if>
-                </ul>
-                <ul class="navbar-nav">
-                    <c:if test="#{!accountController.loggedIn}">
-                        <h:commandButton class="btn btn-primary" value="Sign Up" action="createAccount?faces-redirect=true"/>&nbsp;
-                        <h:commandButton class="btn btn-primary" value="Log In" action="login?faces-redirect=true"/>
-                    </c:if>
-                    <c:if test="#{accountController.loggedIn}">
-                        <h:commandLink class="btn btn-primary" value="Log Out" action="#{accountController.logout()}"/>
-                    </c:if>
-                </ul>
-            </nav>
-        </h:form>
-        
+        <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
         <div id="signup">
             <h:form style="width: 340px; margin: 50px auto;">
                 <h2 style="text-align: left;">Student Sign Up</h2>       
@@ -97,7 +42,39 @@
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="lname" value="Last Name"/>
-                    <h:inputText id="lname" class="form-control" value = "#{studentDetailController.student.lastName}">
+                    <h:inputText id="lname" class="form-control" value = "#{studentDetailController.student.age}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="age" value="Age&nbsp;"/>
+                    <h:selectOneMenu value="#{user.favCoffee1}">
+                        <f:selectItem itemValue="14" itemLabel="14" />
+                        <f:selectItem itemValue="15" itemLabel="15" />
+                        <f:selectItem itemValue="16" itemLabel="16" />
+                        <f:selectItem itemValue="17" itemLabel="17" />
+                        <f:selectItem itemValue="18" itemLabel="18" />
+                        <f:selectItem itemValue="19" itemLabel="19" />
+                        <f:selectItem itemValue="20" itemLabel="20" />
+                        <f:selectItem itemValue="21" itemLabel="21" />
+                        <f:selectItem itemValue="22" itemLabel="22" />
+                    </h:selectOneMenu>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="school" value="High School Name"/>
+                    <h:inputText id="school" class="form-control" value = "#{studentDetailController.student.school}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="gradYear" value="Graduation Year"/>
+                    <h:inputText id="gradYear" class="form-control" value = "#{studentDetailController.student.graduationYear}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="gpa" value="GPA"/>
+                    <h:inputText id="gpa" class="form-control" value = "#{studentDetailController.student.gpa}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
@@ -106,9 +83,6 @@
                 </div>
             </h:form>
         </div>
-        
-        
-        <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
     </h:body>
 </html>
 

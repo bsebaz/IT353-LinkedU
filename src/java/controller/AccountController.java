@@ -22,20 +22,7 @@ import model.User;
 @SessionScoped
 public class AccountController implements java.io.Serializable {
 
-    /**
-     * @return the badLogin
-     */
-    public boolean isBadLogin() {
-        return badLogin;
-    }
-
-    /**
-     * @param badLogin the badLogin to set
-     */
-    public void setBadLogin(boolean badLogin) {
-        this.badLogin = badLogin;
-    }
-
+    AccountDAO db;
     private User user;
     private boolean loggedIn;
     private boolean accessDenied;
@@ -46,10 +33,12 @@ public class AccountController implements java.io.Serializable {
         loggedIn = false;
         accessDenied = false;
         badLogin = false;
+        db = new AccountDAO();
     }
 
     /**
-     * Redirects the user to the login page if they try to access a login only page
+     * Redirects the user to the login page if they try to access a login only
+     * page
      */
     public void checkIfNotLoggedIn() {
         if (!loggedIn) {
@@ -61,7 +50,8 @@ public class AccountController implements java.io.Serializable {
     }
 
     /**
-     * Redirects the user to the home page if they try to access a "not logged in" page
+     * Redirects the user to the home page if they try to access a "not logged
+     * in" page
      */
     public void checkIfAlreadyLoggedIn() {
         if (!loggedIn) {
@@ -82,57 +72,17 @@ public class AccountController implements java.io.Serializable {
     }
 
     public String login() {
-        
-        boolean isGood;
-        String returnString = "login?faces-redirect=true";
-        try
-        {
-            isGood = verifyUser();
-        }
-        
-        catch(SQLException e)
-        {
-            isGood = false;    
-        }
-        if(isGood == true)
-        {
-            loggedIn = true;
-            returnString = "home?faces-redirect=true";
-            return returnString;
-        }
-        //Remove later
-//        user.setUsername("TestAccount");
-//        user.setAdmin(true);
-//        user.setAccountType("student");
-//        user.setUserID(1);
-        return returnString;
-    }
-    
-    public boolean verifyUser() throws SQLException {
-        AccountDAO anAccountDAO = new AccountDAO();    // Creating a new object each time.
-        ResultSet result = anAccountDAO.findUser(user.getUsername()); // Doing anything with the object after this?
-//        user = AccountDAO.findUser(user.getUserID());
-        
-        if (!result.first())
-        {
+        loggedIn = db.login(user);
+        if (!loggedIn) {
             badLogin = true;
-            return false; 
+            return "login?faces-redirect=true";
         }
-        else
-        {
-            String tempPass = result.getString("PASSWORD");
-            
-            if(!user.getPassword().equals(tempPass))
-            {
-                badLogin = true;
-                return false;
-            }
-            else
-            {
-                setLoggedIn(true);
-                return true;
-            }
-        }
+        return "home?faces-redirect=true";
+//      Testing
+//      user.setUsername("TestAccount");
+//      user.setAdmin(true);
+//      user.setAccountType("student");
+//      user.setUserID(1);
     }
 
     public String logout() {
@@ -180,5 +130,19 @@ public class AccountController implements java.io.Serializable {
      */
     public void setAccessDenied(boolean accessDenied) {
         this.accessDenied = accessDenied;
+    }
+
+    /**
+     * @return the badLogin
+     */
+    public boolean isBadLogin() {
+        return badLogin;
+    }
+
+    /**
+     * @param badLogin the badLogin to set
+     */
+    public void setBadLogin(boolean badLogin) {
+        this.badLogin = badLogin;
     }
 }

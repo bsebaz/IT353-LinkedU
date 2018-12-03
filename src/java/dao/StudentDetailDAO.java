@@ -34,7 +34,7 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                student = new Student(rs.getInt("userId"),
+                student = new Student(rs.getInt("accountId"),
                         rs.getInt("studentId"), 
                         rs.getString("firstName"), 
                         rs.getString("lastName"), 
