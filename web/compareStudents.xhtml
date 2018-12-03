@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>University Compare</title>
+        <h:outputStylesheet name="css/bootstrap.min.css"/>
+        <h:outputScript name="js/bootstrap.min.js"/>
+        <h:outputScript name="js/jquery-3.3.1.min.js"/>
+    </h:head>
+    <h:body>
+        <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
+        <div class="container my-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h:form rendered="#{compareStudentsController.renderTable()}">
+                        <h1>Student Comparison</h1>
+                        <table class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <td/>
+                                    <th>
+                                        <h:outputLink value="studentDetail.xhtml">
+                                            <h:outputText value="#{compareStudentsController.selectedStudent1.firstName} #{compareStudentsController.selectedStudent1.lastName}"/>
+                                            <f:param name="studentId" value="#{compareStudentsController.selectedStudent1.studentId}"/>
+                                        </h:outputLink>
+                                    </th>
+                                    <th>
+                                        <h:outputLink value="studentDetail.xhtml">
+                                            <h:outputText value="#{compareStudentsController.selectedStudent2.firstName} #{compareStudentsController.selectedStudent2.lastName}"/>
+                                            <f:param name="studentId" value="#{compareStudentsController.selectedStudent2.studentId}"/>
+                                        </h:outputLink>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <th>School</th>
+                                <td><h:outputText value="#{compareStudentsController.selectedStudent1.school}"/></td>
+                                <td><h:outputText value="#{compareStudentsController.selectedStudent2.school}"/></td>
+                            </tr>
+                            <tr>
+                                <th>GPA</th>
+                                <td><h:outputText value="#{compareStudentsController.selectedStudent1.gpa}"/></td>
+                                <td><h:outputText value="#{compareStudentsController.selectedStudent2.gpa}"/></td>
+                            </tr>
+                        </table>
+                    </h:form>
+                    <h:form rendered="#{!compareStudentsController.renderTable()}">
+                        <h1>Couldn't Compare Universities</h1><br/>
+                        <h4>Either no university or only one selected</h4>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Login</title>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
@@ -69,18 +70,27 @@
                 </ul>
             </nav>
         </h:form>
+        
+        <h:form style="width: 340px; margin: 50px auto;" rendered="#{accountController.badLogin}">
+        <div class="alert alert-danger" role="alert">
+            Invalid Username or Password.
+            <h:outputText value ="#{accountController.setBadLogin(false)}"/>
+        </div>
+        </h:form>
+        
+        <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
         <div id="login">
             <h:form style="width: 340px; margin: 50px auto;">
                 <h2 style="text-align: center;">Log in</h2>       
                 <div class="form-group">
                     <h:outputLabel for="username" value="Username"/>
-                    <h:inputText id="username" class="form-control">
+                    <h:inputText id="username" class="form-control" value = "#{accountController.user.username}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="password" value="Password"/>
-                    <h:inputSecret id="password" class="form-control">
+                    <h:inputSecret id="password" class="form-control" value = "#{accountController.user.password}">
                         <!-- Validator here, if any -->
                     </h:inputSecret>
                 </div>

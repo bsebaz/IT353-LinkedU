@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/resources/css/bootstrap.css</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/controller/AccountController.java</file>
@@ -37,5 +38,8 @@
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/controller/DetailsInterface.java</file>
             <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/home.xhtml</file>
         </group>
+=======
+        <group/>
+>>>>>>> 9b73996d9db2f0e959dec1da6259acf0ad251533
     </open-files>
 </project-private>

@@ -5,6 +5,9 @@
  */
 package controller;
 
+import dao.UniversityDetailDAO;
+import java.sql.SQLException;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import model.University;
@@ -15,9 +18,29 @@ import model.University;
  */
 @ManagedBean
 @RequestScoped
-public class CompareUniversityController {
+public class CompareUniversityController implements DetailsInterface {
+
     private University selectedUniversity1;
     private University selectedUniversity2;
+    private final UniversityDetailDAO DB = new UniversityDetailDAO();
+
+    public CompareUniversityController() {
+        Map<String, String> params = getParamsFromURL();
+        String universityId1 = params.get("universityId1");
+        String universityId2 = params.get("universityId2");
+        try {
+            selectedUniversity1 = DB.getUniversity(Integer.parseInt(universityId1));
+            selectedUniversity2 = DB.getUniversity(Integer.parseInt(universityId2));
+        } catch (SQLException e) {
+            System.out.println("Couldn't find one or more requested universities");
+        } catch (NumberFormatException e) {
+            System.out.println("Couldn't find one or more requested universities");
+        }
+    }
+
+    public boolean renderTable() {
+        return !(selectedUniversity1 == null || selectedUniversity2 == null);
+    }
 
     /**
      * @return the selectedUniversity1
@@ -45,15 +68,5 @@ public class CompareUniversityController {
      */
     public void setSelectedUniversity2(University selectedUniversity2) {
         this.selectedUniversity2 = selectedUniversity2;
-    }
-    
-    public String compare(University selectedUniversity1, University selectedUniversity2) {
-        this.selectedUniversity1 = selectedUniversity1;
-        this.selectedUniversity2 = selectedUniversity2;
-        return "compareUniversities.xhtml?faces-redirect";
-    }
-    
-    public boolean renderTable() {
-        return !(selectedUniversity1 == null || selectedUniversity2 == null);
     }
 }
