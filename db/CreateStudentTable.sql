@@ -12,7 +12,7 @@ drop table LinkedUDB.students;
 
 CREATE TABLE LinkedUDB.students (
   studentId         INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-  userId                    INT, --Foreign key to tie student accounts to user account
+  accountId                    INT, --Foreign key to tie student accounts to user account
   firstName                 VARCHAR(50),
   lastName                  VARCHAR(50),
   age                       VARCHAR(50),
