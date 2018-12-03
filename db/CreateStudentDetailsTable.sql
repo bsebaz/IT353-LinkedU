@@ -15,5 +15,5 @@ CREATE TABLE LinkedUDB.studentDetails (
   studentId                 INT,
   detailType                VARCHAR(50),
   detailName                VARCHAR(50),
-  detailContent             VARCHAR(255)
+  detailContent             VARCHAR(500)
 );

@@ -40,9 +40,9 @@
                                 </div>
                                 <c:if test="#{(studentDetailController.student.userId == accountController.user.userID)}">
                                     <div class="float-right">
-                                        <h:commandButton class="btn btn-outline-success my-2 my-sm-0" value="Edit" action="studentEdit?faces-redirect=true" >
+                                        <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="studentEdit.xhtml">Edit
                                             <f:param name="studentId" value="#{studentDetailController.student.studentId}"/>
-                                        </h:commandButton>
+                                        </h:outputLink>
                                     </div>
                                 </c:if>
                             </h:form>
@@ -51,28 +51,22 @@
                             </h:form>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="detailDescription">
-                            <h3>Description</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum malesuada orci, vel finibus ante cursus eget. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
-                                Mauris sed maximus ex, nec imperdiet diam. Vestibulum ullamcorper nunc sit amet sem dapibus, eu placerat nunc mollis. Aenean eget interdum nulla. Maecenas suscipit varius neque, blandit volutpat purus posuere vitae. 
-                                Maecenas odio augue, varius vel ultricies sit amet, gravida sed lectus.</p>
-
-                            <p>Aenean eget laoreet quam. Nam id vulputate velit. Sed dui est, consequat vel nisi id, sollicitudin egestas enim. Nullam interdum, odio eget aliquet consequat, neque risus faucibus ligula, vel suscipit lacus 
-                                tortor ac lacus. Nam bibendum turpis ut feugiat accumsan. Aliquam dictum at tortor non efficitur. Sed condimentum diam non quam euismod egestas. Mauris consequat, neque in dignissim porta, massa enim 
-                                consectetur enim, eget tincidunt tortor felis quis nisl.</p>
+                    <ui:repeat value="#{studentDetailController.studentDetails}" var="details">
+                        <div class="row">
+                            <div class="detailDescription">
+                                <h3><h:outputText value="#{details.detailName}"/> </h3>
+                                
+                                <h:outputText rendered="#{details.detailType == 'text'}" value="#{details.detailContent}"/>
+                                <ul>    
+                                    <ui:repeat value="#{details.splitDetailContent()}" var="list" rendered="#{details.detailType == 'list'}">
+                                        <li>
+                                            <h:outputText value="#{list}"/>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div>
                         </div>
-                    </div>    
-                    <div class="row">
-                        <div class="detailDescription">
-                            <h3>Interests</h3>
-                            <ul>
-                                <li>Rock Climbing</li>
-                                <li>Bowling</li>
-                                <li>Tennis</li>
-                            </ul>
-                        </div>
-                    </div>    
+                    </ui:repeat>
                 </div>
             </div>
         </div>

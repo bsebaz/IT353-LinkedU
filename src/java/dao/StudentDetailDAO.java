@@ -116,6 +116,44 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
         return rowCount;
     }
     
+    public int updateStudentDetails(List<StudentDetails> studentDetails){
+        
+        int rowCount = 0;
+        try (Connection db = connect()){
+            
+            for (StudentDetails studentDetail: studentDetails){
+                int detailId = studentDetail.getDetailId();
+                String detailType = studentDetail.getDetailType();
+                String detailName = studentDetail.getDetailName();
+                String detailContent = studentDetail.getDetailContent();
+                
+                String query = "UPDATE LinkedUDB.studentDetails SET detailType = ?, detailName = ?, detailContent = ? WHERE detailID = ?";
+                PreparedStatement pstmt = null;
+
+                pstmt = db.prepareStatement(query);
+                pstmt.setString(1, detailType);
+                pstmt.setString(2, detailName);
+                pstmt.setString(3, detailContent);
+                pstmt.setInt(4, detailId);
+                rowCount = pstmt.executeUpdate();
+                
+                if (rowCount == 1){
+                    FacesContext.getCurrentInstance().addMessage("studentEdit:success", new FacesMessage("Profile updated successfully"));
+                }
+                else{
+                    FacesContext.getCurrentInstance().addMessage("studentEdit:error", new FacesMessage("Error updating profile"));
+                    break;
+                }
+            }
+                
+            db.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        
+        return rowCount;
+    }
+    
     public int addNewDetail(Student student){
         int rowCount = 0;
         try (Connection db = connect()){
@@ -127,6 +165,25 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
 
             pstmt = db.prepareStatement(query);
             pstmt.setInt(1, studentId);
+            rowCount = pstmt.executeUpdate();
+
+            db.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        
+        return rowCount;
+    }
+    
+    public int removeDetail(int detailId){
+        int rowCount = 0;
+        try (Connection db = connect()){
+                
+            String query = "DELETE FROM LinkedUDB.studentDetails WHERE detailId = ?";
+            PreparedStatement pstmt = null;
+
+            pstmt = db.prepareStatement(query);
+            pstmt.setInt(1, detailId);
             rowCount = pstmt.executeUpdate();
 
             db.close();
