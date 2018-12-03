@@ -11,7 +11,7 @@
 drop table LinkedUDB.studentDetails;
 
 CREATE TABLE LinkedUDB.studentDetails (
-  detailId         INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+  detailId                  INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
   studentId                 INT,
   detailType                VARCHAR(50),
   detailName                VARCHAR(50),

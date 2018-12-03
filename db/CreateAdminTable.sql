@@ -11,8 +11,8 @@
 drop table LinkedUDB.admins;
 
 CREATE TABLE LinkedUDB.admins (
-  adminId         INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-  accountId                    INT, --Foreign key to tie student accounts to user account
+  adminId                  INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+  accountId                INT, --Foreign key to tie student accounts to user account
   email                    VARCHAR(20),
   name                     VARCHAR(20)
 
