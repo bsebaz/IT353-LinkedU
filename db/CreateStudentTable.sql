@@ -19,6 +19,11 @@ CREATE TABLE LinkedUDB.students (
   school                    VARCHAR(128),
   yearGraduated             VARCHAR(50),
   gpa                       VARCHAR(50)
+
+
+-- uncomment this block once we're ready to connect tables
+--    CONSTRAINT FK_UserStudent FOREIGN KEY (accountId)
+--    REFERENCES LinkedUDB.accounts(accountId)
 );
 
 INSERT INTO LinkedUDB.students (userId, firstName, lastName, age, school, yearGraduated, gpa) 
