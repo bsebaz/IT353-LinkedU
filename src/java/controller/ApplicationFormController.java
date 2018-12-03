@@ -5,11 +5,10 @@
  */
 package controller;
 
-import javax.faces.application.ConfigurableNavigationHandler;
+import dao.ApplicationFormDAO;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import model.User;
+import model.ApplicationForm;
 
 /**
  *
@@ -19,6 +18,15 @@ import model.User;
 @SessionScoped
 public class ApplicationFormController implements java.io.Serializable{
     
+    private ApplicationForm applicationForm;
+    private final ApplicationFormDAO applicationFormDAO;
+    
+    public ApplicationFormController(){
+        applicationForm = new ApplicationForm();
+        applicationFormDAO = new ApplicationFormDAO();
+    }
+
+    
     public String openApplicationForm(){
         return "applicationFormEditor.xhtml";
     }
@@ -26,4 +34,7 @@ public class ApplicationFormController implements java.io.Serializable{
     public void saveApplicationForm(){
     
     }
+    
+    public ApplicationForm getApplicationForm(){return applicationForm;}
+    public void setApplicationForm(ApplicationForm applicationForm){this.applicationForm = applicationForm;}
 }
