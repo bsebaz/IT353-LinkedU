@@ -21,4 +21,8 @@
     <welcome-file-list>
         <welcome-file>faces/home.xhtml</welcome-file>
     </welcome-file-list>
+    <mime-mapping>
+        <extension>map <!--{or the extension of file}--></extension>
+        <mime-type>application/octet-stream</mime-type>
+    </mime-mapping>
 </web-app>

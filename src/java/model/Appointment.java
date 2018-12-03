@@ -5,17 +5,45 @@
  */
 package model;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author slfx7
  */
 public class Appointment {
+
     private int appointmentId;
     private University university;
     private Student student;
-    private String start;
-    private String end;
-    private String date;
+    private Time start;
+    private Time end;
+    private Date date;
+    DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+
+    public Appointment(int appointmentId, University university, Time start, Time end, Date date) {
+        this.appointmentId = appointmentId;
+        this.university = university;
+        this.start = start;
+        this.end = end;
+        this.date = date;
+    }
+
+    public Appointment(int appointmentId, University university, Student student, Time start, Time end, Date date) {
+        this(appointmentId, university, start, end, date);
+        this.student = student;
+    }
+
+    public String getFormattedStart() {
+        return dateFormat.format(start);
+    }
+
+    public String getFormattedEnd() {
+        return dateFormat.format(end);
+    }
 
     /**
      * @return the appointmentId
@@ -62,42 +90,42 @@ public class Appointment {
     /**
      * @return the start
      */
-    public String getStart() {
+    public Time getStart() {
         return start;
     }
 
     /**
      * @param start the start to set
      */
-    public void setStart(String start) {
+    public void setStart(Time start) {
         this.start = start;
     }
 
     /**
      * @return the end
      */
-    public String getEnd() {
+    public Time getEnd() {
         return end;
     }
 
     /**
      * @param end the end to set
      */
-    public void setEnd(String end) {
+    public void setEnd(Time end) {
         this.end = end;
     }
 
     /**
      * @return the date
      */
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
     /**
      * @param date the date to set
      */
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }
