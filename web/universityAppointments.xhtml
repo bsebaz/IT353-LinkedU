@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head></head>
+    <body>
+        <ui:composition>
+            <h:form>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 searchBox">
+                            <h2>Appointments</h2>
+                            <h:form id="tableForm">
+                                <div class="listDisplay">
+                                    <h:outputText value="#{searchStudentsController.renderStudentList()}"/>
+                                    <h:dataTable value = "#{searchStudentsController.students}" var = "students"
+                                                 styleClass = "table table-bordered table-striped" id="studentTable">
+                                        <h:column>    				
+                                            <f:facet name = "header">Date</f:facet>    				
+                                            <a href="studentDetail.xhtml?studentId=#{students.studentId}">
+                                                #{students.firstName} #{students.lastName}
+                                            </a>  
+                                        </h:column>
+
+                                        <h:column>
+                                            <f:facet name = "header">Time</f:facet>
+                                                #{students.age}
+                                        </h:column>
+
+                                        <h:column>
+                                            <f:facet name = "header">Student Name</f:facet>
+                                                #{students.school}
+                                        </h:column>
+                                        <h:column>
+                                            <h:commandButton value="Edit"/>
+                                        </h:column>
+                                    </h:dataTable>
+                                </div>
+                            </h:form>
+                            <h:form>
+                                
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </ui:composition>
+    </body>
+</html>

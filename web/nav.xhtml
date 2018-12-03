@@ -10,13 +10,16 @@
         <ui:composition>
             <h:form>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <!-- Navbar Left -->
                     <h:commandLink class="navbar-brand" action="home?faces-redirect=true">
                         <h:graphicImage name="image/logo.png" height="32"/>
                     </h:commandLink>
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
+                        <!-- Home -->
+                        <li class="nav-item">
                             <h:commandLink class="nav-link" value="Home" action="home?faces-redirect=true"/>
                         </li>
+                        <!-- User Page -->
                         <li class="nav-item">
                             <c:if test="#{accountController.user.accountType == 'student'}">
                                 <h:outputLink class="nav-link" value="studentDetail.xhtml">#{accountController.user.username}</h:outputLink>
@@ -25,6 +28,7 @@
                                 <h:outputLink class="nav-link" value="universityDetail.xhtml">#{accountController.user.username}</h:outputLink>
                             </c:if>
                         </li>
+                        <!-- Search Page -->
                         <c:if test="#{accountController.user.accountType == 'student' or not accountController.loggedIn}">
                             <li class="nav-item">
                                 <h:commandLink class="nav-link" value="University Search" action="searchUniversities.xhtml?faces-redirect=true"/>
@@ -35,6 +39,13 @@
                                 <h:commandLink class="nav-link" value="Student Search" action="searchStudents.xhtml?faces-redirect=true"/>
                             </li>
                         </c:if>
+                        <!-- Appointments -->
+                        <c:if test="#{accountController.loggedIn}">
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link" value="Appointments" action="appointments.xhtml?faces-redirect=true"/>
+                            </li>
+                        </c:if>
+                        <!-- Admin Controls -->
                         <c:if test="#{(accountController.user.admin) and (accountController.user.accountType == 'student')}">
                             <li class="nav-item">
                                 <h:commandLink class="nav-link" value="View as Recruiter" action="#{accountController.user.setAccountType('recruiter')}"/>
@@ -46,11 +57,14 @@
                             </li>
                         </c:if>
                     </ul>
+                    <!-- Navbar Right -->
                     <ul class="navbar-nav">
+                        <!-- Not Logged In -->
                         <c:if test="#{!accountController.loggedIn}">
                             <h:commandButton class="btn btn-primary" value="Sign Up" action="createAccount?faces-redirect=true"/>&nbsp;
                             <h:commandButton class="btn btn-primary" value="Log In" action="login?faces-redirect=true"/>
                         </c:if>
+                        <!-- Logged Im -->
                         <c:if test="#{accountController.loggedIn}">
                             <h:commandLink class="btn btn-primary" value="Log Out" action="#{accountController.logout()}"/>
                         </c:if>
