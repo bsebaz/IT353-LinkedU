@@ -57,7 +57,14 @@ public class SearchStudentsDAO implements DAOInterface, java.io.Serializable {
             ResultSet rs = pstmt.executeQuery();
             
             while(rs.next()){
-                Student student = new Student(rs.getInt("studentId"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("age"), rs.getString("school"), rs.getString("yearGraduated"), rs.getString("gpa"));
+                Student student = new Student(rs.getInt("userId"),
+                        rs.getInt("studentId"), 
+                        rs.getString("firstName"), 
+                        rs.getString("lastName"), 
+                        rs.getString("age"), 
+                        rs.getString("school"), 
+                        rs.getString("yearGraduated"), 
+                        rs.getString("gpa"));
                 
                 students.add(student);
             }

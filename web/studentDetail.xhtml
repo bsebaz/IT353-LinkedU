@@ -26,16 +26,25 @@
                         </div>
                         <div class="col-md-9" style="border-left: solid 1px #777">
                             <h:form rendered="#{!(studentDetailController.student == null)}">
-                                <h2>
-                                    <h:outputText value="#{studentDetailController.student.firstName} "/>
-                                    <h:outputText value="#{studentDetailController.student.lastName}, "/>
-                                    <h:outputText value="#{studentDetailController.student.age}"/><br></br>
-                                </h2>
-                                <h5>
-                                    <h:outputText value="#{studentDetailController.student.school}, "/>
-                                    <h:outputText value="#{studentDetailController.student.graduationYear}"/><br></br>
-                                    <h:outputText value="#{studentDetailController.student.gpa} GPA"/><br></br>
-                                </h5>
+                                <div class="float-left">
+                                    <h2>
+                                        <h:outputText value="#{studentDetailController.student.firstName} "/>
+                                        <h:outputText value="#{studentDetailController.student.lastName}, "/>
+                                        <h:outputText value="#{studentDetailController.student.age}"/><br></br>
+                                    </h2>
+                                    <h5>
+                                        <h:outputText value="#{studentDetailController.student.school}, "/>
+                                        <h:outputText value="#{studentDetailController.student.graduationYear}"/><br></br>
+                                        <h:outputText value="#{studentDetailController.student.gpa} GPA"/><br></br>
+                                    </h5>
+                                </div>
+                                <c:if test="#{(studentDetailController.student.userId == accountController.user.userID)}">
+                                    <div class="float-right">
+                                        <h:commandButton class="btn btn-outline-success my-2 my-sm-0" value="Edit" action="studentEdit?faces-redirect=true" >
+                                            <f:param name="studentId" value="#{studentDetailController.student.studentId}"/>
+                                        </h:commandButton>
+                                    </div>
+                                </c:if>
                             </h:form>
                             <h:form rendered="#{(studentDetailController.student == null)}">
                                 <h1>Student Not Found</h1>
