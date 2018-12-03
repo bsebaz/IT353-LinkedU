@@ -9,12 +9,14 @@ import dao.StudentDetailDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import model.Student;
+import model.StudentDetails;
 
 /**
  *
@@ -28,6 +30,7 @@ public class StudentDetailController implements DetailsInterface {
     private final StudentDetailDAO DB = new StudentDetailDAO();
     @ManagedProperty(value = "#{accountController.user.userID}")
     private int userID;
+    
 
     public StudentDetailController() {
         retrieveStudent();
@@ -57,6 +60,22 @@ public class StudentDetailController implements DetailsInterface {
                 System.out.println("Couldn't find requested user");
             }
         }
+    }
+    
+    public String updateStudent(){
+        DB.updateStudent(student);
+        return "studentEdit?redirect=true";
+    }
+    
+    public String addNewDetail(){
+        DB.addNewDetail(student);
+        return "studentEdit?redirect=true";
+    }
+    
+    public List<StudentDetails> studentDetails() throws SQLException{
+        List students = DB.getStudentDetails(student.getStudentId());
+        
+        return students;
     }
 
     /**
