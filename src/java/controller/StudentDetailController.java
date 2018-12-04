@@ -28,6 +28,7 @@ public class StudentDetailController implements DetailsInterface {
     private final StudentDetailDAO DB = new StudentDetailDAO();
     @ManagedProperty(value = "#{accountController.user.userID}")
     private int userID;
+    private List<StudentDetails> studentDetails;
     
     @PostConstruct
     public void viewDetails() {
@@ -56,18 +57,17 @@ public class StudentDetailController implements DetailsInterface {
     
     public String updateStudent(){
         DB.updateStudent(student);
-        return "studentEdit?redirect=true";
+        DB.updateStudentDetails(studentDetails);
+        return "studentEdit?studentId="+student.getStudentId();
     }
     
-    public String addNewDetail(){
+    public String addNewDetail() throws SQLException{
         DB.addNewDetail(student);
-        return "studentEdit?redirect=true";
+        return "studentEdit?redirect=true&studentId="+student.getStudentId();
     }
-    
-    public List<StudentDetails> studentDetails() throws SQLException{
-        List students = DB.getStudentDetails(student.getStudentId());
-        
-        return students;
+    public String removeDetail(int detailId) throws SQLException{
+        DB.removeDetail(detailId);
+        return "studentEdit?redirect=true&studentId="+student.getStudentId();
     }
 
     /**
@@ -89,5 +89,19 @@ public class StudentDetailController implements DetailsInterface {
      */
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    /**
+     * @return the studentDetails
+     */
+    public List<StudentDetails> getStudentDetails() {
+        return studentDetails;
+    }
+
+    /**
+     * @param studentDetails the studentDetails to set
+     */
+    public void setStudentDetails(List<StudentDetails> studentDetails) {
+        this.studentDetails = studentDetails;
     }
 }

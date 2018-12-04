@@ -24,7 +24,7 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
 
     public Student getStudent(int id) throws SQLException {
         Student student = null;
-        
+
         try (Connection db = connect()) {
             String query = "SELECT * FROM LinkedUDB.students WHERE studentID = ?";
             PreparedStatement pstmt = null;
@@ -35,12 +35,12 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
 
             if (rs.next()) {
                 student = new Student(rs.getInt("accountId"),
-                        rs.getInt("studentId"), 
-                        rs.getString("firstName"), 
-                        rs.getString("lastName"), 
-                        rs.getString("age"), 
-                        rs.getString("school"), 
-                        rs.getString("yearGraduated"), 
+                        rs.getInt("studentId"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("age"),
+                        rs.getString("school"),
+                        rs.getString("yearGraduated"),
                         rs.getString("gpa"));
             }
             rs.close();
@@ -50,43 +50,43 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
 
         return student;
     }
-    
-    public int updateStudent(Student student){
-        
+
+    public int updateStudent(Student student) {
+
         int rowCount = 0;
-        try (Connection db = connect()){
-            
+        try (Connection db = connect()) {
+
             int studentId = student.getStudentId();
-            String firstName = student.getFirstName().replaceAll("\\s+","");
-            String lastName = student.getLastName().replaceAll("\\s+","");
-            String age = student.getAge().replaceAll("\\s+","");
-            String school = student.getSchool().replaceAll("\\s+","");
-            String graduationYear = student.getGraduationYear().replaceAll("\\s+","");
-            String gpa = student.getGpa().replaceAll("\\s+","");
-            
+            String firstName = student.getFirstName().replaceAll("\\s+", "");
+            String lastName = student.getLastName().replaceAll("\\s+", "");
+            String age = student.getAge().replaceAll("\\s+", "");
+            String school = student.getSchool().replaceAll("\\s+", "");
+            String graduationYear = student.getGraduationYear().replaceAll("\\s+", "");
+            String gpa = student.getGpa().replaceAll("\\s+", "");
+
             boolean valid = true;
-            
-            if (firstName.length() < 2 || firstName.length() > 25){
+
+            if (firstName.length() < 2 || firstName.length() > 25) {
                 valid = false;
             }
-            if (lastName.length() < 2 || lastName.length() > 25){
+            if (lastName.length() < 2 || lastName.length() > 25) {
                 valid = false;
             }
-            if (age.length() < 2 || age.length() > 25){
+            if (age.length() < 2 || age.length() > 25) {
                 valid = false;
             }
-            if (school.length() < 2 || school.length() > 25){
+            if (school.length() < 2 || school.length() > 25) {
                 valid = false;
             }
-            if (graduationYear.length() < 2 || graduationYear.length() > 25){
+            if (graduationYear.length() < 2 || graduationYear.length() > 25) {
                 valid = false;
             }
-            if (gpa.length() < 2 || gpa.length() > 25){
+            if (gpa.length() < 2 || gpa.length() > 25) {
                 valid = false;
             }
-            
-            if (valid){
-                
+
+            if (valid) {
+
                 String query = "UPDATE LinkedUDB.students SET firstName = ?, lastName = ?, age = ?, school = ?, yearGraduated = ?, gpa = ? WHERE studentID = ?";
                 PreparedStatement pstmt = null;
 
@@ -99,29 +99,64 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
                 pstmt.setString(6, gpa);
                 pstmt.setInt(7, studentId);
                 rowCount = pstmt.executeUpdate();
-                
-                if (rowCount == 1){
+
+                if (rowCount == 1) {
                     FacesContext.getCurrentInstance().addMessage("studentEdit:success", new FacesMessage("Profile updated successfully"));
-                }
-                else{
+                } else {
                     FacesContext.getCurrentInstance().addMessage("studentEdit:error", new FacesMessage("Error updating profile"));
                 }
-                
+
                 db.close();
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        
+
         return rowCount;
     }
-    
-    public int addNewDetail(Student student){
+
+    public int updateStudentDetails(List<StudentDetails> studentDetails) {
+
         int rowCount = 0;
-        try (Connection db = connect()){
-            
+        try (Connection db = connect()) {
+            if (studentDetails != null) {
+                for (StudentDetails studentDetail : studentDetails) {
+                    int detailId = studentDetail.getDetailId();
+                    String detailType = studentDetail.getDetailType();
+                    String detailName = studentDetail.getDetailName();
+                    String detailContent = studentDetail.getDetailContent();
+
+                    String query = "UPDATE LinkedUDB.studentDetails SET detailType = ?, detailName = ?, detailContent = ? WHERE detailID = ?";
+                    PreparedStatement pstmt = null;
+
+                    pstmt = db.prepareStatement(query);
+                    pstmt.setString(1, detailType);
+                    pstmt.setString(2, detailName);
+                    pstmt.setString(3, detailContent);
+                    pstmt.setInt(4, detailId);
+                    rowCount = pstmt.executeUpdate();
+
+                    if (rowCount == 1) {
+                        FacesContext.getCurrentInstance().addMessage("studentEdit:success", new FacesMessage("Profile updated successfully"));
+                    } else {
+                        FacesContext.getCurrentInstance().addMessage("studentEdit:error", new FacesMessage("Error updating profile"));
+                        break;
+                    }
+                }
+            }
+            db.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rowCount;
+    }
+
+    public int addNewDetail(Student student) {
+        int rowCount = 0;
+        try (Connection db = connect()) {
+
             int studentId = student.getStudentId();
-                
+
             String query = "INSERT INTO LinkedUDB.studentDetails (studentId) VALUES (?)";
             PreparedStatement pstmt = null;
 
@@ -133,38 +168,57 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        
+
         return rowCount;
     }
-    
-    public List<StudentDetails> getStudentDetails(int studentId) throws SQLException{
-            
+
+    public int removeDetail(int detailId) {
+        int rowCount = 0;
+        try (Connection db = connect()) {
+
+            String query = "DELETE FROM LinkedUDB.studentDetails WHERE detailId = ?";
+            PreparedStatement pstmt = null;
+
+            pstmt = db.prepareStatement(query);
+            pstmt.setInt(1, detailId);
+            rowCount = pstmt.executeUpdate();
+
+            db.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return rowCount;
+    }
+
+    public List<StudentDetails> getStudentDetails(int studentId) throws SQLException {
+
         List<StudentDetails> studentDetails = new ArrayList<StudentDetails>();
-        
+
         try (Connection DBConn = connect()) {
             String insertString = "";
-            
+
             PreparedStatement pstmt = null;
-            
+
             insertString = "SELECT * FROM LinkedUDB.studentDetails WHERE studentId = ?";
-                
-            pstmt = DBConn.prepareStatement( insertString );
+
+            pstmt = DBConn.prepareStatement(insertString);
             pstmt.setInt(1, studentId);
             ResultSet rs = pstmt.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 StudentDetails studentDetail = new StudentDetails(rs.getInt("detailId"),
-                        rs.getInt("studentId"), 
-                        rs.getString("detailType"), 
-                        rs.getString("detailName"), 
+                        rs.getInt("studentId"),
+                        rs.getString("detailType"),
+                        rs.getString("detailName"),
                         rs.getString("detailContent"));
-                
+
                 studentDetails.add(studentDetail);
             }
-            
+
             DBConn.close();
         }
-        
+
         return studentDetails;
     }
 }

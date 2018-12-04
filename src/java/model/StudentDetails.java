@@ -27,6 +27,14 @@ public class StudentDetails implements java.io.Serializable {
         this.detailName = detailName;
         this.detailContent = detailContent;
     }
+    
+    public String[] splitDetailContent(){
+        return detailContent.split(",");
+    }
+    
+    public String test(){
+        return "test";
+    }
 
     /**
      * @return the detailId
