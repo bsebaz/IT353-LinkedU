@@ -7,25 +7,29 @@ package controller;
 
 import dao.UniversityDetailDAO;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import model.University;
+import model.UniversityDetails;
 
 /**
  *
  * @author slfx7
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class UniversityDetailController implements DetailsInterface {
 
     private University university;
     private final UniversityDetailDAO DB = new UniversityDetailDAO();
     @ManagedProperty(value = "#{accountController.user.userID}")
     private int userID;
+    private List<UniversityDetails> universityDetails;
 
     public UniversityDetailController() {
         retrieveUniversity();
@@ -42,6 +46,7 @@ public class UniversityDetailController implements DetailsInterface {
         if (id != null) {
             try {
                 university = DB.getUniversity(Integer.parseInt(id));
+                universityDetails = DB.getUniversityDetails(university.getUniversityId());
             } catch (SQLException e) {
                 System.out.println("Couldn't find requested university");
             } catch (NumberFormatException e) {
@@ -55,6 +60,21 @@ public class UniversityDetailController implements DetailsInterface {
                 System.out.println("Couldn't find requested university");
             }
         }
+    }
+    
+    public String updateUniversity(){
+        DB.updateUniversity(university);
+        DB.updateUniversityDetails(universityDetails);
+        return "universityEdit?universityId="+university.getUniversityId();
+    }
+    
+    public String addNewDetail() throws SQLException{
+        DB.addNewDetail(university);
+        return "universityEdit?redirect=true&universityId="+university.getUniversityId();
+    }
+    public String removeDetail(int detailId) throws SQLException{
+        DB.removeDetail(detailId);
+        return "universityEdit?redirect=true&universityId="+university.getUniversityId();
     }
 
     /**
@@ -76,5 +96,19 @@ public class UniversityDetailController implements DetailsInterface {
      */
     public void setUniversity(University university) {
         this.university = university;
+    }
+
+    /**
+     * @return the universityDetails
+     */
+    public List<UniversityDetails> getUniversityDetails() {
+        return universityDetails;
+    }
+
+    /**
+     * @param universityDetails the universityDetails to set
+     */
+    public void setUniversityDetails(List<UniversityDetails> universityDetails) {
+        this.universityDetails = universityDetails;
     }
 }

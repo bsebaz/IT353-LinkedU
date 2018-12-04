@@ -12,6 +12,7 @@ package model;
 public class University implements java.io.Serializable {
 
     private int universityId;
+    private int accountId;
     private String name;
     private String city;
     private String state;
@@ -24,8 +25,9 @@ public class University implements java.io.Serializable {
 
     }
 
-    public University(int universityId, String name, String city, String state, String studentPopulation, String cost) {
+    public University(int universityId, int accountId, String name, String city, String state, String studentPopulation, String cost) {
         this.universityId = universityId;
+        this.accountId = accountId;
         this.name = name;
         this.city = city;
         this.state = state;
@@ -33,8 +35,8 @@ public class University implements java.io.Serializable {
         this.cost = cost;
     }
 
-    public University(int universityId, String name, String city, String state, String studentPopulation, String cost, String accentColor, boolean featured) {
-        this(universityId, name, city, state, studentPopulation, cost);
+    public University(int universityId, int accountId, String name, String city, String state, String studentPopulation, String cost, String accentColor, boolean featured) {
+        this(universityId, accountId, name, city, state, studentPopulation, cost);
         this.accentColor = accentColor;
         this.featured = featured;
     }
@@ -149,6 +151,20 @@ public class University implements java.io.Serializable {
      */
     public void setAccentColor(String accentColor) {
         this.accentColor = accentColor;
+    }
+
+    /**
+     * @return the accountId
+     */
+    public int getAccountId() {
+        return accountId;
+    }
+
+    /**
+     * @param accountId the accountId to set
+     */
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
 }

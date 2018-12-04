@@ -27,7 +27,9 @@
                                 </h:outputLink>
                             </c:if>
                             <c:if test="#{accountController.user.accountType == 'recruiter'}">
-                                <h:outputLink class="nav-link" value="universityDetail.xhtml">#{accountController.user.username}</h:outputLink>
+                                <h:outputLink class="nav-link" value="universityDetail.xhtml">#{accountController.user.username}
+                                    <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                </h:outputLink>
                             </c:if>
                         </li>
                         <!-- Search Page -->

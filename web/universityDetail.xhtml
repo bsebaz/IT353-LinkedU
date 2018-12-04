@@ -24,39 +24,39 @@
 
                             </div>
                             <h:form rendered="#{!(universityDetailController.university == null)}">
-                                <h2><h:outputText value="#{universityDetailController.university.name}"/></h2>
+                                <h2 class="float-left"><h:outputText value="#{universityDetailController.university.name}"/></h2>
+                                <c:if test="#{(universityDetailController.university.accountId == accountController.user.userID)}">
+                                    <h:outputLink class="btn btn-outline-success my-2 my-sm-0 float-right" value="universityEdit.xhtml">Edit
+                                        <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                    </h:outputLink>
+                                </c:if>
                             </h:form>
                             <h:form rendered="#{(universityDetailController.university == null)}">
                                 <h2>University Not Found</h2>
                             </h:form>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="detailDescription">
-                            <h3>Description</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum malesuada orci, vel finibus ante cursus eget. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
-                                Mauris sed maximus ex, nec imperdiet diam. Vestibulum ullamcorper nunc sit amet sem dapibus, eu placerat nunc mollis. Aenean eget interdum nulla. Maecenas suscipit varius neque, blandit volutpat purus posuere vitae. 
-                                Maecenas odio augue, varius vel ultricies sit amet, gravida sed lectus.</p>
-
-                            <p>Aenean eget laoreet quam. Nam id vulputate velit. Sed dui est, consequat vel nisi id, sollicitudin egestas enim. Nullam interdum, odio eget aliquet consequat, neque risus faucibus ligula, vel suscipit lacus 
-                                tortor ac lacus. Nam bibendum turpis ut feugiat accumsan. Aliquam dictum at tortor non efficitur. Sed condimentum diam non quam euismod egestas. Mauris consequat, neque in dignissim porta, massa enim 
-                                consectetur enim, eget tincidunt tortor felis quis nisl.</p>
+                    <c:if test="#{universityDetailController.universityDetails.size() == 0}">
+                        <div class="my-3">
+                            
                         </div>
-                    </div>    
-                    <div class="row">
-                        <div class="detailDescription">
-                            <h3>Colleges</h3>
-                            <ul>
-                                <li>College of Applied Science</li>
-                                <li>College of Arts and Sciences</li>
-                                <li>College of Business</li>
-                                <li>College of Education</li>
-                                <li>College of Fine Arts</li>
-                                <li>Interdisciplinary Studies</li>
-                                <li>Mennonite College of Nursing</li>
-                            </ul>
+                    </c:if>
+                    <ui:repeat value="#{universityDetailController.universityDetails}" var="details">
+                        <div class="row">
+                            <div class="detailDescription">
+                                <h3><h:outputText value="#{details.detailName}"/> </h3>
+                                
+                                <h:outputText rendered="#{details.detailType == 'text'}" value="#{details.detailContent}"/>
+                                <ul>    
+                                    <ui:repeat value="#{details.splitDetailContent()}" var="list" rendered="#{details.detailType == 'list'}">
+                                        <li>
+                                            <h:outputText value="#{list}"/>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div>
                         </div>
-                    </div>    
+                    </ui:repeat>   
                 </div>
             </div>
         </div>
