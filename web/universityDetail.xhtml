@@ -14,7 +14,8 @@
     </h:head>
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
-
+        <!-- Try Getting the Requested University -->
+        <h:form><h:outputText value="#{universityDetailController.viewDetails()}"/></h:form>
         <div class="container">
             <div class="row">
                 <div class="col-md-12 detailInfo">
@@ -23,31 +24,35 @@
                             <div class="universityDetailBanner">
 
                             </div>
-                            <h:form rendered="#{!(universityDetailController.university == null)}">
-                                <h2 class="float-left"><h:outputText value="#{universityDetailController.university.name}"/></h2>
-                                <c:if test="#{(universityDetailController.university.accountId == accountController.user.userID)}">
-                                    <h:outputLink class="btn btn-outline-success my-2 my-sm-0 float-right" value="universityEdit.xhtml">Edit
-                                        <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
-                                    </h:outputLink>
-                                </c:if>
-                            </h:form>
-                            <h:form rendered="#{(universityDetailController.university == null)}">
-                                <h2>University Not Found</h2>
-                            </h:form>
+                            <div class="float-left">
+                                <h:form rendered="#{!(universityDetailController.university == null)}">
+                                    <h2><h:outputText value="#{universityDetailController.university.name}"/></h2>
+                                </h:form>
+                                <h:form rendered="#{(universityDetailController.university == null)}">
+                                    <h2>University Not Found</h2>
+                                </h:form>
+                            </div>
+                            <c:if test="#{(accountController.user ne null) and (accountController.user.accountType == 'student')}">
+                                <h:form>
+                                    <div class="float-right">
+                                        <h:commandButton class="btn btn-primary my-2 my-sm-0" value="Schedule an Appointment" action="#{scheduleAppointmentsController.viewAppointments(universityDetailController.university)}"/>
+                                    </div>
+                                </h:form>
+                            </c:if>
                         </div>
                     </div>
                     <c:if test="#{universityDetailController.universityDetails.size() == 0}">
                         <div class="my-3">
-                            
+
                         </div>
                     </c:if>
                     <ui:repeat value="#{universityDetailController.universityDetails}" var="details">
                         <div class="row">
                             <div class="detailDescription">
                                 <h3><h:outputText value="#{details.detailName}"/> </h3>
-                                
+
                                 <h:outputText rendered="#{details.detailType == 'text'}" value="#{details.detailContent}"/>
-                                <ul>    
+                                <ul>
                                     <ui:repeat value="#{details.splitDetailContent()}" var="list" rendered="#{details.detailType == 'list'}">
                                         <li>
                                             <h:outputText value="#{list}"/>
@@ -56,10 +61,9 @@
                                 </ul>
                             </div>
                         </div>
-                    </ui:repeat>   
+                    </ui:repeat>
                 </div>
             </div>
         </div>
     </h:body>
 </html>
-

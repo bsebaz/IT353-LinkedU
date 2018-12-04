@@ -10,6 +10,13 @@
         <h:outputStylesheet name="css/bootstrap.min.css"/>
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
+        <script type="text/javascript" language="javascript">
+            $(document).ready(function(){
+                $('.options_button').click(function(){
+                    $('#app_form_body').load('#app_form_body');
+                });
+            })
+        </script>
         <style>
             .fixed_menu {
                 top: 0;
@@ -23,10 +30,10 @@
                 background-color: gainsboro;
                 font-size: 20px;
             }
-            .app_form_body{
-                margin-top: 100px;
+            #app_form_body{
+                margin-top: 150px;
             }
-            </style>
+        </style>
 
     </h:head>
     <h:body>
@@ -34,69 +41,29 @@
         <div class="fixed_menu">
             <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
             <div class="edit_menu">
-                <a href="#global">Global</a>
-                <a href="#save">Save</a>
-                <a href="#insert">Insert</a>
-                <a href="#delete">Delete</a>
+                <a id="global_button" class="options_button" href="#global">Global</a>
+                <a id="save_button" class="options_button" href="#save">Save</a>
+                <a id="insert_button" class="options_button" href="#insert">Insert</a>
+                <a id="delete_button" class="options_button" href="#delete">Delete</a>
             </div>
         </div>
-        <div class="app_form_body">
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-            dummyText<br/>
-        </div>
 
+        <br/>
+        <br/>
+        <h:form id="app_form_body">
+            <h3><h:outputText id="form_title" value="#{applicationFormController.applicationForm.title}"></h:outputText></h3>
+            <br/>
+            <ui:repeat value="#{applicationFormController.applicationForm.elements}" var="element">
+                <div id="#{element.getName()}" class="form_element">
+                    <h5><h:outputText value="#{element.getNumber()} #{element.getName()}"></h:outputText></h5>
+                    <h:outputText value="#{element.getInstruction()}"></h:outputText>
+                    <br/>
+                    <h:outputText value="#{element.toHTML()}" escape="false"></h:outputText>
+                </div>
+            </ui:repeat>
+            <h:commandButton class="btn homeCardButton" style="background-color: blue;}" value="Submit">
+            </h:commandButton>
+        </h:form>
     </h:body>
 </html>
 

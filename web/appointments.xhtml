@@ -21,6 +21,9 @@
             }
         </style>
     </h:head>
+    
+    <f:event listener="#{accountController.checkIfNotLoggedIn()}" type="preRenderView" />
+    
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
         <c:if test="#{accountController.user.accountType == 'student'}">

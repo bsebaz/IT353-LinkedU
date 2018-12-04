@@ -5,8 +5,7 @@
  */
 package model;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -16,15 +15,16 @@ import java.text.SimpleDateFormat;
  */
 public class Appointment {
 
+    private final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm a");
+    private final DateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
     private int appointmentId;
     private University university;
     private Student student;
-    private Time start;
-    private Time end;
+    private Date start;
+    private Date end;
     private Date date;
-    DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
 
-    public Appointment(int appointmentId, University university, Time start, Time end, Date date) {
+    public Appointment(int appointmentId, University university, Date start, Date end, Date date) {
         this.appointmentId = appointmentId;
         this.university = university;
         this.start = start;
@@ -32,17 +32,21 @@ public class Appointment {
         this.date = date;
     }
 
-    public Appointment(int appointmentId, University university, Student student, Time start, Time end, Date date) {
+    public Appointment(int appointmentId, University university, Student student, Date start, Date end, Date date) {
         this(appointmentId, university, start, end, date);
         this.student = student;
     }
 
     public String getFormattedStart() {
-        return dateFormat.format(start);
+        return TIME_FORMAT.format(start);
     }
 
     public String getFormattedEnd() {
-        return dateFormat.format(end);
+        return TIME_FORMAT.format(end);
+    }
+
+    public String getFormattedDate() {
+        return DATE_FORMAT.format(date);
     }
 
     /**
@@ -90,28 +94,28 @@ public class Appointment {
     /**
      * @return the start
      */
-    public Time getStart() {
+    public Date getStart() {
         return start;
     }
 
     /**
      * @param start the start to set
      */
-    public void setStart(Time start) {
+    public void setStart(Date start) {
         this.start = start;
     }
 
     /**
      * @return the end
      */
-    public Time getEnd() {
+    public Date getEnd() {
         return end;
     }
 
     /**
      * @param end the end to set
      */
-    public void setEnd(Time end) {
+    public void setEnd(Date end) {
         this.end = end;
     }
 

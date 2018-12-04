@@ -12,8 +12,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import model.Student;
 import model.StudentDetails;
 
@@ -22,7 +21,7 @@ import model.StudentDetails;
  * @author slfx7
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class StudentDetailController implements DetailsInterface {
 
     private Student student;
@@ -31,13 +30,8 @@ public class StudentDetailController implements DetailsInterface {
     private int userID;
     private List<StudentDetails> studentDetails;
     
-
-    public StudentDetailController() {
-        retrieveStudent();
-    }
-
     @PostConstruct
-    private void retrieveStudent() {
+    public void viewDetails() {
         //Get studentId from URL
         Map<String, String> params = getParamsFromURL();
         String id = params.get("studentId");
@@ -47,11 +41,9 @@ public class StudentDetailController implements DetailsInterface {
         if (id != null) {
             try {
                 student = DB.getStudent(Integer.parseInt(id));
-                studentDetails = DB.getStudentDetails(student.getStudentId());
-            } catch (SQLException e) {
+            } catch (SQLException | NumberFormatException e) {
                 System.out.println("Couldn't find requested user");
-            } catch (NumberFormatException e) {
-                System.out.println("Couldn't find requested user");
+                e.getLocalizedMessage();
             }
         } //Otherwise, return the current user's page
         else {

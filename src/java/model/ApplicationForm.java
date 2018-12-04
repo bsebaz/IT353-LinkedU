@@ -7,6 +7,8 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
 
@@ -14,7 +16,8 @@ import org.primefaces.json.JSONObject;
  *
  * @author jftur
  */
-
+@SessionScoped
+@ManagedBean
 public class ApplicationForm implements Serializable{
     
     private String universityId;
@@ -24,15 +27,19 @@ public class ApplicationForm implements Serializable{
     private ArrayList <Element> elements;
     
     
-    public ApplicationForm(){}
+    public ApplicationForm(){
+        this("Unnamed");
+    }
     
     public ApplicationForm(String title){
         this.title = title;
         elements = new ArrayList<>();
+        elements.add(new RadialElement(elements.size()+1,"firstQuestion", "Click a bubble (please work)", new String[]{"Oh","my","Gosh"}));
+        elements.add(new ShortElement(elements.size()+1,"secondQuestion", "Type a short thing (please work)",0,12,12));
+        elements.add(new LongElement(elements.size()+1,"thirdQuestion", "Type a thing (please work)",50,5,"Here's some default text"));
     }
     
     public ApplicationForm(JSONObject json){
-        title = "unnamed";
         elements = new ArrayList<>();
     }
     
@@ -94,25 +101,24 @@ public class ApplicationForm implements Serializable{
         //make sure element numbers are same as index + 1 after removal
     }
     
-    public static final String[] FIELD_TYPES = {"radial","select","shortText","longText","file"};
+    public static final String[] FIELD_TYPES = {"radial","select","short","long","file"};
     
-    private abstract class Element{
+    public abstract class Element implements Serializable{
         private int number;
         private String name;
         private String type;
         private String instruction;
-        
 
-        Element(){}
+        public Element(){}
         
-        Element(int number, String name, String type, String instruction){
+        public Element(int number, String name, String type, String instruction){
             this.number = number;
             this.name = name;
             this.type = type;
             this.instruction = instruction;
         }
         
-        JSONObject toJSON(){
+        public JSONObject toJSON(){
             JSONObject obj = new JSONObject();
             obj.put("name",name);
             obj.put("number",number);
@@ -121,29 +127,29 @@ public class ApplicationForm implements Serializable{
             return obj;
         }
         
-        abstract String toHTML();
+        public abstract String toHTML();
         
-        int getNumber(){return number;}
-        String getName(){return name;}
-        String getType(){return type;}
-        String getInstruction(){return instruction;}
+        public int getNumber(){return number;}
+        public String getName(){return name;}
+        public String getType(){return type;}
+        public String getInstruction(){return instruction;}
 
-        void setNumber(int number){this.number = number;}
-        void setName(String name){this.name = name;}
-        void setType(String type){this.type = type;}
-        void setInstruction(String instruction){this.instruction = instruction;}
+        public void setNumber(int number){this.number = number;}
+        public void setName(String name){this.name = name;}
+        public void setType(String type){this.type = type;}
+        public void setInstruction(String instruction){this.instruction = instruction;}
     }
     
-    private class RadialElement extends Element{
+    public class RadialElement extends Element{
         private String[] choices;
         
-        RadialElement(int number, String name, String type, String instruction, String[] choices){
-            super(number, name, type, instruction);
+        RadialElement(int number, String name, String instruction, String[] choices){
+            super(number, name, "radial", instruction);
             this.choices = choices;
         }
         
         @Override
-        JSONObject toJSON(){
+        public JSONObject toJSON(){
             JSONObject obj = super.toJSON();
             JSONArray chs = new JSONArray();
             for(String choice: choices){
@@ -154,32 +160,37 @@ public class ApplicationForm implements Serializable{
         }
         
         @Override
-        String toHTML(){
-            String html = "";
-            html += "<h:selectOneRadio id=\"" + getName() +"\" value=\"#{user.favColor1}\">";
-            html +=     "<f:selectItem itemValue=\"Red\" itemLabel=\"Color1 - Red\" />";
-            html +=     "<f:selectItem itemValue=\"Green\" itemLabel=\"Color1 - Green\" />";
-            html +=     "<f:selectItem itemValue=\"Blue\" itemLabel=\"Color1 - Blue\" />";
-            html += "</h:selectOneRadio>";
+        public String toHTML(){
+            String html = "<table>\n" +
+                    "   <tr>\n";
+            for(int i = 0; i < choices.length; i++){
+            html += "      <td>\n" +
+                    "         <input type = \"radio\" name = \"" + getName() + "\" \n" +
+                    "            id = \"" + getName() + i + "\" value =" + choices[i] + " />\n" +
+                    "         <label for = \"" + getName() + i + "\">" + choices[i] + "</label>\n";
+            }
+            html += "      </td>\n" +
+                    "   </tr>\n" +
+                    "</table><br/>";
             return html;
         }
         
-        void setChoice(int index, String choice){choices[index] = choice;}
-        String getChoice(int index){return choices[index];}
-        void setChoices(String[] choices){this.choices = choices;}
-        String[] getChoices(){return choices;}
+        public void setChoice(int index, String choice){choices[index] = choice;}
+        public String getChoice(int index){return choices[index];}
+        public void setChoices(String[] choices){this.choices = choices;}
+        public String[] getChoices(){return choices;}
     }
     
-    private class SelectElement extends Element{
+    public class SelectElement extends Element{
         private String[] choices;
         
-        SelectElement(int number, String name, String type, String instruction, String[] choices){
+        public SelectElement(int number, String name, String type, String instruction, String[] choices){
             super(number, name, type, instruction);
             this.choices = choices;
         }
         
         @Override
-        JSONObject toJSON(){
+        public JSONObject toJSON(){
             JSONObject obj = super.toJSON();
             JSONArray chs = new JSONArray();
             for(String choice: choices){
@@ -190,24 +201,78 @@ public class ApplicationForm implements Serializable{
         }
         
         @Override
-        String toHTML(){
+        public String toHTML(){
             String html = "";
             html += "<select name=\"" + getName() + "\" size=\"1\">";
             for(int i = 0; i < choices.length; i++){
                 html +=     "<option value=\"" + choices[i] + "\">" + choices[i] + "</option>";
             }
-            html += "</select>";
+            html += "</select><br/>";
             return html;
         }
         
-        void setChoice(int index, String choice){choices[index] = choice;}
-        String getChoice(int index){return choices[index];}
-        void setChoices(String[] choices){this.choices = choices;}
-        String[] getChoices(){return choices;}
+        public void setChoice(int index, String choice){choices[index] = choice;}
+        public String getChoice(int index){return choices[index];}
+        public void setChoices(String[] choices){this.choices = choices;}
+        public String[] getChoices(){return choices;}
     }
     
-    private class ShortElement{
+    public class LongElement extends Element{
+        private int width;
+        private int height;
+        private String defText;
         
+        public LongElement(int number, String name, String instruction, int width, int height, String defText){
+            super(number, name, "long", instruction);
+            this.width = width;
+            this.height = height;
+            this.defText = defText;
+        }
+        
+        @Override
+        public JSONObject toJSON(){
+            JSONObject obj = super.toJSON();
+            JSONArray chs = new JSONArray();
+            return obj;
+        }
+        
+        @Override
+        public String toHTML(){
+            String html = "";
+            html += "<textarea rows=\"" + height + "\" cols=\"" + width + "\">\n" +
+                    defText + "\n" +
+                    "</textarea><br/> ";
+            return html;
+        }
+    }
+    
+    public class ShortElement extends Element{
+        private int minLength;
+        private int maxLength;
+        private int size;
+        
+        public ShortElement(int number, String name, String instruction, int minLength, int maxLength, int size){
+            super(number, name, "short", instruction);
+            this.minLength = minLength;
+            this.maxLength = maxLength;
+            this.size = size;
+        }
+        
+        @Override
+        public JSONObject toJSON(){
+            JSONObject obj = super.toJSON();
+            JSONArray chs = new JSONArray();
+            return obj;
+        }
+        
+        @Override
+        public String toHTML(){
+            String html = "";
+            html += //"<label for=\"" + getName() + "\">" + getInstruction() + ":</label>\n" +
+                "<input type=\"text\" id=\"" + getName() + "\" name=\"" + getName() + "\" required\n" +
+                "       minlength=\"" + minLength + "\" maxlength=\"" + maxLength + "\" size=\"" + size + "\"><br/><br/>";
+            return html;
+        }
     }
     
     private void renumberElements(){
@@ -238,7 +303,7 @@ public class ApplicationForm implements Serializable{
     public void setElements(ArrayList<Element> elements){this.elements = elements;}
     public void setElement(int index, Element element){elements.set(index, element);}
     
-    public String getTitle(){return title;}
+    public String getTitle(){setTitle(title);return title;}
     public String getUniversityId(){return universityId;}
     public String getApplicationId(){return applicationId;}
     public ArrayList<Element> getElements(){return elements;}

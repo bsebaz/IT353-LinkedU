@@ -8,12 +8,10 @@ package dao;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import javax.xml.registry.infomodel.Concept;
 import model.Appointment;
 import model.Student;
 import model.University;
@@ -24,7 +22,7 @@ import model.University;
  */
 public class AppointmentDAO implements DAOInterface, java.io.Serializable {
 
-    public void createAppointment(Time start, Time end, Date date, University university) {
+    public void createAppointment(Date start, Date end, Date date, University university) {
         ArrayList vars = new ArrayList(Arrays.asList(start, end, date, university.getUniversityId()));
         String sql = "INSERT INTO LinkedUDB.appointments (startTime, endTime, aptDate, universityId)"
                 + "VALUES(?, ?, ?, ?)";
@@ -34,6 +32,12 @@ public class AppointmentDAO implements DAOInterface, java.io.Serializable {
     public void scheduleAppointment(Appointment appointment, Student student) {
         ArrayList vars = new ArrayList(Arrays.asList(student.getStudentId(), appointment.getAppointmentId()));
         String sql = "UPDATE LinkedUDB.appointments SET STUDENTID = ? WHERE APPOINTMENTID = ?";
+        updateDB(sql, vars);
+    }
+
+    public void editAppointment(Appointment selected, Date start, Date end, Date date) {
+        ArrayList vars = new ArrayList(Arrays.asList(selected.getStart(), selected.getEnd(), selected.getDate(), selected.getAppointmentId()));
+        String sql = "UPDATE LinkedUDB.appointments SET startTime = ?, endTime = ?, aptDate = ? WHERE APPOINTMENTID = ?";
         updateDB(sql, vars);
     }
 
@@ -109,7 +113,7 @@ public class AppointmentDAO implements DAOInterface, java.io.Serializable {
         return appointmentCollection;
     }
 
-    public ArrayList<Appointment> getStudentAppointments(Student student) {
+    public ArrayList<Appointment> getScheduledAppointments(Student student) {
         ArrayList<Appointment> appointmentCollection = new ArrayList();
         UniversityDetailDAO universityDB = new UniversityDetailDAO();
         String query = "SELECT * FROM LinkedUDB.appointments "
