@@ -17,8 +17,14 @@
         <!-- Notifications -->
         <h:form style="width: 340px; margin: 50px auto;" rendered="#{accountController.badLogin}">
         <div class="alert alert-danger" role="alert">
-            Invalid Username or Password.
+            Invalid Username or Password
             <h:outputText value ="#{accountController.setBadLogin(false)}"/>
+        </div>
+        </h:form>
+        <h:form style="width: 340px; margin: 50px auto;" rendered="#{accountController.accessDenied}">
+        <div class="alert alert-warning" role="alert">
+            Must be logged in to view page
+            <h:outputText value ="#{accountController.setAccessDenied(false)}"/>
         </div>
         </h:form>
         <!-- Login Form -->

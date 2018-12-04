@@ -14,7 +14,8 @@
     </h:head>
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
-
+        <!-- Try Getting the Requested Student -->
+        <h:form><h:outputText value="#{studentDetailController.viewDetails()}"/></h:form>
         <div class="container">
             <div class="row">
                 <div class="col-md-12 detailInfo">

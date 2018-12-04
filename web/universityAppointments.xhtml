@@ -9,19 +9,53 @@
     <head></head>
     <body>
         <ui:composition>
+            <!-- Try Loading the Appointments -->
+            <h:form><h:outputText value="#{universityAppointmentsController.viewAppointments()}"/></h:form>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 searchBox">
                         <h2>Appointments</h2>
+                        <!-- Toasts -->
+                        <h:form rendered="#{universityAppointmentsController.creationSuccess}">
+                            <div class="alert alert-success" role="alert">
+                                Appointment Created Successfully
+                                <h:outputText value ="#{universityAppointmentsController.setCreationSuccess(false)}"/>
+                            </div>
+                        </h:form>
+                        <h:form rendered="#{universityAppointmentsController.editSuccess}">
+                            <div class="alert alert-success" role="alert">
+                                Edited Appointment Successfully
+                                <h:outputText value ="#{universityAppointmentsController.setEditSuccess(false)}"/>
+                            </div>
+                        </h:form>
+                        <h:form rendered="#{universityAppointmentsController.cancellationSuccess}">
+                            <div class="alert alert-success" role="alert">
+                                Canceled Meeting with #{universityAppointmentsController.canceledName}
+                                <h:outputText value ="#{universityAppointmentsController.setCancellationSuccess(false)}"/>
+                            </div>
+                        </h:form>
+                        <h:form rendered="#{universityAppointmentsController.deleteSuccess}">
+                            <div class="alert alert-success" role="alert">
+                                Appointment Deleted Successfully
+                                <h:outputText value ="#{universityAppointmentsController.setDeleteSuccess(false)}"/>
+                            </div>
+                        </h:form>
+                        <!-- Page Content -->
                         <h4>Create Appointment</h4>
                         <div class="searchBar d-flex">
                             <h:form class="form-inline mr-auto my-2 my-lg-0">
                                 <p:outputLabel for="date" value="Date:&nbsp;" class="mr-sm-2 my-auto"/>
-                                <p:calendar inputStyleClass="form-control mr-sm-2" id="date" class="date" pattern="MM/dd/yyyy" value="#{universityAppointmentsController.date}"/>
+                                <p:calendar inputStyleClass="form-control mr-sm-2" id="date" class="date" pattern="MM/dd/yyyy" value="#{universityAppointmentsController.date}">
+                                    <p:ajax event="dateSelect" listener="#{universityAppointmentsController.onDateSelect}"/>
+                                </p:calendar>
                                 <p:outputLabel for="start" value="Start:&nbsp;" class="mx-sm-2 my-auto"/>
-                                <p:calendar inputStyleClass="form-control mr-sm-2" id="start" value="#{universityAppointmentsController.start}" pattern="hh:mm aa" timeControlType="select" stepMinute="5" timeOnly="true"/>
+                                <p:calendar inputStyleClass="form-control mr-sm-2" id="start" value="#{universityAppointmentsController.start}" pattern="hh:mm aa" timeControlType="select" stepMinute="5" timeOnly="true">
+                                    <p:ajax event="dateSelect" listener="#{universityAppointmentsController.onTimeSelect}"/>
+                                </p:calendar>
                                 <p:outputLabel for="end" value="End:&nbsp;" class="mx-sm-2 my-auto"/>
-                                <p:calendar inputStyleClass="form-control mr-sm-2" id="end" value="#{universityAppointmentsController.end}" pattern="hh:mm aa" timeControlType="select" stepMinute="5" timeOnly="true"/>
+                                <p:calendar inputStyleClass="form-control mr-sm-2" id="end" value="#{universityAppointmentsController.end}" pattern="hh:mm aa" timeControlType="select" stepMinute="5" timeOnly="true">
+                                    <p:ajax event="dateSelect" listener="#{universityAppointmentsController.onTimeSelect}"/>
+                                </p:calendar>
                             </h:form>
                             <h:form class="ml-auto">
                                 <h:commandButton class="btn btn-primary my-2 my-sm-0" value="Create Appointment" action="#{universityAppointmentsController.createNewAppointment()}"/>
@@ -30,36 +64,9 @@
                         <h4>Scheduled Appointments</h4>
                         <h:form id="scheduledForm">
                             <div class="listDisplay">
-                                <h:dataTable value = "#{universityAppointmentsController.scheduledAppointments}" var = "appointment"
-                                             styleClass = "table table-bordered table-striped" id="scheduledTable">
-                                    <h:column>    				
-                                        <f:facet name = "header">Date</f:facet>    				
-                                            #{appointment.date}
-                                    </h:column>
-
-                                    <h:column>
-                                        <f:facet name = "header">Time</f:facet>
-                                        #{appointment.start} - #{appointment.end}
-                                    </h:column>
-
-                                    <h:column>
-                                        <f:facet name = "header">Student</f:facet>
-                                        <h:outputLink value="studentDetail.xhtml">
-                                            <h:outputText value="#{appointment.student.firstName} #{appointment.student.lastName}"/>
-                                            <f:param name="studentId" value="#{appointment.student.studentId}"/>
-                                        </h:outputLink>
-                                    </h:column>
-                                    <h:column>
-                                        <h:commandButton value="Edit"/>
-                                    </h:column>
-                                </h:dataTable>
-                            </div>
-                        </h:form>
-                        <h4>Open Appointments</h4>
-                        <h:form id="unscheduledForm">
-                            <div class="listDisplay">
-                                <h:dataTable value = "#{universityAppointmentsController.unscheduledAppointments}" var = "appointment"
-                                             styleClass = "table table-bordered table-striped" id="unscheduledTable">
+                                <h:dataTable id="scheduledTable" value = "#{universityAppointmentsController.scheduledAppointments}" var = "appointment"
+                                             styleClass = "table table-bordered table-striped"
+                                             columnClasses="align-middle, align-middle, align-middle">
                                     <h:column>    				
                                         <f:facet name = "header">Date</f:facet>    				
                                             #{appointment.date}
@@ -71,7 +78,39 @@
                                     </h:column>
 
                                     <h:column>
-                                        <h:commandButton value="Edit"/>
+                                        <f:facet name = "header">Student</f:facet>
+                                        <h:outputLink value="studentDetail.xhtml">
+                                            <h:outputText value="#{appointment.student.firstName} #{appointment.student.lastName}"/>
+                                            <f:param name="studentId" value="#{appointment.student.studentId}"/>
+                                        </h:outputLink>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">Update</f:facet>
+                                        <h:commandButton class="btn btn-danger mr-sm-2" value="Cancel" action="#{universityAppointmentsController.cancelAppointment(appointment)}"/>
+                                        <h:commandButton class="btn btn-outline-danger ml-sm-2" value="Delete" action="#{universityAppointmentsController.deleteAppointment(appointment)}"/>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </h:form>
+                        <h4>Open Appointments</h4>
+                        <h:form id="unscheduledForm">
+                            <div class="listDisplay">
+                                <h:dataTable id="unscheduledTable" value = "#{universityAppointmentsController.unscheduledAppointments}" var = "appointment"
+                                             styleClass = "table table-bordered table-striped"
+                                             columnClasses="align-middle, align-middle">
+                                    <h:column>    				
+                                        <f:facet name = "header">Date</f:facet>    				
+                                            #{appointment.date}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name = "header">Time</f:facet>
+                                        #{appointment.formattedStart} - #{appointment.formattedEnd}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name = "header">Update</f:facet>
+                                        <h:commandButton class="btn btn-success" value="Edit" action="#{universityAppointmentsController.editAppointment(appointment)}"/>
                                     </h:column>
                                 </h:dataTable>
                             </div>
