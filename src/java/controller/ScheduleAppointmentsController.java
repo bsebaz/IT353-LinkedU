@@ -15,6 +15,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import model.Appointment;
 import model.AppointmentComparator;
+import model.MailBean;
+import model.Student;
 import model.University;
 
 /**
@@ -53,12 +55,22 @@ public class ScheduleAppointmentsController implements java.io.Serializable, Det
 
     public void schedule(Appointment appointment) {
         StudentDetailDAO studentDB = new StudentDetailDAO();
+        Student student = null;
         try {
-            DB.scheduleAppointment(appointment, studentDB.getStudent(userID));
+            student = studentDB.getStudent(userID);
+            DB.scheduleAppointment(appointment, student);
         } catch (SQLException e) {
             System.out.println("Couldn't schedule appointment");
             e.getLocalizedMessage();
             success = false;
+        }
+        if(student != null) {
+            try{
+                MailBean.sendEmail(appointment, student);
+            } catch(Exception e) {
+                System.out.println("Failed to send email confirmation");
+                System.out.println(e.getLocalizedMessage());
+            }
         }
         success = true;
         unscheduledAppointments = DB.getUnscheduledAppointments(university);

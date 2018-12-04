@@ -15,13 +15,14 @@ import java.text.SimpleDateFormat;
  */
 public class Appointment {
 
+    private final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm a");
+    private final DateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
     private int appointmentId;
     private University university;
     private Student student;
     private Date start;
     private Date end;
     private Date date;
-    DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
 
     public Appointment(int appointmentId, University university, Date start, Date end, Date date) {
         this.appointmentId = appointmentId;
@@ -37,11 +38,15 @@ public class Appointment {
     }
 
     public String getFormattedStart() {
-        return dateFormat.format(start);
+        return TIME_FORMAT.format(start);
     }
 
     public String getFormattedEnd() {
-        return dateFormat.format(end);
+        return TIME_FORMAT.format(end);
+    }
+
+    public String getFormattedDate() {
+        return DATE_FORMAT.format(date);
     }
 
     /**
