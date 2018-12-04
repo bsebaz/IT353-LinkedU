@@ -18,7 +18,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class HomeController {
+public class HomeController implements java.io.Serializable {
 
     private ArrayList<University> featuredUniversities;
     private final HomeDAO DB;

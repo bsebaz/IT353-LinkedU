@@ -14,7 +14,54 @@
     </h:head>
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 searchBox">
+                    <c:if test="#{scheduleAppointmentsController.university ne null}">
+                        <h2>Open Appointments For <h:outputText value="#{scheduleAppointmentsController.university.name}"/></h2>
+                        <!-- Toasts -->
+                        <h:form rendered="#{scheduleAppointmentsController.success}">
+                            <div class="alert alert-success" role="alert">
+                                Appointment at #{scheduleAppointmentsController.university.name} Scheduled Successfully<br/>
+                                An email confirming this appointment will be sent to you shortly
+                                <h:outputText value ="#{scheduleAppointmentsController.setSuccess(false)}"/>
+                            </div>
+                        </h:form>
+                        <!-- Page Content -->
+                        <h:form id="unscheduledForm">
+                            <div class="listDisplay">
+                                <h:dataTable id="unscheduledTable" value = "#{scheduleAppointmentsController.unscheduledAppointments}" var = "appointment"
+                                             styleClass = "table table-bordered table-striped"
+                                             columnClasses="align-middle, align-middle">
+                                    <h:column>    				
+                                        <f:facet name = "header">Date</f:facet>    				
+                                            #{appointment.date}
+                                    </h:column>
 
+                                    <h:column>
+                                        <f:facet name = "header">Time</f:facet>
+                                        #{appointment.formattedStart} - #{appointment.formattedEnd}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name = "header">Selection</f:facet>
+                                        <h:commandButton class="btn btn-outline-success" value="Select" action="#{scheduleAppointmentsController.schedule(appointment)}" />
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </h:form>
+                    </c:if>
+                    <c:if test="#{scheduleAppointmentsController.university eq null}">
+                        <h:form>
+                            <div class="text-center">
+                                <h2 class="my-lg-3">No University Selected!</h2>
+                                <h:commandButton class="btn btn-primary my-md-3" value="Home" action="home?faces-redirect=true"/>
+                            </div>
+                        </h:form>
+                    </c:if>
+                </div>
+            </div>
+        </div>
     </h:body>
 </html>
 

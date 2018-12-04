@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Edit Appointment</title>
+        <h:outputStylesheet name="css/bootstrap.min.css"/>
+        <h:outputStylesheet name="css/LinkedU.css"/>
+        <h:outputScript name="js/bootstrap.min.js"/>
+        <h:outputScript name="js/appointments.js"/>
+        <style>
+            input.ui-state-hover, input.ui-state-focus {
+                color: #495057;
+                font-weight: normal;
+                background-color: #fff;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
+        </style>
+    </h:head>
+
+    <f:event listener="#{accountController.checkIfNotLoggedIn()}" type="preRenderView" />
+
+    <h:body>
+        <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 searchBox">
+                    <div class="d-flex">
+                        <h2 class="mr-auto">Edit Appointment</h2>
+                        <h:form class="ml-auto">
+                            <h:commandButton class="btn btn-outline-danger" value="Delete Appointment" action="#{universityAppointmentsController.deleteAppointment()}"/>
+                        </h:form>
+                    </div>
+                    <div class="searchBar d-flex">
+                        <h:form class="form-inline mr-auto my-2 my-lg-0">
+                            <p:outputLabel for="date" value="Date:&nbsp;" class="mr-sm-2 my-auto"/>
+                            <p:calendar inputStyleClass="form-control mr-sm-2" id="date" class="date" pattern="MM/dd/yyyy" value="#{universityAppointmentsController.selected.date}">
+                                <p:ajax event="dateSelect" listener="#{universityAppointmentsController.onDateSelect}"/>
+                            </p:calendar>
+                            <p:outputLabel for="start" value="Start:&nbsp;" class="mx-sm-2 my-auto"/>
+                            <p:calendar inputStyleClass="form-control mr-sm-2" id="start" value="#{universityAppointmentsController.selected.start}" pattern="hh:mm aa" timeControlType="select" stepMinute="5" timeOnly="true">
+                                <p:ajax event="dateSelect" listener="#{universityAppointmentsController.onTimeSelect}"/>
+                            </p:calendar>
+                            <p:outputLabel for="end" value="End:&nbsp;" class="mx-sm-2 my-auto"/>
+                            <p:calendar inputStyleClass="form-control mr-sm-2" id="end" value="#{universityAppointmentsController.selected.end}" pattern="hh:mm aa" timeControlType="select" stepMinute="5" timeOnly="true">
+                                <p:ajax event="dateSelect" listener="#{universityAppointmentsController.onTimeSelect}"/>
+                            </p:calendar>
+                        </h:form>
+                        <h:form class="ml-auto">
+                            <h:commandButton class="btn btn-primary my-2 mr-sm-2 my-sm-0" value="Submit" action="#{universityAppointmentsController.submitEdit()}"/>
+                            <h:commandButton class="btn btn-dark my-2 ml-sm-2 my-sm-0" value="Cancel" action="#{universityAppointmentsController.cancelEdit()}"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>

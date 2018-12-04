@@ -21,7 +21,7 @@ import model.University;
  */
 @ManagedBean
 @SessionScoped
-public class SearchUniversitiesController {
+public class SearchUniversitiesController implements java.io.Serializable {
 
     private String searchTerm;
     private Map<Integer, Boolean> checked;

@@ -14,7 +14,8 @@
     </h:head>
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
-
+        <!-- Try Getting the Requested University -->
+        <h:form><h:outputText value="#{universityDetailController.viewDetails()}"/></h:form>
         <div class="container">
             <div class="row">
                 <div class="col-md-12 detailInfo">
@@ -23,12 +24,21 @@
                             <div class="universityDetailBanner">
 
                             </div>
-                            <h:form rendered="#{!(universityDetailController.university == null)}">
-                                <h2><h:outputText value="#{universityDetailController.university.name}"/></h2>
-                            </h:form>
-                            <h:form rendered="#{(universityDetailController.university == null)}">
-                                <h2>University Not Found</h2>
-                            </h:form>
+                            <div class="float-left">
+                                <h:form rendered="#{!(universityDetailController.university == null)}">
+                                    <h2><h:outputText value="#{universityDetailController.university.name}"/></h2>
+                                </h:form>
+                                <h:form rendered="#{(universityDetailController.university == null)}">
+                                    <h2>University Not Found</h2>
+                                </h:form>
+                            </div>
+                            <c:if test="#{(accountController.user ne null) and (accountController.user.accountType == 'student')}">
+                                <h:form>
+                                    <div class="float-right">
+                                        <h:commandButton class="btn btn-primary my-2 my-sm-0" value="Schedule an Appointment" action="#{scheduleAppointmentsController.viewAppointments(universityDetailController.university)}"/>
+                                    </div>
+                                </h:form>
+                            </c:if>
                         </div>
                     </div>
                     <div class="row">

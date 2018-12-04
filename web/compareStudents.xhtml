@@ -8,14 +8,15 @@
     <h:head>
         <title>University Compare</title>
         <h:outputStylesheet name="css/bootstrap.min.css"/>
+        <h:outputStylesheet name="css/LinkedU.css"/>
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
     </h:head>
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
-        <div class="container my-3">
+        <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 searchBox">
                     <h:form rendered="#{compareStudentsController.renderTable()}">
                         <h1>Student Comparison</h1>
                         <table class="table table-hover table-striped table-bordered">

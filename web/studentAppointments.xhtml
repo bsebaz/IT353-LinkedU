@@ -13,9 +13,59 @@ and open the template in the editor.
     <head></head>
     <body>
         <ui:composition>
-            <h:form>
-                Student Appointments
-            </h:form>
+            <!-- Try Loading the Appointments -->
+            <h:form><h:outputText value="#{studentAppointmentsController.viewAppointments()}"/></h:form>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 searchBox">
+                        <h2>Appointments</h2>
+                        <!-- Toasts -->
+                        <h:form rendered="#{studentAppointmentsController.cancellationSuccess}">
+                            <div class="alert alert-success" role="alert">
+                                Appointment at #{studentAppointmentsController.canceledName} Canceled
+                                <h:outputText value ="#{studentAppointmentsController.setCancellationSuccess(false)}"/>
+                            </div>
+                        </h:form>
+                        <!-- Page Content -->
+                        <h4>Scheduled Appointments</h4>
+                        <h:form id="scheduledForm">
+                            <div class="listDisplay">
+                                <h:dataTable id="scheduledTable" value = "#{studentAppointmentsController.scheduledAppointments}" var = "appointment"
+                                             styleClass = "table table-bordered table-striped"
+                                             columnClasses="align-middle, align-middle, align-middle, align-middle">
+                                    <h:column>
+                                        <f:facet name = "header">University</f:facet>
+                                        <h:outputLink value="universityDetail.xhtml">
+                                            <h:outputText value="#{appointment.university.name}"/>
+                                            <f:param name="studentId" value="#{appointment.university.universityId}"/>
+                                        </h:outputLink>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name = "header">Location</f:facet>
+                                        #{appointment.university.city}, #{appointment.university.state}
+                                    </h:column>
+
+                                    <h:column>    				
+                                        <f:facet name = "header">Date</f:facet>    				
+                                            #{appointment.date}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name = "header">Time</f:facet>
+                                        #{appointment.formattedStart} - #{appointment.formattedEnd}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name = "header">Cancellation</f:facet>
+                                        <h:commandButton class="btn btn-danger" value="Cancel" action="#{studentAppointmentsController.cancelAppointment(appointment)}"/>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
         </ui:composition>
     </body>
 </html>

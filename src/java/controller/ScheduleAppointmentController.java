@@ -9,6 +9,6 @@ package controller;
  *
  * @author slfx7
  */
-public class ScheduleAppointmentController {
+public class ScheduleAppointmentController implements java.io.Serializable {
     
 }

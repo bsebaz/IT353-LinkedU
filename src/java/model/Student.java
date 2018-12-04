@@ -11,7 +11,7 @@ package model;
  */
 public class Student implements java.io.Serializable {
     private int studentId;
-    private int userId;
+    private int userId; //AccountID in table
     private String firstName;
     private String lastName;
     private String age;

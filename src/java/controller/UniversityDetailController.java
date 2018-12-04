@@ -11,7 +11,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import model.University;
 
 /**
@@ -19,7 +19,7 @@ import model.University;
  * @author slfx7
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class UniversityDetailController implements DetailsInterface {
 
     private University university;
@@ -27,28 +27,23 @@ public class UniversityDetailController implements DetailsInterface {
     @ManagedProperty(value = "#{accountController.user.userID}")
     private int userID;
 
-    public UniversityDetailController() {
-        retrieveUniversity();
-    }
-
     @PostConstruct
-    private void retrieveUniversity() {
-        //Get studentId from URL
+    public void viewDetails() {
+        //Get universityId from URL
         Map<String, String> params = getParamsFromURL();
         String id = params.get("universityId");
 
         //We'll need more cases than what's here, such as checking if the account is a student / recruiter
-        //Get requested user
+        //Get requested university
         if (id != null) {
             try {
                 university = DB.getUniversity(Integer.parseInt(id));
-            } catch (SQLException e) {
+            } catch (SQLException | NumberFormatException e) {
                 System.out.println("Couldn't find requested university");
-            } catch (NumberFormatException e) {
-                System.out.println("Couldn't find requested university");
+                e.getLocalizedMessage();
             }
         } //Otherwise, return the current user's page
-        else {
+        else if (userID > 0) {
             try {
                 university = DB.getUniversity(userID);
             } catch (SQLException e) {

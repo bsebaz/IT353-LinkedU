@@ -6,17 +6,13 @@
 package controller;
 
 import dao.SearchStudentsDAO;
-import dao.SearchUniversitiesDAO;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import model.Student;
-import model.University;
 
 /**
  *
@@ -24,7 +20,7 @@ import model.University;
  */
 @ManagedBean
 @SessionScoped
-public class SearchStudentsController {
+public class SearchStudentsController implements java.io.Serializable {
 
     private String searchTerm;
     private Map<Integer, Boolean> checked;
@@ -37,13 +33,19 @@ public class SearchStudentsController {
         try {
             students = searchStudentsDAO.getStudents(searchTerm);
         } catch (SQLException e) {
-            System.out.println("Unable to load universities");
+            System.out.println(e.getLocalizedMessage());
+            System.out.println("Unable to load students");
         }
     }
 
-    public void renderStudentList() throws SQLException {
-        students = searchStudentsDAO.getStudents(searchTerm);
-        searchTerm = "";
+    public void renderStudentList() {
+        try {
+            students = searchStudentsDAO.getStudents(searchTerm);
+            searchTerm = "";
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+            System.out.println("Unable to load students");
+        }
     }
 
     public String compare() {

@@ -12,7 +12,6 @@ drop table LinkedUDB.appointments;
 
 CREATE TABLE LinkedUDB.appointments (
   appointmentId             INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-  advisor                   VARCHAR(50),
   startTime                 TIME,
   endTime                   TIME,
   aptDate                   DATE,

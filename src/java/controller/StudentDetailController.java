@@ -7,14 +7,12 @@ package controller;
 
 import dao.StudentDetailDAO;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import model.Student;
 import model.StudentDetails;
 
@@ -23,21 +21,17 @@ import model.StudentDetails;
  * @author slfx7
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class StudentDetailController implements DetailsInterface {
 
     private Student student;
     private final StudentDetailDAO DB = new StudentDetailDAO();
     @ManagedProperty(value = "#{accountController.user.userID}")
     private int userID;
+    private List<StudentDetails> studentDetails;
     
-
-    public StudentDetailController() {
-        retrieveStudent();
-    }
-
     @PostConstruct
-    private void retrieveStudent() {
+    public void viewDetails() {
         //Get studentId from URL
         Map<String, String> params = getParamsFromURL();
         String id = params.get("studentId");
@@ -47,10 +41,9 @@ public class StudentDetailController implements DetailsInterface {
         if (id != null) {
             try {
                 student = DB.getStudent(Integer.parseInt(id));
-            } catch (SQLException e) {
+            } catch (SQLException | NumberFormatException e) {
                 System.out.println("Couldn't find requested user");
-            } catch (NumberFormatException e) {
-                System.out.println("Couldn't find requested user");
+                e.getLocalizedMessage();
             }
         } //Otherwise, return the current user's page
         else {
@@ -64,18 +57,17 @@ public class StudentDetailController implements DetailsInterface {
     
     public String updateStudent(){
         DB.updateStudent(student);
-        return "studentEdit?redirect=true";
+        DB.updateStudentDetails(studentDetails);
+        return "studentEdit?studentId="+student.getStudentId();
     }
     
-    public String addNewDetail(){
+    public String addNewDetail() throws SQLException{
         DB.addNewDetail(student);
-        return "studentEdit?redirect=true";
+        return "studentEdit?redirect=true&studentId="+student.getStudentId();
     }
-    
-    public List<StudentDetails> studentDetails() throws SQLException{
-        List students = DB.getStudentDetails(student.getStudentId());
-        
-        return students;
+    public String removeDetail(int detailId) throws SQLException{
+        DB.removeDetail(detailId);
+        return "studentEdit?redirect=true&studentId="+student.getStudentId();
     }
 
     /**
@@ -97,5 +89,19 @@ public class StudentDetailController implements DetailsInterface {
      */
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    /**
+     * @return the studentDetails
+     */
+    public List<StudentDetails> getStudentDetails() {
+        return studentDetails;
+    }
+
+    /**
+     * @param studentDetails the studentDetails to set
+     */
+    public void setStudentDetails(List<StudentDetails> studentDetails) {
+        this.studentDetails = studentDetails;
     }
 }
