@@ -74,4 +74,20 @@ public class SearchStudentsDAO implements DAOInterface, java.io.Serializable {
         
         return students;
     }
+    
+    public void removeUniversity(int universityId){
+        try (Connection db = connect()) {
+
+            String query = "DELETE FROM LinkedUDB.students WHERE studentId = ?";
+            PreparedStatement pstmt = null;
+
+            pstmt = db.prepareStatement(query);
+            pstmt.setInt(1, universityId);
+            int rowCount = pstmt.executeUpdate();
+
+            db.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }    
 }

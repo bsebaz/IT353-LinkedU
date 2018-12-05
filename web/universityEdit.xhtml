@@ -61,6 +61,19 @@
                                         </h:inputText>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <h:outputLabel for="applicationUrl" value="Application URL"/>
+                                        <h:inputText id="applicationUrl" class="form-control" value="#{universityDetailController.university.applicationUrl}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                    <div class="form-check col-4 my-3" style="margin-left: 1em;">
+                                        <h:selectBooleanCheckbox rendered="#{accountController.user.admin}" id="featuredUniversity" class="form-check-input" value="#{universityDetailController.university.featured}">
+                                        </h:selectBooleanCheckbox>
+                                        <h:outputLabel for="featuredUniversity" class="form-check-label" value="Featured University"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <ui:repeat value="#{universityDetailController.universityDetails}" var="details">

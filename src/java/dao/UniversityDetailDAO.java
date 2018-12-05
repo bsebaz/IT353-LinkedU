@@ -54,6 +54,8 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
             String city = university.getCity().trim();
             String state = university.getState().trim();
             String studentPopulation = university.getStudentPopulation().trim();
+            String applicationUrl = university.getApplicationUrl();
+            boolean featured = university.isFeatured();
             
             boolean valid = true;
             
@@ -75,7 +77,7 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
             
             if (valid){
                 
-                String query = "UPDATE LinkedUDB.universities SET name = ?, cost = ?, city = ?, state = ?, studentPopulation = ? WHERE universityId = ?";
+                String query = "UPDATE LinkedUDB.universities SET name = ?, cost = ?, city = ?, state = ?, studentPopulation = ?, applicationUrl = ?, featured = ? WHERE universityId = ?";
                 PreparedStatement pstmt = null;
 
                 pstmt = db.prepareStatement(query);
@@ -84,7 +86,9 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
                 pstmt.setString(3, city);
                 pstmt.setString(4, state);
                 pstmt.setString(5, studentPopulation);
-                pstmt.setInt(6, universityId);
+                pstmt.setString(6, applicationUrl);
+                pstmt.setBoolean(7, featured);
+                pstmt.setInt(8, universityId);
                 rowCount = pstmt.executeUpdate();
                 
                 if (rowCount == 1){
@@ -181,7 +185,8 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
                         rs.getString("studentPopulation"),
                         rs.getString("cost"),
                         rs.getString("accentColor"),
-                        rs.getBoolean("featured")
+                        rs.getBoolean("featured"),
+                        rs.getString("applicationUrl")
                 );
             }
             rs.close();

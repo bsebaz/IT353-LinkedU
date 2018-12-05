@@ -20,6 +20,7 @@ public class University implements java.io.Serializable {
     private String cost;
     private String accentColor;
     private boolean featured;
+    private String applicationUrl;
 
     public University() {
 
@@ -35,10 +36,11 @@ public class University implements java.io.Serializable {
         this.cost = cost;
     }
 
-    public University(int universityId, int accountId, String name, String city, String state, String studentPopulation, String cost, String accentColor, boolean featured) {
+    public University(int universityId, int accountId, String name, String city, String state, String studentPopulation, String cost, String accentColor, boolean featured, String applicationUrl) {
         this(universityId, accountId, name, city, state, studentPopulation, cost);
         this.accentColor = accentColor;
         this.featured = featured;
+        this.applicationUrl = applicationUrl;
     }
 
     /**
@@ -165,6 +167,20 @@ public class University implements java.io.Serializable {
      */
     public void setAccountId(int accountId) {
         this.accountId = accountId;
+    }
+
+    /**
+     * @return the applicationUrl
+     */
+    public String getApplicationUrl() {
+        return applicationUrl;
+    }
+
+    /**
+     * @param applicationUrl the applicationUrl to set
+     */
+    public void setApplicationUrl(String applicationUrl) {
+        this.applicationUrl = applicationUrl;
     }
 
 }

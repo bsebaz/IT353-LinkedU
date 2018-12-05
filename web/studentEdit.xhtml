@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>LinkedU</title>
         <h:outputStylesheet name="css/bootstrap.min.css"/>
@@ -21,7 +22,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 detailInfo">
-                    <h:form rendered="#{!(studentDetailController.student == null)}" id="studentEdit">
+                    <h:form rendered="#{!(studentDetailController.student == null)}" id="studentEdit" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="studentDetailImage">

@@ -35,7 +35,8 @@ public class HomeDAO implements DAOInterface, java.io.Serializable {
                         rs.getString("studentPopulation"),
                         rs.getString("cost"),
                         rs.getString("accentColor"),
-                        true
+                        rs.getBoolean("featured"),
+                        rs.getString("applicationUrl")
                 );
                 featuredUniversities.add(featured);
             }        

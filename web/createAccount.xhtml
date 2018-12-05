@@ -15,7 +15,7 @@
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
         <div id="signup">
             <h:form style="width: 340px; margin: 50px auto;">
-                <h2 style="text-align: left;">Student Sign Up</h2>       
+                <h2 style="text-align: left;">Student Sign Up</h2>
                 <div class="form-group">
                     <h:outputLabel for="username" value="Username"/>
                     <h:inputText id="username" class="form-control" required="true" value = "#{accountController.user.username}">
@@ -28,7 +28,7 @@
                         <!-- Validator here, if any -->
                     </h:inputSecret>
                 </div>
-                
+
                 <div class="form-group">
                     <h:outputLabel for="fname" value="First Name"/>
                     <h:inputText id="fname" class="form-control" required="true" value = "#{accountController.student.firstName}">
@@ -75,11 +75,10 @@
                 </div>
                 <div class="form-group">
                     <h:commandButton class="btn btn-primary btn-block" value="Sign Up" action="#{accountController.attemptUserSignUp()}"> <!--add back action=-->
-                        
+
                     </h:commandButton>
                 </div>
             </h:form>
         </div>
     </h:body>
 </html>
-
