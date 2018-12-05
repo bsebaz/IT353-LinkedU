@@ -50,8 +50,10 @@ public class StudentAppointmentsController implements java.io.Serializable {
             System.out.println(e.getLocalizedMessage());
             System.out.println("Couldn't Load Student");
         }
-        scheduledAppointments = DB.getScheduledAppointments(student);
-        Collections.sort(scheduledAppointments, AC);
+        if (student != null) {
+            scheduledAppointments = DB.getScheduledAppointments(student);
+            Collections.sort(scheduledAppointments, AC);
+        }
     }
 
     public void cancelAppointment(Appointment selected) {
