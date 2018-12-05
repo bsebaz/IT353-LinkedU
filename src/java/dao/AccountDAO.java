@@ -94,11 +94,10 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
     {
         String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
         Connection DBConn = null;
-        Statement stmt = null;
-                
+
         try {
             String givenUsername = user.getUsername();
-            
+
             DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String sql = "SELECT * FROM LINKEDUDB.ACCOUNTS WHERE USERNAME = ?";
@@ -115,8 +114,6 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        
         return false;
     }
 }
-

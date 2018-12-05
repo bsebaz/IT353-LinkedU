@@ -22,10 +22,11 @@
                         <!-- User Page -->
                         <li class="nav-item">
                             <c:if test="#{accountController.user ne null and accountController.user.accountType == 'student'}">
-                                <h:outputLink class="nav-link" value="studentDetail.xhtml">#{accountController.user.username}</h:outputLink>
+                                <h:outputLink class="nav-link" value="studentDetail.xhtml">#{universalController.getFormattedStudentName(accountController.user.userID)}</h:outputLink>
                             </c:if>
                             <c:if test="#{accountController.user.accountType == 'recruiter'}">
-                                <h:outputLink class="nav-link" value="universityDetail.xhtml">#{accountController.user.username}
+                                <h:outputLink class="nav-link" value="universityDetail.xhtml">
+                                    #{universalController.getUniversityName(accountController.user.userID)}
                                     <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
                                 </h:outputLink>
                             </c:if>

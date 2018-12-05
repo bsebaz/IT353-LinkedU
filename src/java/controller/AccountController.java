@@ -65,7 +65,7 @@ public class AccountController implements java.io.Serializable {
     }
 
     public void checkIfRecruiter() {
-        if (!user.getAccountType().equals("recruiter")) {
+        if (!user.getAccountType().equals("recruiter") && !user.isAdmin()) {
             FacesContext fc = FacesContext.getCurrentInstance();
             ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
             nav.performNavigation("accessDenied?faces-redirect=true");

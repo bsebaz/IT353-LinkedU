@@ -28,15 +28,15 @@ public class ApplicationForm implements Serializable{
     
     
     public ApplicationForm(){
-        this("Unnamed");
+        this("Unnamed Application Form");
     }
     
     public ApplicationForm(String title){
         this.title = title;
         elements = new ArrayList<>();
-        elements.add(new RadialElement(elements.size()+1,"firstQuestion", "Click a bubble (please work)", new String[]{"Oh","my","Gosh"}));
-        elements.add(new ShortElement(elements.size()+1,"secondQuestion", "Type a short thing (please work)",0,12,12));
-        elements.add(new LongElement(elements.size()+1,"thirdQuestion", "Type a thing (please work)",50,5,"Here's some default text"));
+        //elements.add(new RadialElement(elements.size()+1,"firstQuestion", "Click a bubble (please work)", new String[]{"Oh","my","Gosh"}));
+        //elements.add(new ShortElement(elements.size()+1,"secondQuestion", "Type a short thing (please work)",0,12,12));
+        //elements.add(new LongElement(elements.size()+1,"thirdQuestion", "Type a thing (please work)",50,5,"Here's some default text"));
     }
     
     public ApplicationForm(JSONObject json){
@@ -63,18 +63,19 @@ public class ApplicationForm implements Serializable{
     public void addField(String type){
         int n = elements.size();
         Element e = null;
+        if(type == null || type.equals(""))return;
         switch(type){
-            case "radial":{
-                //e = new RadialElement(n);
+            case "radio":{
+                e = new RadialElement(n+1,"New Radio Element", "Click a bubble", new String[]{"Choice 1","Choice 2"});
             }break;
             case "select":{
-                //e = new SelectElement(n);
+                e = new SelectElement(n+1,"New Select Element", "Choose from the dropdown list", new String[]{"choice 1","choice 2","choice 3"});
             }break;
-            case "shortText":{
-                //e = new ShortElement(n);
+            case "short":{
+                e = new ShortElement(n+1, "New Text Element", "Instruction Placeholder", 0, 20, 20);
             }break;
-            case "longText":{
-                //e = new LongElement(n);
+            case "long":{
+                e = new LongElement(n+1,"New Long Element", "Type a thing (please work)",50,5,"Default Text");
             }break;
             case "file":{
                 //e = new FileElement(n);
@@ -101,7 +102,7 @@ public class ApplicationForm implements Serializable{
         //make sure element numbers are same as index + 1 after removal
     }
     
-    public static final String[] FIELD_TYPES = {"radial","select","short","long","file"};
+    public static final String[] FIELD_TYPES = {"radio","select","short","long","file"};
     
     public abstract class Element implements Serializable{
         private int number;
@@ -144,7 +145,7 @@ public class ApplicationForm implements Serializable{
         private String[] choices;
         
         RadialElement(int number, String name, String instruction, String[] choices){
-            super(number, name, "radial", instruction);
+            super(number, name, "radio", instruction);
             this.choices = choices;
         }
         
@@ -184,8 +185,8 @@ public class ApplicationForm implements Serializable{
     public class SelectElement extends Element{
         private String[] choices;
         
-        public SelectElement(int number, String name, String type, String instruction, String[] choices){
-            super(number, name, type, instruction);
+        public SelectElement(int number, String name, String instruction, String[] choices){
+            super(number, name, "select", instruction);
             this.choices = choices;
         }
         
@@ -207,7 +208,7 @@ public class ApplicationForm implements Serializable{
             for(int i = 0; i < choices.length; i++){
                 html +=     "<option value=\"" + choices[i] + "\">" + choices[i] + "</option>";
             }
-            html += "</select><br/>";
+            html += "</select><br/><br/>";
             return html;
         }
         
@@ -269,7 +270,7 @@ public class ApplicationForm implements Serializable{
         public String toHTML(){
             String html = "";
             html += //"<label for=\"" + getName() + "\">" + getInstruction() + ":</label>\n" +
-                "<input type=\"text\" id=\"" + getName() + "\" name=\"" + getName() + "\" required\n" +
+                "<input type=\"text\" id=\"" + getName() + "\" name=\"" + getName() + "\"" + // required\n" +
                 "       minlength=\"" + minLength + "\" maxlength=\"" + maxLength + "\" size=\"" + size + "\"><br/><br/>";
             return html;
         }
