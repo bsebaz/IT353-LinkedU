@@ -63,6 +63,9 @@
                     <!-- Navbar Right -->
                     <ul class="navbar-nav">
                         <!-- Not Logged In -->
+                        <c:if test="#{!accountController.user.admin}">
+                            <h:commandButton class="btn btn-primary" value="Create University Account" action="createUniversityAccount?faces-redirect=true"/>&nbsp;
+                        </c:if>
                         <c:if test="#{!accountController.loggedIn}">
                             <h:commandButton class="btn btn-primary" value="Sign Up" action="createAccount?faces-redirect=true"/>&nbsp;
                             <h:commandButton class="btn btn-primary" value="Log In" action="login?faces-redirect=true"/>

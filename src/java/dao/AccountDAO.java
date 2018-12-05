@@ -36,9 +36,11 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
                 if (dbUsername.equals(username) && dbPassword.equals(password)) {
                     //Login was successful, set the user's attributes
                     int dbUserID = rs.getInt("ACCOUNTID");
+                    String dbEmail = rs.getString("EMAIL");
                     String dbAccountType = rs.getString("ACCOUNTTYPE");
                     boolean dbAdmin = rs.getBoolean("ISADMIN");
                     user.setUserID(dbUserID);
+                    user.setEmail(dbEmail);
                     user.setAccountType(dbAccountType);
                     user.setAdmin(dbAdmin);
                     //Set reutrn value to true

@@ -10,6 +10,7 @@ import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import model.University;
 import model.User;
 
 /**
@@ -22,6 +23,7 @@ public class AccountController implements java.io.Serializable {
 
     AccountDAO db;
     private User user;
+    private University signUpUniversity;
     private boolean loggedIn;
     private boolean accessDenied;
     private boolean badLogin;
@@ -32,6 +34,7 @@ public class AccountController implements java.io.Serializable {
         accessDenied = false;
         badLogin = false;
         db = new AccountDAO();
+        signUpUniversity = new University();
     }
 
     /**
@@ -98,8 +101,14 @@ public class AccountController implements java.io.Serializable {
         return "home?faces-redirect=true";
     }
     
+    public String createUniversityAccount() {
+        return "";
+    }
 
-
+    private int CreateAccount() {
+        return 0;
+    }
+    
     /**
      * @return the user
      */
@@ -154,5 +163,19 @@ public class AccountController implements java.io.Serializable {
      */
     public void setBadLogin(boolean badLogin) {
         this.badLogin = badLogin;
+    }
+
+    /**
+     * @return the signUpUniversity
+     */
+    public University getSignUpUniversity() {
+        return signUpUniversity;
+    }
+
+    /**
+     * @param signUpUniversity the signUpUniversity to set
+     */
+    public void setSignUpUniversity(University signUpUniversity) {
+        this.signUpUniversity = signUpUniversity;
     }
 }
