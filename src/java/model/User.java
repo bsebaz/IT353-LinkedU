@@ -6,7 +6,7 @@
 package model;
 
 import dao.AccountDAO;
-import dao.StudentDAO;
+
 
 /**
  *
@@ -102,6 +102,10 @@ public class User implements java.io.Serializable {
        // boolean goodStudentInsert;
         boolean goodAccountInsert;
         
+        if(!AccountDAO.checkIfUserExists(this))
+        {
+            
+        }
         goodAccountInsert = AccountDAO.insertAccount(this);
         
         return goodAccountInsert;
