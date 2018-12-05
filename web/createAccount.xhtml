@@ -29,6 +29,13 @@
                         <!-- Validator here, if any -->
                     </h:inputSecret>
                 </div>
+                
+                <div class="form-group">
+                    <h:outputLabel for="email" value="Email"/>
+                    <h:inputText id="email" class="form-control" required="true" value = "#{accountController.user.email}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
 
                 <div class="form-group">
                     <h:outputLabel for="fname" value="First Name"/>
