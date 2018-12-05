@@ -10,7 +10,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
 import model.User;
 
 /**
@@ -21,7 +22,6 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
 
     public boolean login(User user) {
         boolean result = false;
-        
 
         try (Connection db = connect()) {
             String username = user.getUsername();
@@ -56,44 +56,32 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
         }
         return result;
     }
-    
-    public static int insertAccount(User account)
-    {
-                String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
-                
-                String insertString = "INSERT INTO LINKEDUDB.Accounts(USERNAME, PASSWORD, ACCOUNTTYPE, ISADMIN) "
-                + "VALUES('" + account.getUsername() + "','"
-                                    + account.getPassword() + "','"
-                                    + "student" + "',"
-                                    + "0" + ")";
-                
-                int accountId = -1;
-                
-                
-                try (Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student")) {
-                   PreparedStatement stmt = DBConn.prepareStatement(insertString, new String[]{"ACCOUNTID"});
-                   stmt.executeUpdate();
-                   
-                   ResultSet result = stmt.getGeneratedKeys();
- 
-                   while (result.next()) {
-                       accountId = result.getInt(1);
-                   }
-                   
-                }
-                catch(Exception e){
-                    
-                    e.printStackTrace();
-              
-                    System.out.println("EXCEPTION: unable to insert user");
-                    return -1;
-                }
-        
+
+    public int insertAccount(User account, String accountType) {
+        int accountId = -1;
+        ArrayList vars = new ArrayList(Arrays.asList(account.getUsername(), account.getPassword(), account.getEmail(), accountType, false));
+        String insertString = "INSERT INTO LINKEDUDB.Accounts(USERNAME, PASSWORD, EMAIL, ACCOUNTTYPE, ISADMIN) "
+                + "VALUES(?, ?, ?, ?, ?)";
+        try (Connection db = connect()) {
+            PreparedStatement stmt = db.prepareStatement(insertString, new String[]{"ACCOUNTID"});
+            setVars(stmt, vars);
+            stmt.executeUpdate();
+
+            ResultSet result = stmt.getGeneratedKeys();
+
+            if (result.next()) {
+                accountId = result.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("EXCEPTION: unable to insert user");
+            return -1;
+        }
         return accountId;
-     }
-    
-    public static boolean checkIfUserExists(User user)
-    {
+    }
+
+    public boolean checkIfUserExists(User user) {
         String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
         Connection DBConn = null;
 

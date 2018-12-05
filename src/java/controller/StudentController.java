@@ -5,53 +5,49 @@
  */
 package controller;
 
-import dao.StudentDAO;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import model.Student;
 
 /**
  *
  * @author kchris4
  */
-
-@ManagedBean
-@SessionScoped
 public class StudentController implements java.io.Serializable{
-    
+
     private Student student;
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
     
-    public StudentController() 
+    public StudentController()
     {
         student = new Student();
     }
-    
+
+    public Student getModel()
+    {
+        return student;
+    }
+
+    public void setModel(Student model)
+    {
+        this.student = model;
+    }
+
     public String getResponse()
     {
         String resultString = "";
-        
+
         return resultString;
     }
-    
+
     public void attemptStudentInsert()
     {
        // boolean goodStudentInsert;
         boolean goodAccountInsert = false;
-        
-        
+
+
         //StudentDAO.insertStudent(this.student);
-        
-        
-        
+
+
+
         //return goodAccountInsert;
-        
+
     }
 }

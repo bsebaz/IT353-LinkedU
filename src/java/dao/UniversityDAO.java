@@ -10,8 +10,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import model.Student;
+import java.util.ArrayList;
+import java.util.Arrays;
+import model.University;
+import model.User;
 
 /**
  *
@@ -38,5 +40,31 @@ public class UniversityDAO implements DAOInterface, java.io.Serializable {
             System.out.println(e.getLocalizedMessage());
         }
         return name;
+    }
+
+    public int insertUniversity(University university, int accountID) {
+        int universityID = -1;
+        ArrayList vars = new ArrayList(Arrays.asList(accountID, university.getName(), university.getCity(), university.getState(), university.getAccentColor(), false));
+        String query = "INSERT INTO LINKEDUDB.UNIVERSITIES (ACCOUNTID, NAME, CITY, STATE, ACCENTCOLOR, FEATURED) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection db = connect()) {
+            PreparedStatement stmt = db.prepareStatement(query, new String[]{"UNIVERSITYID"});
+            setVars(stmt, vars);
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+
+            if (rs.next()) {
+                universityID = rs.getInt(1);
+            }
+            rs.close();
+            stmt.close();
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("EXCEPTION: unable to insert user");
+            return -1;
+        }
+        return universityID;
     }
 }

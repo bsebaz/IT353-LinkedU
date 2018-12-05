@@ -6,6 +6,12 @@
 package controller;
 
 import dao.StudentDetailDAO;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +19,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.mail.MessagingException;
+import javax.mail.Part;
 import model.Student;
 import model.StudentDetails;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -22,6 +32,7 @@ import model.StudentDetails;
  */
 @ManagedBean
 @SessionScoped
+@ViewScoped
 public class StudentDetailController implements DetailsInterface {
 
     private Student student;
@@ -29,6 +40,7 @@ public class StudentDetailController implements DetailsInterface {
     @ManagedProperty(value = "#{accountController.user.userID}")
     private int userID;
     private List<StudentDetails> studentDetails;
+    private UploadedFile file;
     
     @PostConstruct
     public void viewDetails() {
@@ -41,6 +53,7 @@ public class StudentDetailController implements DetailsInterface {
         if (id != null) {
             try {
                 student = DB.getStudent(Integer.parseInt(id));
+                studentDetails = DB.getStudentDetails(student.getUserId());
             } catch (SQLException | NumberFormatException e) {
                 System.out.println("Couldn't find requested user");
                 e.getLocalizedMessage();
@@ -54,6 +67,36 @@ public class StudentDetailController implements DetailsInterface {
             }
         }
     }
+    
+     public void upload() throws IOException, MessagingException{
+        try (InputStream input = file.getInputstream()) {
+            String fileName = file.getFileName();
+            
+            try {
+                // write the inputStream to a FileOutputStream
+                System.out.println(System.getProperty("user.dir"));
+                OutputStream out = new FileOutputStream(new File("C:\\Users\\Bailey\\Documents\\GitHub\\IT353-LinkedU\\web\\resources\\image\\" + fileName));
+
+                int read = 0;
+                byte[] bytes = new byte[1024];
+
+                while ((read = input.read(/*bytes*/)) != -1) {
+                    out.write(read);//bytes, 0, read);
+                }
+
+                input.close();
+                out.flush();
+                out.close();
+
+                System.out.println("New file created!");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        catch (IOException e) {
+            System.out.print(e);
+        }
+    }       
     
     public String updateStudent(){
         DB.updateStudent(student);
@@ -103,5 +146,19 @@ public class StudentDetailController implements DetailsInterface {
      */
     public void setStudentDetails(List<StudentDetails> studentDetails) {
         this.studentDetails = studentDetails;
+    }
+
+    /**
+     * @return the file
+     */
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(UploadedFile file) {
+        this.file = file;
     }
 }

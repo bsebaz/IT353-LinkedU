@@ -49,7 +49,11 @@ public class SearchUniversitiesDAO implements DAOInterface, java.io.Serializable
                         rs.getString("city"), 
                         rs.getString("state"), 
                         rs.getString("studentPopulation"), 
-                        rs.getString("cost"));
+                        rs.getString("cost"),
+                        rs.getString("accentColor"),
+                        rs.getBoolean("featured"),
+                        rs.getString("applicationUrl")
+                );
                 universities.add(university);
             }
             
@@ -57,5 +61,41 @@ public class SearchUniversitiesDAO implements DAOInterface, java.io.Serializable
         }
         
         return universities;
+    }
+    
+    public void saveFeatured(List<University> universities){
+        try (Connection db = connect()) {
+                for (University university : universities) {
+                    boolean featured = university.isFeatured();
+                    int universityId = university.getUniversityId();
+
+                    String query = "UPDATE LinkedUDB.universities SET featured = ? WHERE universityId = ?";
+                    PreparedStatement pstmt = null;
+
+                    pstmt = db.prepareStatement(query);
+                    pstmt.setBoolean(1, featured);
+                    pstmt.setInt(2, universityId);
+                    int rowCount = pstmt.executeUpdate();
+                }
+            db.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+    
+    public void removeUniversity(int universityId){
+        try (Connection db = connect()) {
+
+            String query = "DELETE FROM LinkedUDB.universities WHERE universityId = ?";
+            PreparedStatement pstmt = null;
+
+            pstmt = db.prepareStatement(query);
+            pstmt.setInt(1, universityId);
+            int rowCount = pstmt.executeUpdate();
+
+            db.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

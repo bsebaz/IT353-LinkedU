@@ -30,6 +30,9 @@
                         <h:form>
                             <h:commandButton class="btn btn-primary compare-btn" value="Compare Selected" action="#{searchUniversitiesController.compare()}"/>
                         </h:form>
+                        <h:form rendered="#{accountController.user.admin}">
+                            <h:commandButton class="btn btn-primary" style="margin-left: 1em;" value="Save" action="#{searchUniversitiesController.saveFeatured()}"/>
+                        </h:form>
                     </div>
                     <div>
                         <h:form id="tableForm">
@@ -68,6 +71,16 @@
                                         <h:selectBooleanCheckbox class="compare" value="#{searchUniversitiesController.checked[universities.universityId]}">
                                             <f:ajax event="valueChange" render=":tableForm:universityTable"/>
                                         </h:selectBooleanCheckbox>
+                                    </h:column>
+                                    <h:column rendered="#{accountController.user.admin}">
+                                        <f:facet name="header">Featured</f:facet>
+                                        <h:selectBooleanCheckbox class="" value="#{universities.featured}">
+                                            <f:ajax event="valueChange" render=":tableForm:studentTable"/>
+                                        </h:selectBooleanCheckbox>
+                                    </h:column>
+                                    <h:column rendered="#{accountController.user.admin}">
+                                        <f:facet name="header">Remove</f:facet>
+                                        <h:commandButton class="btn btn-outline-danger my-2 my-sm-0" value="Remove" action="#{searchUniversitiesController.removeUniversity(universities.universityId)}"/>
                                     </h:column>
                                 </h:dataTable>
                             </div>

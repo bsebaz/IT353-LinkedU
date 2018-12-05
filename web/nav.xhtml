@@ -22,7 +22,10 @@
                         <!-- User Page -->
                         <li class="nav-item">
                             <c:if test="#{accountController.user ne null and accountController.user.accountType == 'student'}">
-                                <h:outputLink class="nav-link" value="studentDetail.xhtml">#{universalController.getFormattedStudentName(accountController.user.userID)}</h:outputLink>
+                                <h:outputLink class="nav-link" value="studentDetail.xhtml">
+                                    #{universalController.getFormattedStudentName(accountController.user.userID)}
+                                    <f:param name="studentId" value="#{studentDetailController.student.studentId}"/>
+                                </h:outputLink>
                             </c:if>
                             <c:if test="#{accountController.user.accountType == 'recruiter'}">
                                 <h:outputLink class="nav-link" value="universityDetail.xhtml">
@@ -63,7 +66,7 @@
                     <!-- Navbar Right -->
                     <ul class="navbar-nav">
                         <!-- Not Logged In -->
-                        <c:if test="#{!accountController.user.admin}">
+                        <c:if test="#{accountController.user.admin}">
                             <h:commandButton class="btn btn-primary" value="Create University Account" action="createUniversityAccount?faces-redirect=true"/>&nbsp;
                         </c:if>
                         <c:if test="#{!accountController.loggedIn}">

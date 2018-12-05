@@ -32,12 +32,26 @@
                                     <h2>University Not Found</h2>
                                 </h:form>
                             </div>
+                            <c:if test="#{universityDetailController.university.applicationUrl != null and universityDetailController.university.applicationUrl.trim().length() > 0}">
+                                <h:form>
+                                    <div class="float-right" style="margin-left: 1em;">
+                                        <h:outputLink class="btn btn-success my-2 my-sm-0" value="#{universityDetailController.university.applicationUrl}">Apply</h:outputLink>
+                                    </div>
+                                </h:form>
+                            </c:if>
                             <c:if test="#{(accountController.user ne null) and (accountController.user.accountType == 'student')}">
                                 <h:form>
                                     <div class="float-right">
                                         <h:commandButton class="btn btn-primary my-2 my-sm-0" value="Schedule an Appointment" action="#{scheduleAppointmentsController.viewAppointments(universityDetailController.university)}"/>
                                     </div>
                                 </h:form>
+                            </c:if>
+                            <c:if test="#{(universityDetailController.university.accountId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')}">
+                                <div class="float-right">
+                                    <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="universityEdit.xhtml">Edit
+                                        <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                    </h:outputLink>
+                                </div>
                             </c:if>
                         </div>
                     </div>
@@ -47,20 +61,22 @@
                         </div>
                     </c:if>
                     <ui:repeat value="#{universityDetailController.universityDetails}" var="details">
-                        <div class="row">
-                            <div class="detailDescription">
-                                <h3><h:outputText value="#{details.detailName}"/> </h3>
+                        <h:panelGroup rendered="#{details.detailContent != null and details.detailContent.trim().length() > 0}">
+                            <div class="row">
+                                <div class="detailDescription">
+                                    <h3><h:outputText value="#{details.detailName}"/> </h3>
 
-                                <h:outputText rendered="#{details.detailType == 'text'}" value="#{details.detailContent}"/>
-                                <ul>
-                                    <ui:repeat value="#{details.splitDetailContent()}" var="list" rendered="#{details.detailType == 'list'}">
-                                        <li>
-                                            <h:outputText value="#{list}"/>
-                                        </li>
-                                    </ui:repeat>
-                                </ul>
+                                    <h:outputText rendered="#{details.detailType == 'text'}" value="#{details.detailContent}"/>
+                                    <ul>
+                                        <ui:repeat value="#{details.splitDetailContent()}" var="list" rendered="#{details.detailType == 'list'}">
+                                            <li>
+                                                <h:outputText value="#{list}"/>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        </h:panelGroup>
                     </ui:repeat>
                 </div>
             </div>
