@@ -21,11 +21,6 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
 
     public boolean login(User user) {
         boolean result = false;
-        
-        if(checkIfUserExists(user))
-        {
-            return false;
-        }
 
         try (Connection db = connect()) {
             String username = user.getUsername();
@@ -92,34 +87,5 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
             
         return true;
      }
-    
-    public static boolean checkIfUserExists(User user)
-    {
-        String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
-        Connection DBConn = null;
-        Statement stmt = null;
-                
-        try {
-            String givenUsername = user.getUsername();
-            
-            DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
-
-            String sql = "SELECT * FROM LINKEDUDB.ACCOUNTS WHERE USERNAME = ?";
-            PreparedStatement pstmt = DBConn.prepareStatement(sql);
-            pstmt.setString(1, givenUsername);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                //User already exists in DB
-                return true;
-            }
-            rs.close();
-            pstmt.close();
-            //db.close();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        
-        return false;
-    }
 }
 

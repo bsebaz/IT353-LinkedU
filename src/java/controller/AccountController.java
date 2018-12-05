@@ -100,8 +100,6 @@ public class AccountController implements java.io.Serializable {
         
         return "home?faces-redirect=true";
     }
-    
-
 
     /**
      * @return the user

@@ -5,28 +5,15 @@
  */
 package controller;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import model.Student;
 
 /**
  *
  * @author kchris4
  */
-
-@ManagedBean
-@SessionScoped
 public class StudentController implements java.io.Serializable{
     
     private Student student;
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
     
     public StudentController() 
     {
@@ -38,9 +25,9 @@ public class StudentController implements java.io.Serializable{
         return student;
     }
 
-    public void setModel(Student student) 
+    public void setModel(Student model) 
     {
-        this.student = student;
+        this.student = model;
     }
     
     public String getResponse()
