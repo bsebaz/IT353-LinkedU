@@ -26,6 +26,6 @@ CREATE TABLE LinkedUDB.universities (
 INSERT INTO LinkedUDB.universities (accountId, name, city, state, studentPopulation, cost, accentColor, featured) 
 VALUES (1, 'Illinois State University', 'Normal', 'IL', '18000', '25000', 'CE1126', 1);
 INSERT INTO LinkedUDB.universities (accountId, name, city, state, studentPopulation, cost, accentColor, featured)
-VALUES (2, 'University of Illinois at Urbana–Champaign', 'Champaign-Urbana', 'IL', '34000', '31000', 'E84A27', 1);
+VALUES (20, 'University of Illinois at Urbana–Champaign', 'Champaign-Urbana', 'IL', '34000', '31000', 'E84A27', 1);
 INSERT INTO LinkedUDB.universities (accountId, name, city, state, studentPopulation, cost, accentColor, featured)
-VALUES (3, 'Northern Illinois University', 'Dekalb', 'IL', '20000', '18000', 'C8102E', 1);
+VALUES (30, 'Northern Illinois University', 'Dekalb', 'IL', '20000', '18000', 'C8102E', 1);
