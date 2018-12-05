@@ -51,10 +51,12 @@
                                 <p:outputLabel for="start" value="Start:&nbsp;" class="mx-sm-2 my-auto"/>
                                 <p:calendar inputStyleClass="form-control mr-sm-2" id="start" value="#{universityAppointmentsController.start}" pattern="hh:mm aa" timeControlType="select" stepMinute="5" timeOnly="true">
                                     <p:ajax event="dateSelect" listener="#{universityAppointmentsController.onTimeSelect}"/>
+                                    <p:ajax event="click" listener="#{universityAppointmentsController.onTimeSelect}"/>
                                 </p:calendar>
                                 <p:outputLabel for="end" value="End:&nbsp;" class="mx-sm-2 my-auto"/>
                                 <p:calendar inputStyleClass="form-control mr-sm-2" id="end" value="#{universityAppointmentsController.end}" pattern="hh:mm aa" timeControlType="select" stepMinute="5" timeOnly="true">
                                     <p:ajax event="dateSelect" listener="#{universityAppointmentsController.onTimeSelect}"/>
+                                    <p:ajax event="click" listener="#{universityAppointmentsController.onTimeSelect}"/>
                                 </p:calendar>
                             </h:form>
                             <h:form class="ml-auto">

@@ -38,8 +38,7 @@ public class HomeDAO implements DAOInterface, java.io.Serializable {
                         true
                 );
                 featuredUniversities.add(featured);
-            }
-            
+            }        
             rs.close();
             pstmt.close();
             db.close();
