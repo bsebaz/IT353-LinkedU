@@ -51,7 +51,9 @@ public class SearchUniversitiesDAO implements DAOInterface, java.io.Serializable
                         rs.getString("studentPopulation"), 
                         rs.getString("cost"),
                         rs.getString("accentColor"),
-                        rs.getBoolean("featured"));
+                        rs.getBoolean("featured"),
+                        rs.getString("applicationUrl")
+                );
                 universities.add(university);
             }
             

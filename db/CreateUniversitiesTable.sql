@@ -19,6 +19,7 @@ CREATE TABLE LinkedUDB.universities (
   studentPopulation    VARCHAR(128),
   cost                 VARCHAR(50),
   accentColor          VARCHAR(6),
+  applicationUrl       VARCHAR(50),
   featured             SMALLINT
 );
 

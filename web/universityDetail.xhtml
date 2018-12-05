@@ -32,6 +32,13 @@
                                     <h2>University Not Found</h2>
                                 </h:form>
                             </div>
+                            <c:if test="#{universityDetailController.university.applicationUrl != null and universityDetailController.university.applicationUrl.trim().length() > 0}">
+                                <h:form>
+                                    <div class="float-right" style="margin-left: 1em;">
+                                        <h:outputLink class="btn btn-success my-2 my-sm-0" value="#{universityDetailController.university.applicationUrl}">Apply</h:outputLink>
+                                    </div>
+                                </h:form>
+                            </c:if>
                             <c:if test="#{(accountController.user ne null) and (accountController.user.accountType == 'student')}">
                                 <h:form>
                                     <div class="float-right">
@@ -39,7 +46,7 @@
                                     </div>
                                 </h:form>
                             </c:if>
-                            <c:if test="#{(studentDetailController.student.userId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')}">
+                            <c:if test="#{(universityDetailController.university.accountId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')}">
                                 <div class="float-right">
                                     <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="universityEdit.xhtml">Edit
                                         <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>

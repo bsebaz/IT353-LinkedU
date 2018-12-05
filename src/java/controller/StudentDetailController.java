@@ -7,8 +7,10 @@ package controller;
 
 import dao.StudentDetailDAO;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,6 +24,7 @@ import javax.mail.MessagingException;
 import javax.mail.Part;
 import model.Student;
 import model.StudentDetails;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -37,7 +40,7 @@ public class StudentDetailController implements DetailsInterface {
     @ManagedProperty(value = "#{accountController.user.userID}")
     private int userID;
     private List<StudentDetails> studentDetails;
-    private Part file;
+    private UploadedFile file;
     
     @PostConstruct
     public void viewDetails() {
@@ -66,12 +69,32 @@ public class StudentDetailController implements DetailsInterface {
     }
     
      public void upload() throws IOException, MessagingException{
-        try (InputStream input = file.getInputStream()) {
+        try (InputStream input = file.getInputstream()) {
             String fileName = file.getFileName();
-            Files.copy(input, new File("images", fileName).toPath());
+            
+            try {
+                // write the inputStream to a FileOutputStream
+                System.out.println(System.getProperty("user.dir"));
+                OutputStream out = new FileOutputStream(new File("C:\\Users\\Bailey\\Documents\\GitHub\\IT353-LinkedU\\web\\resources\\image\\" + fileName));
+
+                int read = 0;
+                byte[] bytes = new byte[1024];
+
+                while ((read = input.read(/*bytes*/)) != -1) {
+                    out.write(read);//bytes, 0, read);
+                }
+
+                input.close();
+                out.flush();
+                out.close();
+
+                System.out.println("New file created!");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
         catch (IOException e) {
-            e.printStackTrace();
+            System.out.print(e);
         }
     }       
     
@@ -128,14 +151,14 @@ public class StudentDetailController implements DetailsInterface {
     /**
      * @return the file
      */
-    public Part getFile() {
+    public UploadedFile getFile() {
         return file;
     }
 
     /**
      * @param file the file to set
      */
-    public void setFile(Part file) {
+    public void setFile(UploadedFile file) {
         this.file = file;
     }
 }
