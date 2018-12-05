@@ -68,8 +68,8 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
                 String insertString = "INSERT INTO LINKEDUDB.Accounts(USERNAME, PASSWORD, ACCOUNTTYPE, ISADMIN) "
                 + "VALUES('" + account.getUsername() + "','"
                                     + account.getPassword() + "','"
-                                    + account.getAccountType() + "',"
-                                    + "0" + "')";
+                                    + "student" + "',"
+                                    + "0" + ")";
                 
                 
                 try {

@@ -90,15 +90,26 @@ public class AccountController implements java.io.Serializable {
         return "home?faces-redirect=true";
     }
     
-    public String createLogin()
+    public String attemptUserSignUp()
     {
-        String dest;
+       
+        boolean goodAccountInsert = false;
         
-        boolean isSuccessful;
+        if(!AccountDAO.checkIfUserExists(this.user))
+        {
+            goodAccountInsert = AccountDAO.insertAccount(this.user);
+        }
         
-        isSuccessful = user.attemptUserSignUp();
         
-        return "home?faces-redirect=true";
+        if(goodAccountInsert == true)
+        {
+            return "home?faces-redirect=true";
+        }
+        else
+        {
+            return "createAccount?faces-redirect=true";
+        }
+        
     }
     
 

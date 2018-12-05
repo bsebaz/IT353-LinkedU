@@ -97,18 +97,5 @@ public class User implements java.io.Serializable {
         this.userID = userID;
     }
     
-    public boolean attemptUserSignUp()
-    {
-       // boolean goodStudentInsert;
-        boolean goodAccountInsert;
-        
-        if(!AccountDAO.checkIfUserExists(this))
-        {
-            
-        }
-        goodAccountInsert = AccountDAO.insertAccount(this);
-        
-        return goodAccountInsert;
-        
-    }
+
 }

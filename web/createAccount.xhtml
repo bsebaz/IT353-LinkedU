@@ -74,8 +74,8 @@
                     </h:inputText>
                 </div>
                 <div class="form-group">
-                    <h:commandButton class="btn btn-primary btn-block" value="Sign Up" action="#{accountController.user.attemptUserSignUp()}"> <!--add back action=-->
-                        <f:actionListener binding="#{studentController.student.attemptStudentInsert()}" />
+                    <h:commandButton class="btn btn-primary btn-block" value="Sign Up" action="#{accountController.attemptUserSignUp()}"> <!--add back action=-->
+                        <f:actionListener binding="#{studentController.attemptStudentInsert()}" />
                     </h:commandButton>
                 </div>
             </h:form>
