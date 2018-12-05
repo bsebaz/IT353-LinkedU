@@ -13,9 +13,14 @@
         <script type="text/javascript" language="javascript">
             $(document).ready(function(){
                 $('.options_button').click(function(){
-                    $('#app_form_body').load('#app_form_body');
+                    $('#app_form_body').load(" #app_form_body > *");
                 });
             });
+            
+            function addField(lnk){
+                var type = lnk.value;
+                
+            }
         </script>
         <style>
             .fixed_menu {
@@ -23,7 +28,7 @@
                 overflow-y: hidden;
                 /*overflow-x: scroll*/
                 position: fixed;  /*Set the navbar to fixed position */
-                height: 100px;
+                height: 500px;
                 width: 100%;
             }
             .edit_menu{
@@ -31,7 +36,20 @@
                 font-size: 20px;
             }
             #app_form_body{
-                margin-top: 150px;
+                margin-top: 200px;
+                margin-right: 50px;
+                margin-left: 50px;
+                margin-bottom: 50px;
+            }
+        </style>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style type="text/css">
+            .bs-example{
+                margin: 20px;
+                margin-top: 5px;
             }
         </style>
 
@@ -40,17 +58,52 @@
     <f:event listener="#{accountController.checkIfNotLoggedIn()}" type="preRenderView" />
     
     <h:body>
-        
         <div class="fixed_menu">
             <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
-            <div class="edit_menu">
-                <a id="global_button" class="options_button" href="#global">Global</a>
-                <a id="save_button" class="options_button" href="#save">Save</a>
-                <a id="insert_button" class="options_button" href="#insert">Insert</a>
-                <a id="delete_button" class="options_button" href="#delete">Delete</a>
-            </div>
+            <div class="bs-example">
+            <nav id="myNavbar" class="navbar navbar-expand-sm bg-light" role="navigation">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Brand</a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Profile</a></li>
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Insert</a>
+                                <ul class="dropdown-menu">
+                                    <li><h:commandButton class="options_button" value="short" action="#{applicationFormController.applicationForm.addField('short')}" /></li>
+                                    <li><h:commandButton class="options_button" value="long" action="#{applicationFormController.applicationForm.addField('long')}" /></li>
+                                    <li><h:commandButton class="options_button" value="radio" action="#{applicationFormController.applicationForm.addField('radio')}" /></li>
+                                    <li><h:commandButton class="options_button" value="select" action="#{applicationFormController.applicationForm.addField('select')}" /></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Admin </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Settings</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div>
+            </nav>
         </div>
-
+        </div>
         <br/>
         <br/>
         <h:form id="app_form_body">
