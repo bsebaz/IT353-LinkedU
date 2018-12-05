@@ -31,7 +31,6 @@ public class AccountController implements java.io.Serializable {
     private boolean accessDenied;
     private boolean badLogin;
     private boolean badAccountInsert;
-    private boolean usernameInUse;
 
     public AccountController() {
         user = new User();
@@ -40,7 +39,6 @@ public class AccountController implements java.io.Serializable {
         accessDenied = false;
         badLogin = false;
         badAccountInsert = false;
-        usernameInUse = false;
         db = new AccountDAO();
         signUpUniversity = new University();
     }
@@ -96,14 +94,6 @@ public class AccountController implements java.io.Serializable {
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); // the above is unnecessary once the session is invalidated
         return "home?faces-redirect=true";
-    }
-    
-    public String checkUsername()
-    {
-        setUsernameInUse(AccountDAO.checkIfUserExists(this.user));
-        
-        
-        return "createAccount?faces-redirect=true";
     }
 
     public String attemptUserSignUp() {
@@ -227,14 +217,4 @@ public class AccountController implements java.io.Serializable {
     public void setGoodAccountInsert(boolean goodAccountInsert) {
         this.badAccountInsert = goodAccountInsert;
     }
-
-    public boolean isUsernameInUse() {
-        return usernameInUse;
-    }
-
-    public void setUsernameInUse(boolean usernameInUse) {
-        this.usernameInUse = usernameInUse;
-    }
-    
-    
 }
