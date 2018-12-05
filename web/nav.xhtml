@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -24,8 +24,10 @@
                             <c:if test="#{accountController.user ne null and accountController.user.accountType == 'student'}">
                                 <h:outputLink class="nav-link" value="studentDetail.xhtml">#{accountController.user.username}</h:outputLink>
                             </c:if>
-                            <c:if test="#{accountController.user ne null and accountController.user.accountType == 'recruiter'}">
-                                <h:outputLink class="nav-link" value="universityDetail.xhtml">#{accountController.user.username}</h:outputLink>
+                            <c:if test="#{accountController.user.accountType == 'recruiter'}">
+                                <h:outputLink class="nav-link" value="universityDetail.xhtml">#{accountController.user.username}
+                                    <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                </h:outputLink>
                             </c:if>
                         </li>
                         <!-- Search Page -->

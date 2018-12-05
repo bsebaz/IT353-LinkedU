@@ -57,12 +57,15 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
         try (Connection db = connect()) {
 
             int studentId = student.getStudentId();
-            String firstName = student.getFirstName().replaceAll("\\s+", "");
-            String lastName = student.getLastName().replaceAll("\\s+", "");
-            String age = student.getAge().replaceAll("\\s+", "");
-            String school = student.getSchool().replaceAll("\\s+", "");
-            String graduationYear = student.getGraduationYear().replaceAll("\\s+", "");
-            String gpa = student.getGpa().replaceAll("\\s+", "");
+            String firstName = student.getFirstName().replaceAll("\\s+","");
+            String lastName = student.getLastName().replaceAll("\\s+","");
+            String age = student.getAge().replaceAll("\\s+","");
+            String school = student.getSchool().trim();
+            String graduationYear = student.getGraduationYear().replaceAll("\\s+","");
+            String gpa = student.getGpa().replaceAll("\\s+","");
+
+            firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
+            lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
 
             boolean valid = true;
 

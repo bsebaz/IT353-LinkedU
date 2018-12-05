@@ -52,6 +52,11 @@
                             </h:form>
                         </div>
                     </div>
+                    <c:if test="#{studentDetailController.studentDetails.size() == 0}">
+                        <div class="my-3">
+                            
+                        </div>
+                    </c:if>
                     <ui:repeat value="#{studentDetailController.studentDetails}" var="details">
                         <div class="row">
                             <div class="detailDescription">
