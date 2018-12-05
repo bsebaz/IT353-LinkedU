@@ -26,7 +26,7 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
         Student student = null;
 
         try (Connection db = connect()) {
-            String query = "SELECT * FROM LinkedUDB.students WHERE studentID = ?";
+            String query = "SELECT * FROM LinkedUDB.students WHERE STUDENTID = ?";
             PreparedStatement pstmt = null;
 
             pstmt = db.prepareStatement(query);

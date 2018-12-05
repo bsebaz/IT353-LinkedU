@@ -59,7 +59,7 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
             
             boolean valid = true;
             
-            if (name.length() < 2 || name.length() > 25){
+            if (name.length() < 2 || name.length() > 48){
                 valid = false;
             }
             if (cost.length() < 2 || cost.length() > 25){
@@ -168,7 +168,7 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
         University university = null;
         
         try (Connection db = connect()) {
-            String query = "SELECT * FROM LinkedUDB.universities WHERE universityID = ?";
+            String query = "SELECT * FROM LinkedUDB.universities WHERE UNIVERSITYID = ?";
             PreparedStatement pstmt = null;
 
             pstmt = db.prepareStatement(query);
@@ -206,7 +206,7 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
             
             PreparedStatement pstmt = null;
             
-            insertString = "SELECT * FROM LinkedUDB.universityDetails WHERE universityId = ?";
+            insertString = "SELECT * FROM LinkedUDB.universityDetails WHERE UNIVERSITYID = ?";
                 
             pstmt = DBConn.prepareStatement( insertString );
             pstmt.setInt(1, universityId);

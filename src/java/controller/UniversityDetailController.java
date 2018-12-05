@@ -23,8 +23,7 @@ import model.UniversityDetails;
  */
 @ManagedBean
 @SessionScoped
-@ViewScoped
-public class UniversityDetailController implements DetailsInterface {
+public class UniversityDetailController implements DetailsInterface, java.io.Serializable {
 
     private University university;
     private final UniversityDetailDAO DB = new UniversityDetailDAO();
@@ -43,7 +42,9 @@ public class UniversityDetailController implements DetailsInterface {
         if (id != null) {
             try {
                 university = DB.getUniversity(Integer.parseInt(id));
-                universityDetails = DB.getUniversityDetails(university.getUniversityId());
+                if (university != null) {
+                    universityDetails = DB.getUniversityDetails(university.getUniversityId());
+                }
             } catch (SQLException e) {
                 System.out.println("Couldn't find requested university");
             } catch (NumberFormatException e) {
@@ -60,19 +61,32 @@ public class UniversityDetailController implements DetailsInterface {
         }
     }
 
-    public String updateUniversity(){
-        DB.updateUniversity(university);
-        DB.updateUniversityDetails(universityDetails);
-        return "universityEdit?universityId="+university.getUniversityId();
+    public void refreshDetails() {
+        try {
+            universityDetails = DB.getUniversityDetails(university.getUniversityId());
+        } catch (SQLException e) {
+            System.out.println("Couldn't refresh details");
+        }
     }
 
-    public String addNewDetail() throws SQLException{
-        DB.addNewDetail(university);
-        return "universityEdit?redirect=true&universityId="+university.getUniversityId();
+    public String updateUniversity() {
+        DB.updateUniversity(university);
+        DB.updateUniversityDetails(universityDetails);
+        return "universityEdit?universityId=" + university.getUniversityId();
     }
-    public String removeDetail(int detailId) throws SQLException{
+
+    public String addNewDetail() throws SQLException {
+        DB.updateUniversity(university);
+        DB.updateUniversityDetails(universityDetails);
+        DB.addNewDetail(university);
+        return "universityEdit?redirect=true&universityId=" + university.getUniversityId();
+    }
+
+    public String removeDetail(int detailId) throws SQLException {
+        DB.updateUniversity(university);
+        DB.updateUniversityDetails(universityDetails);
         DB.removeDetail(detailId);
-        return "universityEdit?redirect=true&universityId="+university.getUniversityId();
+        return "universityEdit?redirect=true&universityId=" + university.getUniversityId();
     }
 
     /**

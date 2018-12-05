@@ -39,7 +39,8 @@
                         <div class="listDisplay">
                             <h:outputText value="#{searchStudentsController.renderStudentList()}"/>
                             <h:dataTable value = "#{searchStudentsController.students}" var = "students"
-                                         styleClass = "table table-bordered table-striped" id="studentTable">
+                                         styleClass = "table table-bordered table-striped" id="studentTable"
+                                         columnClasses="align-middle, align-middle, align-middle, align-middle, align-middle, align-middle">
 
                                 <h:column>    				
                                     <f:facet name = "header">Student Name</f:facet>    				

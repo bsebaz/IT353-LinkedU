@@ -34,8 +34,6 @@ public class ScheduleAppointmentsController implements java.io.Serializable, Det
     private ArrayList<Appointment> unscheduledAppointments;
     //Flags
     private boolean success;
-    @ManagedProperty(value = "#{accountController.user.userID}")
-    private int userID;
 
     public ScheduleAppointmentsController() {
         DB = new AppointmentDAO();
@@ -53,11 +51,11 @@ public class ScheduleAppointmentsController implements java.io.Serializable, Det
         return unscheduledAppointments;
     }
 
-    public void schedule(Appointment appointment) {
+    public void schedule(int studentID, Appointment appointment, String email) {
         StudentDetailDAO studentDB = new StudentDetailDAO();
         Student student = null;
         try {
-            student = studentDB.getStudent(userID);
+            student = studentDB.getStudent(studentID);
             DB.scheduleAppointment(appointment, student);
         } catch (SQLException e) {
             System.out.println("Couldn't schedule appointment");
@@ -66,7 +64,7 @@ public class ScheduleAppointmentsController implements java.io.Serializable, Det
         }
         if(student != null) {
             try{
-                MailBean.sendEmail(appointment, student);
+                MailBean.sendEmail(appointment, student, email);
             } catch(Exception e) {
                 System.out.println("Failed to send email confirmation");
                 System.out.println(e.getLocalizedMessage());
@@ -89,20 +87,6 @@ public class ScheduleAppointmentsController implements java.io.Serializable, Det
      */
     public void setUniversity(University university) {
         this.university = university;
-    }
-
-    /**
-     * @return the userID
-     */
-    public int getUserID() {
-        return userID;
-    }
-
-    /**
-     * @param userID the userID to set
-     */
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     /**

@@ -48,7 +48,7 @@
 
                                     <h:column>
                                         <f:facet name = "header">Selection</f:facet>
-                                        <h:commandButton class="btn btn-outline-success" value="Select" action="#{scheduleAppointmentsController.schedule(appointment)}" />
+                                        <h:commandButton class="btn btn-outline-success" value="Select" action="#{scheduleAppointmentsController.schedule(accountController.studentID, appointment, accountController.user.email)}" />
                                     </h:column>
                                 </h:dataTable>
                             </div>

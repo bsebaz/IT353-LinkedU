@@ -155,6 +155,16 @@ public class AccountController implements java.io.Serializable {
         }
     }
 
+    public int getStudentID() {
+        StudentDAO studentDB = new StudentDAO();
+        return studentDB.getStudentID(user.getUserID());
+    }
+    
+    public int getUniversityID() {
+        UniversityDAO universityDB = new UniversityDAO();
+        return universityDB.getUniversityID(user.getUserID());
+    }
+    
     /**
      * @return the user
      */

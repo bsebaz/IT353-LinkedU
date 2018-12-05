@@ -15,7 +15,7 @@ import javax.mail.internet.*;
 
 public class MailBean {
 
-    public static void sendEmail(Appointment appt, Student stud) {
+    public static void sendEmail(Appointment appt, Student stud, String email) {
         final String username = "LinkedU353@gmail.com";
         final String password = "IT353L!nked";
 
@@ -41,7 +41,7 @@ public class MailBean {
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO,
                     //Replace this with stu.email?
-                    InternetAddress.parse("mmchug1@outlook.com"));
+                    InternetAddress.parse(email));
             message.setSubject("Appointment Confirmation");
             message.setText("Dear " + stud.getFirstName() + " " + stud.getLastName() + ", "
                     + "\n\nThis is an email confirmation of you appointment at " + appt.getUniversity().getName() + " on "

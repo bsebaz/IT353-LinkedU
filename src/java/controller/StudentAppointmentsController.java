@@ -36,9 +36,6 @@ public class StudentAppointmentsController implements java.io.Serializable {
     //Flags
     private String canceledName;
     private boolean cancellationSuccess, cancellationFailure;
-    //Injected Values
-    @ManagedProperty(value = "#{accountController.user.userID}")
-    private int userID;
 
     public StudentAppointmentsController() {
         DB = new AppointmentDAO();
@@ -46,10 +43,9 @@ public class StudentAppointmentsController implements java.io.Serializable {
         AC = new AppointmentComparator();
     }
 
-    @PostConstruct
-    public final void viewAppointments() {
+    public final void viewAppointments(int id) {
         try {
-            student = STUDENT_DB.getStudent(userID);
+            student = STUDENT_DB.getStudent(id);
         } catch (SQLException e) {
             System.out.println(e.getLocalizedMessage());
             System.out.println("Couldn't Load Student");
@@ -66,20 +62,6 @@ public class StudentAppointmentsController implements java.io.Serializable {
 
     public ArrayList<Appointment> getScheduledAppointments() {
         return scheduledAppointments;
-    }
-
-    /**
-     * @return the userID
-     */
-    public int getUserID() {
-        return userID;
-    }
-
-    /**
-     * @param userID the userID to set
-     */
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     /**

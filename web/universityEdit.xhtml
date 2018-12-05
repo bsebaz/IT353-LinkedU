@@ -69,13 +69,13 @@
                                         </h:inputText>
                                     </div>
                                     <div class="form-check col-4 my-3" style="margin-left: 1em;">
-                                        <h:selectBooleanCheckbox rendered="#{accountController.user.admin}" id="featuredUniversity" class="form-check-input" value="#{universityDetailController.university.featured}">
-                                        </h:selectBooleanCheckbox>
-                                        <h:outputLabel for="featuredUniversity" class="form-check-label" value="Featured University"/>
+                                        <h:selectBooleanCheckbox rendered="#{accountController.user.admin}" id="featuredUniversity" class="form-check-input" value="#{universityDetailController.university.featured}"/>
+                                        <h:outputLabel rendered="#{accountController.user.admin}" for="featuredUniversity" class="form-check-label" value="Featured University"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <h:outputText value="#{universityDetailController.refreshDetails()}"/>
                         <ui:repeat value="#{universityDetailController.universityDetails}" var="details">
                             <div class="row">
                                 <div class="detailDescription row">

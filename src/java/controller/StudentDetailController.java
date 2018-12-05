@@ -11,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.mail.MessagingException;
-import javax.mail.Part;
 import model.Student;
 import model.StudentDetails;
 import org.primefaces.model.UploadedFile;
@@ -32,16 +30,15 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @SessionScoped
-@ViewScoped
-public class StudentDetailController implements DetailsInterface {
+public class StudentDetailController implements DetailsInterface, java.io.Serializable {
 
     private Student student;
     private final StudentDetailDAO DB = new StudentDetailDAO();
-    @ManagedProperty(value = "#{accountController.user.userID}")
-    private int userID;
     private List<StudentDetails> studentDetails;
     private UploadedFile file;
-    
+    @ManagedProperty(value = "#{accountController.user.userID}")
+    private int userID;
+
     @PostConstruct
     public void viewDetails() {
         //Get studentId from URL
@@ -53,7 +50,9 @@ public class StudentDetailController implements DetailsInterface {
         if (id != null) {
             try {
                 student = DB.getStudent(Integer.parseInt(id));
-                studentDetails = DB.getStudentDetails(student.getUserId());
+                if (student != null) {
+                    studentDetails = DB.getStudentDetails(student.getStudentId());
+                }
             } catch (SQLException | NumberFormatException e) {
                 System.out.println("Couldn't find requested user");
                 e.getLocalizedMessage();
@@ -67,11 +66,11 @@ public class StudentDetailController implements DetailsInterface {
             }
         }
     }
-    
-     public void upload() throws IOException, MessagingException{
+
+    public void upload() throws IOException, MessagingException {
         try (InputStream input = file.getInputstream()) {
             String fileName = file.getFileName();
-            
+
             try {
                 // write the inputStream to a FileOutputStream
                 System.out.println(System.getProperty("user.dir"));
@@ -92,25 +91,37 @@ public class StudentDetailController implements DetailsInterface {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.print(e);
         }
-    }       
-    
-    public String updateStudent(){
+    }
+
+    public void refreshDetails() {
+        try {
+            studentDetails = DB.getStudentDetails(student.getStudentId());
+        } catch (SQLException e) {
+            System.out.println("Couldn't refresh details");
+        }
+    }
+
+    public String updateStudent() {
         DB.updateStudent(student);
         DB.updateStudentDetails(studentDetails);
-        return "studentEdit?studentId="+student.getStudentId();
+        return "studentEdit?studentId=" + student.getStudentId();
     }
-    
-    public String addNewDetail() throws SQLException{
+
+    public String addNewDetail() throws SQLException {
+        DB.updateStudent(student);
+        DB.updateStudentDetails(studentDetails);
         DB.addNewDetail(student);
-        return "studentEdit?redirect=true&studentId="+student.getStudentId();
+        return "studentEdit?redirect=true&studentId=" + student.getStudentId();
     }
-    public String removeDetail(int detailId) throws SQLException{
+
+    public String removeDetail(int detailId) throws SQLException {
+        DB.updateStudent(student);
+        DB.updateStudentDetails(studentDetails);
         DB.removeDetail(detailId);
-        return "studentEdit?redirect=true&studentId="+student.getStudentId();
+        return "studentEdit?redirect=true&studentId=" + student.getStudentId();
     }
 
     /**

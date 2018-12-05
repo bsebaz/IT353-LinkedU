@@ -71,4 +71,25 @@ public class StudentDAO implements DAOInterface, java.io.Serializable {
         }
         return name;
     }
+
+    public int getStudentID(int userID) {
+        String query = "SELECT STUDENTID FROM LINKEDUDB.STUDENTS WHERE ACCOUNTID = ?";
+        int id = -1;
+        try (Connection db = connect()) {
+            PreparedStatement pstmt = null;
+            pstmt = db.prepareStatement(query);
+            pstmt.setInt(1, userID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt("STUDENTID");
+            }
+            rs.close();
+            pstmt.close();
+            db.close();
+        } catch (SQLException e) {
+            System.out.println("Failed to get student id");
+            System.out.println(e.getLocalizedMessage());
+        }
+        return id;
+    }
 }
