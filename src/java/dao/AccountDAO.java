@@ -21,11 +21,6 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
 
     public boolean login(User user) {
         boolean result = false;
-        
-        if(checkIfUserExists(user))
-        {
-            return false;
-        }
 
         try (Connection db = connect()) {
             String username = user.getUsername();
@@ -58,50 +53,43 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
         }
         return result;
     }
-    
-    public static boolean insertAccount(User account)
-    {
-                String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
-                Connection DBConn = null;
-                Statement stmt = null;
-                
-                String insertString = "INSERT INTO LINKEDUDB.Accounts(USERNAME, PASSWORD, ACCOUNTTYPE, ISADMIN) "
-                + "VALUES('" + account.getUsername() + "','"
-                                    + account.getPassword() + "','"
-                                    + account.getAccountType() + "',"
-                                    + "0" + "')";
-                
-                
-                try {
-                   DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
-                   //stmt = DBConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-                   System.out.println(insertString);
-                   stmt = DBConn.createStatement();
-                   stmt.executeUpdate(insertString);
-                   
-                }
-                catch(Exception e){
-                    
-                    e.printStackTrace();
-              
-                    System.out.println("EXCEPTION: unable to insert user");
-                    return false;
-                }
-                
-            
-            
-        return true;
-     }
-    
-    public static boolean checkIfUserExists(User user)
-    {
+
+    public static boolean insertAccount(User account) {
         String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
         Connection DBConn = null;
         Statement stmt = null;
-                
+
+        String insertString = "INSERT INTO LINKEDUDB.Accounts(USERNAME, PASSWORD, ACCOUNTTYPE, ISADMIN) "
+                + "VALUES('" + account.getUsername() + "','"
+                + account.getPassword() + "','"
+                + account.getAccountType() + "',"
+                + "0" + "')";
+
+        try {
+            DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+            //stmt = DBConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            System.out.println(insertString);
+            stmt = DBConn.createStatement();
+            stmt.executeUpdate(insertString);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            System.out.println("EXCEPTION: unable to insert user");
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean checkIfUserExists(User user) {
+        String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
+        Connection DBConn = null;
+
         try {
             String givenUsername = user.getUsername();
-            
+
             DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String sql = "SELECT * FROM LINKEDUDB.ACCOUNTS WHERE USERNAME = ?";
@@ -118,8 +106,6 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        
         return false;
     }
 }
-

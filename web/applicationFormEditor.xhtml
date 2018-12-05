@@ -15,7 +15,7 @@
                 $('.options_button').click(function(){
                     $('#app_form_body').load('#app_form_body');
                 });
-            })
+            });
         </script>
         <style>
             .fixed_menu {
@@ -36,6 +36,9 @@
         </style>
 
     </h:head>
+    
+    <f:event listener="#{accountController.checkIfNotLoggedIn()}" type="preRenderView" />
+    
     <h:body>
         
         <div class="fixed_menu">
