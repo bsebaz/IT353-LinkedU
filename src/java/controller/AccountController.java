@@ -97,6 +97,8 @@ public class AccountController implements java.io.Serializable {
         boolean isSuccessful;
         
         isSuccessful = user.attemptUserSignUp();
+        
+        return "home?faces-redirect=true";
     }
 
     /**

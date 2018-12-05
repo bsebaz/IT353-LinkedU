@@ -31,19 +31,19 @@
                 
                 <div class="form-group">
                     <h:outputLabel for="fname" value="First Name"/>
-                    <h:inputText id="fname" class="form-control" value = "#{studentDetailController.student.firstName}">
+                    <h:inputText id="fname" class="form-control" value = "#{studentController.student.firstName}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="lname" value="Last Name"/>
-                    <h:inputText id="lname" class="form-control" value = "#{studentDetailController.student.age}">
+                    <h:inputText id="lname" class="form-control" value = "#{studentController.student.age}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="age" value="Age&nbsp;"/>
-                    <h:selectOneMenu value="#{user.favCoffee1}">
+                    <h:selectOneMenu value="#{studentController.student.age}">
                         <f:selectItem itemValue="14" itemLabel="14" />
                         <f:selectItem itemValue="15" itemLabel="15" />
                         <f:selectItem itemValue="16" itemLabel="16" />
@@ -57,19 +57,19 @@
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="school" value="High School Name"/>
-                    <h:inputText id="school" class="form-control" value = "#{studentDetailController.student.school}">
+                    <h:inputText id="school" class="form-control" value = "#{studentController.student.school}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="gradYear" value="Graduation Year"/>
-                    <h:inputText id="gradYear" class="form-control" value = "#{studentDetailController.student.graduationYear}">
+                    <h:inputText id="gradYear" class="form-control" value = "#{studentController.student.graduationYear}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="gpa" value="GPA"/>
-                    <h:inputText id="gpa" class="form-control" value = "#{studentDetailController.student.gpa}">
+                    <h:inputText id="gpa" class="form-control" value = "#{studentController.student.gpa}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
