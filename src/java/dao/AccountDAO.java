@@ -81,7 +81,7 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
         return accountId;
     }
 
-    public static boolean checkIfUserExists(User user) {
+    public boolean checkIfUserExists(User user) {
         String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
         Connection DBConn = null;
 

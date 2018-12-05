@@ -56,7 +56,16 @@ public class AccountController implements java.io.Serializable {
             nav.performNavigation("login?faces-redirect=true");
         }
     }
-
+    
+    public String checkUsername() {
+        AccountDAO accountDAO = new AccountDAO();    // Creating a new object each time.
+        boolean status = accountDAO.checkIfUserExists(user); // Doing anything with the object after this?
+        if (!status)
+            return "";
+        else
+            return "User ID already in use."; 
+    }
+    
     /**
      * Redirects the user to the home page if they try to access a "not logged
      * in" page
@@ -102,7 +111,7 @@ public class AccountController implements java.io.Serializable {
         badAccountInsert = false;
         int accountId = -1;
 
-        if (!AccountDAO.checkIfUserExists(user)) {
+        if (!accountDB.checkIfUserExists(user)) {
             accountId = accountDB.insertAccount(user, "student");
         }
 
@@ -127,7 +136,7 @@ public class AccountController implements java.io.Serializable {
         int accountId = -1;
         int universityID;
 
-        if (!AccountDAO.checkIfUserExists(user)) {
+        if (!accountDB.checkIfUserExists(user)) {
             accountId = accountDB.insertAccount(user, "recruiter");
         }
 
