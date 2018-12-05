@@ -62,6 +62,10 @@ public class SearchStudentsController implements java.io.Serializable {
         checked.clear();
         return "compareStudents?faces-redirect=true&studentId1=" + selectedIDs[0] + "&studentId2=" + selectedIDs[1];
     }
+    
+    public void removeStudent(int studentId){
+        searchStudentsDAO.removeUniversity(studentId);
+    }
 
     /**
      * @return the searchTerm

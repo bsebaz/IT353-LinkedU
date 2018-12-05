@@ -58,20 +58,22 @@
                         </div>
                     </c:if>
                     <ui:repeat value="#{studentDetailController.studentDetails}" var="details">
-                        <div class="row">
-                            <div class="detailDescription">
-                                <h3><h:outputText value="#{details.detailName}"/> </h3>
-                                
-                                <h:outputText rendered="#{details.detailType == 'text'}" value="#{details.detailContent}"/>
-                                <ul>    
-                                    <ui:repeat value="#{details.splitDetailContent()}" var="list" rendered="#{details.detailType == 'list'}">
-                                        <li>
-                                            <h:outputText value="#{list}"/>
-                                        </li>
-                                    </ui:repeat>
-                                </ul>
+                        <h:panelGroup rendered="#{details.detailContent != null and details.detailContent.trim().length() > 0}">
+                            <div class="row">
+                                <div class="detailDescription">
+                                    <h3><h:outputText value="#{details.detailName}"/> </h3>
+
+                                    <h:outputText rendered="#{details.detailType == 'text'}" value="#{details.detailContent}"/>
+                                    <ul>
+                                        <ui:repeat value="#{details.splitDetailContent()}" var="list" rendered="#{details.detailType == 'list'}">
+                                            <li>
+                                                <h:outputText value="#{list}"/>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        </h:panelGroup>
                     </ui:repeat>
                 </div>
             </div>

@@ -67,6 +67,10 @@
                                         <f:ajax event="valueChange" render=":tableForm:studentTable"/>
                                     </h:selectBooleanCheckbox>
                                 </h:column>
+                                <h:column rendered="#{accountController.user.admin}">
+                                    <f:facet name="header">Remove</f:facet>
+                                    <h:commandButton class="btn btn-outline-danger my-2 my-sm-0" value="Remove" action="#{searchStudentsController.removeStudent(students.studentId)}"/>
+                                </h:column>
                             </h:dataTable>
                         </div>
                     </h:form>

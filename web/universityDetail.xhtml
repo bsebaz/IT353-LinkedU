@@ -39,6 +39,13 @@
                                     </div>
                                 </h:form>
                             </c:if>
+                            <c:if test="#{(studentDetailController.student.userId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')}">
+                                <div class="float-right">
+                                    <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="universityEdit.xhtml">Edit
+                                        <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                    </h:outputLink>
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                     <c:if test="#{universityDetailController.universityDetails.size() == 0}">
@@ -47,20 +54,22 @@
                         </div>
                     </c:if>
                     <ui:repeat value="#{universityDetailController.universityDetails}" var="details">
-                        <div class="row">
-                            <div class="detailDescription">
-                                <h3><h:outputText value="#{details.detailName}"/> </h3>
+                        <h:panelGroup rendered="#{details.detailContent != null and details.detailContent.trim().length() > 0}">
+                            <div class="row">
+                                <div class="detailDescription">
+                                    <h3><h:outputText value="#{details.detailName}"/> </h3>
 
-                                <h:outputText rendered="#{details.detailType == 'text'}" value="#{details.detailContent}"/>
-                                <ul>
-                                    <ui:repeat value="#{details.splitDetailContent()}" var="list" rendered="#{details.detailType == 'list'}">
-                                        <li>
-                                            <h:outputText value="#{list}"/>
-                                        </li>
-                                    </ui:repeat>
-                                </ul>
+                                    <h:outputText rendered="#{details.detailType == 'text'}" value="#{details.detailContent}"/>
+                                    <ul>
+                                        <ui:repeat value="#{details.splitDetailContent()}" var="list" rendered="#{details.detailType == 'list'}">
+                                            <li>
+                                                <h:outputText value="#{list}"/>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        </h:panelGroup>
                     </ui:repeat>
                 </div>
             </div>
