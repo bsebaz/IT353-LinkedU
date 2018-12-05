@@ -30,6 +30,7 @@ public class AccountController implements java.io.Serializable {
     private boolean loggedIn;
     private boolean accessDenied;
     private boolean badLogin;
+    private boolean badAccountInsert;
 
     public AccountController() {
         user = new User();
@@ -37,6 +38,7 @@ public class AccountController implements java.io.Serializable {
         loggedIn = false;
         accessDenied = false;
         badLogin = false;
+        badAccountInsert = false;
         db = new AccountDAO();
         signUpUniversity = new University();
     }
@@ -93,36 +95,29 @@ public class AccountController implements java.io.Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); // the above is unnecessary once the session is invalidated
         return "home?faces-redirect=true";
     }
-    
-    public String attemptUserSignUp()
-    {
-       
-        boolean goodAccountInsert = false;
+
+    public String attemptUserSignUp() {
+        badAccountInsert = false;
         int accountId = -1;
-        
-        if(!AccountDAO.checkIfUserExists(this.user))
-        {
+
+        if (!AccountDAO.checkIfUserExists(this.user)) {
             accountId = AccountDAO.insertAccount(this.user);
         }
-        
-        if(accountId == -1) //username exists already
+
+        if (accountId == -1) //username exists already
         {
             return "createAccount?faces-redirect=true";
         }
-        
-        goodAccountInsert = StudentDAO.insertStudent(this.student, accountId);
-        
-        if(goodAccountInsert == true && accountId != -1)
-        {
+
+        badAccountInsert = StudentDAO.insertStudent(this.student, accountId);
+
+        if (badAccountInsert == true && accountId != -1) {
             return "home?faces-redirect=true";
-        }
-        else
-        {
+        } else {
             return "createAccount?faces-redirect=true";
         }
-        
     }
-    
+
     public String createUniversityAccount() {
         return "";
     }
@@ -130,7 +125,7 @@ public class AccountController implements java.io.Serializable {
     private int CreateAccount() {
         return 0;
     }
-    
+
     /**
      * @return the user
      */
@@ -152,8 +147,6 @@ public class AccountController implements java.io.Serializable {
     public void setStudent(Student student) {
         this.student = student;
     }
-    
-    
 
     /**
      * @return the loggedIn
@@ -209,5 +202,19 @@ public class AccountController implements java.io.Serializable {
      */
     public void setSignUpUniversity(University signUpUniversity) {
         this.signUpUniversity = signUpUniversity;
+    }
+
+    /**
+     * @return the goodAccountInsert
+     */
+    public boolean isGoodAccountInsert() {
+        return badAccountInsert;
+    }
+
+    /**
+     * @param goodAccountInsert the goodAccountInsert to set
+     */
+    public void setGoodAccountInsert(boolean goodAccountInsert) {
+        this.badAccountInsert = goodAccountInsert;
     }
 }
