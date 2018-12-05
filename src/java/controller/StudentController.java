@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.StudentDAO;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import model.Student;
@@ -33,16 +34,6 @@ public class StudentController implements java.io.Serializable{
         student = new Student();
     }
     
-    public Student getModel() 
-    {
-        return student;
-    }
-
-    public void setModel(Student student) 
-    {
-        this.student = student;
-    }
-    
     public String getResponse()
     {
         String resultString = "";
@@ -50,5 +41,17 @@ public class StudentController implements java.io.Serializable{
         return resultString;
     }
     
-    
+    public void attemptStudentInsert()
+    {
+       // boolean goodStudentInsert;
+        boolean goodAccountInsert = false;
+        
+        
+        //StudentDAO.insertStudent(this.student);
+        
+        
+        
+        //return goodAccountInsert;
+        
+    }
 }

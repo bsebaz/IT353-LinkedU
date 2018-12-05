@@ -99,16 +99,6 @@ public class User implements java.io.Serializable {
         this.userID = userID;
     }
 
-    public boolean attemptUserSignUp() {
-        // boolean goodStudentInsert;
-        boolean goodAccountInsert = false;
-
-        if (!AccountDAO.checkIfUserExists(this)) {
-            goodAccountInsert = AccountDAO.insertAccount(this);
-        }
-        return goodAccountInsert;
-    }
-
     /**
      * @return the email
      */
