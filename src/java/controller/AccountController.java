@@ -89,6 +89,15 @@ public class AccountController implements java.io.Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); // the above is unnecessary once the session is invalidated
         return "home?faces-redirect=true";
     }
+    
+    public String createLogin()
+    {
+        String dest;
+        
+        boolean isSuccessful;
+        
+        isSuccessful = user.attemptUserSignUp();
+    }
 
     /**
      * @return the user

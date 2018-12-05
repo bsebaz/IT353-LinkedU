@@ -5,6 +5,9 @@
  */
 package model;
 
+import dao.AccountDAO;
+import dao.StudentDAO;
+
 /**
  *
  * @author slfx7
@@ -92,5 +95,16 @@ public class User implements java.io.Serializable {
      */
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+    
+    public boolean attemptUserSignUp()
+    {
+       // boolean goodStudentInsert;
+        boolean goodAccountInsert;
+        
+        goodAccountInsert = AccountDAO.insertAccount(this);
+        
+        return goodAccountInsert;
+        
     }
 }

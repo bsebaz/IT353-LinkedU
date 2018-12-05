@@ -28,12 +28,7 @@
                         <!-- Validator here, if any -->
                     </h:inputSecret>
                 </div>
-                <div class="form-group">
-                    <h:outputLabel for="confirmPass" value="Confirm Password"/>
-                    <h:inputSecret id="confirmPass" class="form-control" value = "#{accountController.user.password}">
-                        <!-- Validator here, if any -->
-                    </h:inputSecret>
-                </div>
+                
                 <div class="form-group">
                     <h:outputLabel for="fname" value="First Name"/>
                     <h:inputText id="fname" class="form-control" value = "#{studentDetailController.student.firstName}">
@@ -79,7 +74,9 @@
                     </h:inputText>
                 </div>
                 <div class="form-group">
-                    <h:commandButton class="btn btn-primary btn-block" value="Sign Up" /> <!--add back action=-->
+                    <h:commandButton class="btn btn-primary btn-block" value="Sign Up" action="#{accountController.user.attemptUserSignUp()}"> <!--add back action=-->
+                        <f:actionListener binding="#{studentDetailController.student.attemptStudentInsert()}" />
+                    </h:commandButton>
                 </div>
             </h:form>
         </div>
