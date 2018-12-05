@@ -148,11 +148,4 @@ public class Student implements java.io.Serializable {
         this.userId = userId;
     }
     
-    public void attemptStudentInsert()
-    {
-        boolean goodStudentInsert;
-        
-        goodStudentInsert = StudentDAO.insertStudent(this);
-
-    }
 }

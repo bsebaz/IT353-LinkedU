@@ -17,18 +17,19 @@ import model.User;
  */
 public class StudentDAO implements DAOInterface, java.io.Serializable{
     
-    public static boolean insertStudent(Student student)
+    public static boolean insertStudent(Student student, int accountId)
     {
                 String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
                 Connection DBConn = null;
                 Statement stmt = null;
                 
-                String insertString = "INSERT INTO LINKEDUDB.Students(FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA) "
-                + "VALUES('" + student.getFirstName() + "','"
+                String insertString = "INSERT INTO LINKEDUDB.Students(ACCOUNTID, FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA) "
+                + "VALUES(" + accountId + ",'" 
+                                    + student.getFirstName() + "','"
                                     + student.getLastName() + "','"
-                                    + student.getAge() + "',"
-                                    + student.getSchool() + "',"
-                                    + student.getGraduationYear() + "',"
+                                    + student.getAge() + "','"
+                                    + student.getSchool() + "','"
+                                    + student.getGraduationYear() + "','"
                                     + student.getGpa() + "')";
                 
                 

@@ -34,16 +34,6 @@ public class StudentController implements java.io.Serializable{
         student = new Student();
     }
     
-    public Student getModel() 
-    {
-        return student;
-    }
-
-    public void setModel(Student student) 
-    {
-        this.student = student;
-    }
-    
     public String getResponse()
     {
         String resultString = "";
@@ -57,7 +47,7 @@ public class StudentController implements java.io.Serializable{
         boolean goodAccountInsert = false;
         
         
-        StudentDAO.insertStudent(this.student);
+        //StudentDAO.insertStudent(this.student);
         
         
         

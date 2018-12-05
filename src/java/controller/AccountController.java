@@ -6,10 +6,12 @@
 package controller;
 
 import dao.AccountDAO;
+import dao.StudentDAO;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import model.Student;
 import model.User;
 
 /**
@@ -22,12 +24,14 @@ public class AccountController implements java.io.Serializable {
 
     AccountDAO db;
     private User user;
+    private Student student;
     private boolean loggedIn;
     private boolean accessDenied;
     private boolean badLogin;
 
     public AccountController() {
         user = new User();
+        student = new Student();
         loggedIn = false;
         accessDenied = false;
         badLogin = false;
@@ -91,14 +95,21 @@ public class AccountController implements java.io.Serializable {
     {
        
         boolean goodAccountInsert = false;
+        int accountId = -1;
         
         if(!AccountDAO.checkIfUserExists(this.user))
         {
-            goodAccountInsert = AccountDAO.insertAccount(this.user);
+            accountId = AccountDAO.insertAccount(this.user);
         }
         
+        if(accountId == -1) //username exists already
+        {
+            return "createAccount?faces-redirect=true";
+        }
         
-        if(goodAccountInsert == true)
+        goodAccountInsert = StudentDAO.insertStudent(this.student, accountId);
+        
+        if(goodAccountInsert == true && accountId != -1)
         {
             return "home?faces-redirect=true";
         }
@@ -124,6 +135,16 @@ public class AccountController implements java.io.Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+    
+    
 
     /**
      * @return the loggedIn
