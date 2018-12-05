@@ -16,10 +16,10 @@ CREATE TABLE LinkedUDB.appointments (
   endTime                   TIME,
   aptDate                   DATE,
   universityId              INT NOT NULL,
-  studentId                 INT,
+  studentId                 INT
 --   FOREIGN KEY (universityId)
 --     REFERENCES LinkedUDB.UNIVERSITIES (universityId),
-  FOREIGN KEY (studentId)
-    REFERENCES LinkedUDB.STUDENTS (studentId)
+--  FOREIGN KEY (studentId)
+--    REFERENCES LinkedUDB.STUDENTS (studentId)
 );
 

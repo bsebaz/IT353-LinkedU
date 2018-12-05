@@ -27,13 +27,13 @@ CREATE TABLE LinkedUDB.students (
 --    REFERENCES LinkedUDB.accounts(accountId)
 );
 
-INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa) 
-VALUES (1, 'bruce', 'macklin', '17', 'SC Prep', '2018', '4.0');
-INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
-VALUES (2, 'jenice', 'hepher', '17', 'St. Charles North', '2018', '4.2');
-INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
-VALUES (3, 'peter', 'franklin', '18', 'St. Charles North', '2018', '3.8');
-INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
-VALUES (4, 'Stephen', 'king', '17', 'St. Chalres North', '2018', '3.6');
-INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
-VALUES (5, 'kyle', 'mercer', '18', 'St. Charles North', '2018', '4.6');
+--INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa) 
+--VALUES (1, 'bruce', 'macklin', '17', 'SC Prep', '2018', '4.0');
+--INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
+--VALUES (2, 'jenice', 'hepher', '17', 'St. Charles North', '2018', '4.2');
+--INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
+--VALUES (3, 'peter', 'franklin', '18', 'St. Charles North', '2018', '3.8');
+--INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
+--VALUES (4, 'Stephen', 'king', '17', 'St. Chalres North', '2018', '3.6');
+--INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
+--VALUES (5, 'kyle', 'mercer', '18', 'St. Charles North', '2018', '4.6');

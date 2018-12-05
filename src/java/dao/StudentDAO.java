@@ -7,9 +7,11 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import model.Student;
-import model.User;
 
 /**
  *
@@ -17,18 +19,19 @@ import model.User;
  */
 public class StudentDAO implements DAOInterface, java.io.Serializable{
     
-    public static boolean insertStudent(Student student)
+    public static boolean insertStudent(Student student, int accountId)
     {
                 String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
                 Connection DBConn = null;
                 Statement stmt = null;
                 
-                String insertString = "INSERT INTO LINKEDUDB.Students(FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA) "
-                + "VALUES('" + student.getFirstName() + "','"
+                String insertString = "INSERT INTO LINKEDUDB.Students(ACCOUNTID, FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA) "
+                + "VALUES(" + accountId + ",'" 
+                                    + student.getFirstName() + "','"
                                     + student.getLastName() + "','"
-                                    + student.getAge() + "',"
-                                    + student.getSchool() + "',"
-                                    + student.getGraduationYear() + "',"
+                                    + student.getAge() + "','"
+                                    + student.getSchool() + "','"
+                                    + student.getGraduationYear() + "','"
                                     + student.getGpa() + "')";
                 
                 
@@ -51,6 +54,26 @@ public class StudentDAO implements DAOInterface, java.io.Serializable{
             
             
         return true;
-     }
-    
+    }
+
+    public String getStudentName(int userID) {
+        String query = "SELECT FIRSTNAME, LASTNAME FROM LINKEDUDB.STUDENTS WHERE ACCOUNTID = ?";
+        String name = "Profile";
+        try (Connection db = connect()) {
+            PreparedStatement pstmt = null;
+            pstmt = db.prepareStatement(query);
+            pstmt.setInt(1, userID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                name = rs.getString("firstName") + " " + rs.getString("lastName");
+            }
+            rs.close();
+            pstmt.close();
+            db.close();
+        } catch (SQLException e) {
+            System.out.println("Failed to get student's name");
+            System.out.println(e.getLocalizedMessage());
+        }
+        return name;
+    }
 }

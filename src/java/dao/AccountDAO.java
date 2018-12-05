@@ -36,9 +36,11 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
                 if (dbUsername.equals(username) && dbPassword.equals(password)) {
                     //Login was successful, set the user's attributes
                     int dbUserID = rs.getInt("ACCOUNTID");
+                    String dbEmail = rs.getString("EMAIL");
                     String dbAccountType = rs.getString("ACCOUNTTYPE");
                     boolean dbAdmin = rs.getBoolean("ISADMIN");
                     user.setUserID(dbUserID);
+                    user.setEmail(dbEmail);
                     user.setAccountType(dbAccountType);
                     user.setAdmin(dbAdmin);
                     //Set reutrn value to true
@@ -53,39 +55,39 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
         }
         return result;
     }
-    
-    public static boolean insertAccount(User account)
+
+    public static int insertAccount(User account)
     {
                 String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
-                Connection DBConn = null;
-                Statement stmt = null;
-                
+
                 String insertString = "INSERT INTO LINKEDUDB.Accounts(USERNAME, PASSWORD, ACCOUNTTYPE, ISADMIN) "
                 + "VALUES('" + account.getUsername() + "','"
                                     + account.getPassword() + "','"
-                                    + account.getAccountType() + "',"
-                                    + "0" + "')";
-                
-                
-                try {
-                   DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
-                   //stmt = DBConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-                   System.out.println(insertString);
-                   stmt = DBConn.createStatement();
-                   stmt.executeUpdate(insertString);
-                   
+                                    + "student" + "',"
+                                    + "0" + ")";
+
+                int accountId = -1;
+
+
+                try (Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student")) {
+                   PreparedStatement stmt = DBConn.prepareStatement(insertString, new String[]{"ACCOUNTID"});
+                   stmt.executeUpdate();
+
+                   ResultSet result = stmt.getGeneratedKeys();
+
+                   while (result.next()) {
+                       accountId = result.getInt(1);
+                   }
+
                 }
                 catch(Exception e){
-                    
+
                     e.printStackTrace();
-              
+
                     System.out.println("EXCEPTION: unable to insert user");
-                    return false;
+                    return -1;
                 }
-                
-            
-            
-        return true;
+
+        return accountId;
      }
 }
-

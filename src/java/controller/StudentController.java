@@ -12,30 +12,42 @@ import model.Student;
  * @author kchris4
  */
 public class StudentController implements java.io.Serializable{
-    
+
     private Student student;
     
-    public StudentController() 
+    public StudentController()
     {
         student = new Student();
     }
-    
-    public Student getModel() 
+
+    public Student getModel()
     {
         return student;
     }
 
-    public void setModel(Student model) 
+    public void setModel(Student model)
     {
         this.student = model;
     }
-    
+
     public String getResponse()
     {
         String resultString = "";
-        
+
         return resultString;
     }
-    
-    
+
+    public void attemptStudentInsert()
+    {
+       // boolean goodStudentInsert;
+        boolean goodAccountInsert = false;
+
+
+        //StudentDAO.insertStudent(this.student);
+
+
+
+        //return goodAccountInsert;
+
+    }
 }

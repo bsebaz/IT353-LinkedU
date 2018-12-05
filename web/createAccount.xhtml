@@ -15,35 +15,35 @@
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
         <div id="signup">
             <h:form style="width: 340px; margin: 50px auto;">
-                <h2 style="text-align: left;">Student Sign Up</h2>       
+                <h2 style="text-align: left;">Student Sign Up</h2>
                 <div class="form-group">
                     <h:outputLabel for="username" value="Username"/>
-                    <h:inputText id="username" class="form-control" value = "#{accountController.user.username}">
+                    <h:inputText id="username" class="form-control" required="true" value = "#{accountController.user.username}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="password" value="Password"/>
-                    <h:inputSecret id="password" class="form-control" value = "#{accountController.user.password}">
+                    <h:inputSecret id="password" class="form-control" required="true" value = "#{accountController.user.password}">
                         <!-- Validator here, if any -->
                     </h:inputSecret>
                 </div>
-                
+
                 <div class="form-group">
                     <h:outputLabel for="fname" value="First Name"/>
-                    <h:inputText id="fname" class="form-control" value = "#{studentController.student.firstName}">
+                    <h:inputText id="fname" class="form-control" required="true" value = "#{accountController.student.firstName}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="lname" value="Last Name"/>
-                    <h:inputText id="lname" class="form-control" value = "#{studentController.student.age}">
+                    <h:inputText id="lname" class="form-control" required="true" value = "#{accountController.student.lastName}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="age" value="Age&nbsp;"/>
-                    <h:selectOneMenu value="#{studentController.student.age}">
+                    <h:selectOneMenu value="#{accountController.student.age}">
                         <f:selectItem itemValue="14" itemLabel="14" />
                         <f:selectItem itemValue="15" itemLabel="15" />
                         <f:selectItem itemValue="16" itemLabel="16" />
@@ -57,29 +57,28 @@
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="school" value="High School Name"/>
-                    <h:inputText id="school" class="form-control" value = "#{studentController.student.school}">
+                    <h:inputText id="school" class="form-control" required="true" value = "#{accountController.student.school}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="gradYear" value="Graduation Year"/>
-                    <h:inputText id="gradYear" class="form-control" value = "#{studentController.student.graduationYear}">
+                    <h:inputText id="gradYear" class="form-control" required="true" value = "#{accountController.student.graduationYear}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="gpa" value="GPA"/>
-                    <h:inputText id="gpa" class="form-control" value = "#{studentController.student.gpa}">
+                    <h:inputText id="gpa" class="form-control" required="true" value = "#{accountController.student.gpa}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
                 <div class="form-group">
-                    <h:commandButton class="btn btn-primary btn-block" value="Sign Up" action="#{accountController.user.attemptUserSignUp()}"> <!--add back action=-->
-                        <f:actionListener binding="#{studentController.student.attemptStudentInsert()}" />
+                    <h:commandButton class="btn btn-primary btn-block" value="Sign Up" action="#{accountController.attemptUserSignUp()}"> <!--add back action=-->
+
                     </h:commandButton>
                 </div>
             </h:form>
         </div>
     </h:body>
 </html>
-

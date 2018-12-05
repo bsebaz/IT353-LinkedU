@@ -22,12 +22,14 @@
                         <!-- User Page -->
                         <li class="nav-item">
                             <c:if test="#{accountController.user ne null and accountController.user.accountType == 'student'}">
-                                <h:outputLink class="nav-link" value="studentDetail.xhtml">#{accountController.user.username}
-                                    <f:param name="studentId" value="#{studentDetailController.student.studentId}"/>
-                                </h:outputLink>
+                                <h:outputLink class="nav-link" value="studentDetail.xhtml">
+                                #{universalController.getFormattedStudentName(accountController.user.userID)}
+                                <f:param name="studentId" value="#{studentDetailController.student.studentId}"/>
+                              </h:outputLink>
                             </c:if>
                             <c:if test="#{accountController.user.accountType == 'recruiter'}">
-                                <h:outputLink class="nav-link" value="universityDetail.xhtml">#{accountController.user.username}
+                                <h:outputLink class="nav-link" value="universityDetail.xhtml">
+                                    #{universalController.getUniversityName(accountController.user.userID)}
                                     <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
                                 </h:outputLink>
                             </c:if>
@@ -64,6 +66,9 @@
                     <!-- Navbar Right -->
                     <ul class="navbar-nav">
                         <!-- Not Logged In -->
+                        <c:if test="#{!accountController.user.admin}">
+                            <h:commandButton class="btn btn-primary" value="Create University Account" action="createUniversityAccount?faces-redirect=true"/>&nbsp;
+                        </c:if>
                         <c:if test="#{!accountController.loggedIn}">
                             <h:commandButton class="btn btn-primary" value="Sign Up" action="createAccount?faces-redirect=true"/>&nbsp;
                             <h:commandButton class="btn btn-primary" value="Log In" action="login?faces-redirect=true"/>

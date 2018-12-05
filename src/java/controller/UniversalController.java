@@ -5,6 +5,8 @@
  */
 package controller;
 
+import dao.StudentDAO;
+import dao.UniversityDAO;
 import java.text.NumberFormat;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -18,8 +20,18 @@ import javax.faces.bean.SessionScoped;
 public class UniversalController implements java.io.Serializable {
 
     private final NumberFormat NF = NumberFormat.getInstance();
+    private final StudentDAO STUDENT_DB = new StudentDAO();
+    private final UniversityDAO UNIVERSITY_DB = new UniversityDAO();
 
     public String formatNumber(String number) {
         return NF.format(Double.parseDouble(number));
+    }
+    
+    public String getFormattedStudentName(int userID) {
+        return STUDENT_DB.getStudentName(userID);
+    }
+    
+    public String getUniversityName(int userID) {
+        return UNIVERSITY_DB.getUniversityName(userID);
     }
 }

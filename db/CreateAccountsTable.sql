@@ -14,9 +14,10 @@ CREATE TABLE LinkedUDB.accounts (
   accountId            INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
   username             VARCHAR(50) UNIQUE,
   password             VARCHAR(50),
+  email                VARCHAR(100),
   accountType          VARCHAR(20), --student/recruiter
   isAdmin              SMALLINT
 );
 
-INSERT INTO LinkedUDB.accounts(username, password, accountType, isAdmin) VALUES ('user', 'password', 'student', 1);
+INSERT INTO LinkedUDB.accounts(username, password, email, accountType, isAdmin) VALUES ('user', 'password', 'mmchug1@outlook.com', 'student', 1);
 

@@ -13,9 +13,11 @@ import dao.StudentDAO;
  * @author slfx7
  */
 public class User implements java.io.Serializable {
+
     private String username;
     private String password;
     private int userID;
+    private String email;
     private boolean admin;
     private String accountType;
 
@@ -25,8 +27,9 @@ public class User implements java.io.Serializable {
         password = "";
         accountType = "";
         userID = -1;
+        email = "";
     }
-    
+
     /**
      * @return the admin
      */
@@ -96,15 +99,27 @@ public class User implements java.io.Serializable {
     public void setUserID(int userID) {
         this.userID = userID;
     }
-    
+
     public boolean attemptUserSignUp()
     {
        // boolean goodStudentInsert;
         boolean goodAccountInsert;
-        
+
         goodAccountInsert = AccountDAO.insertAccount(this);
-        
+
         return goodAccountInsert;
-        
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

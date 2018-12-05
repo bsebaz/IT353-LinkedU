@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Create Account</title>
+        <h:outputStylesheet name="css/bootstrap.min.css"/>
+        <h:outputScript name="js/bootstrap.min.js"/>
+        <h:outputScript name="js/jquery-3.3.1.min.js"/>
+    </h:head>
+    <h:body>
+        <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
+        <div id="signup">
+            <h:form style="width: 340px; margin: 50px auto;">
+                <h2 style="text-align: left;">Create Recruiter / University Account</h2>       
+                <div class="form-group">
+                    <h:outputLabel for="username" value="Username"/>
+                    <h:inputText id="username" class="form-control" value = "#{accountController.user.username}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="password" value="Password"/>
+                    <h:inputSecret id="password" class="form-control" value = "#{accountController.user.password}">
+                        <!-- Validator here, if any -->
+                    </h:inputSecret>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="email" value="E-mail"/>
+                    <h:inputText id="email" class="form-control" value = "#{accountController.user.username}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="name" value="University Name"/>
+                    <h:inputText id="name" class="form-control" value = "#{accountController.signUpUniversity.name}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="city" value="City"/>
+                    <h:inputText id="city" class="form-control" value = "#{accountController.signUpUniversity.city}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="state" value="State"/>
+                    <h:inputText id="state" class="form-control" value = "#{accountController.signUpUniversity.state}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="accent" value="Primary School Color (Hex)"/>
+                    <h:inputText id="accent" class="form-control" value = "#{accountController.signUpUniversity.accentColor}">
+                        <!-- Validator here, if any -->
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:commandButton class="btn btn-primary btn-block" value="Sign Up" action="#{accountController.user.attemptUserSignUp()}"> <!--add back action=-->
+                        <f:actionListener binding="#{accountController.createUniversityAccount()}" />
+                    </h:commandButton>
+                </div>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

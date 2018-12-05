@@ -6,12 +6,13 @@
 package controller;
 
 import dao.AccountDAO;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import dao.StudentDAO;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import model.University;
+import model.Student;
 import model.User;
 
 /**
@@ -24,16 +25,22 @@ public class AccountController implements java.io.Serializable {
 
     AccountDAO db;
     private User user;
+    private University signUpUniversity;
+    private Student student;
     private boolean loggedIn;
     private boolean accessDenied;
     private boolean badLogin;
+    private boolean badAccountInsert;
 
     public AccountController() {
         user = new User();
+        student = new Student();
         loggedIn = false;
         accessDenied = false;
         badLogin = false;
+        badAccountInsert = false;
         db = new AccountDAO();
+        signUpUniversity = new University();
     }
 
     /**
@@ -62,12 +69,11 @@ public class AccountController implements java.io.Serializable {
         }
     }
 
-    public void checkIfAdmin() {
-        if (!user.isAdmin()) {
-            accessDenied = true;
+    public void checkIfRecruiter() {
+        if (!user.getAccountType().equals("recruiter") && !user.isAdmin()) {
             FacesContext fc = FacesContext.getCurrentInstance();
             ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
-            nav.performNavigation("accessDenied");
+            nav.performNavigation("accessDenied?faces-redirect=true");
         }
     }
 
@@ -89,16 +95,31 @@ public class AccountController implements java.io.Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); // the above is unnecessary once the session is invalidated
         return "home?faces-redirect=true";
     }
-    
-    public String createLogin()
-    {
-        String dest;
-        
-        boolean isSuccessful;
-        
-        isSuccessful = user.attemptUserSignUp();
-        
-        return "home?faces-redirect=true";
+
+    public String attemptUserSignUp() {
+        badAccountInsert = false;
+        int accountId = -1;
+
+        if (!AccountDAO.checkIfUserExists(this.user)) {
+            accountId = AccountDAO.insertAccount(this.user);
+        }
+
+        if (accountId == -1) //username exists already
+        {
+            return "createAccount?faces-redirect=true";
+        }
+
+        badAccountInsert = StudentDAO.insertStudent(this.student, accountId);
+
+        if (badAccountInsert == true && accountId != -1) {
+            return "home?faces-redirect=true";
+        } else {
+            return "createAccount?faces-redirect=true";
+        }
+    }
+
+    public String createUniversityAccount() {
+        return "";
     }
 
     /**
@@ -113,6 +134,14 @@ public class AccountController implements java.io.Serializable {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     /**
@@ -155,5 +184,33 @@ public class AccountController implements java.io.Serializable {
      */
     public void setBadLogin(boolean badLogin) {
         this.badLogin = badLogin;
+    }
+
+    /**
+     * @return the signUpUniversity
+     */
+    public University getSignUpUniversity() {
+        return signUpUniversity;
+    }
+
+    /**
+     * @param signUpUniversity the signUpUniversity to set
+     */
+    public void setSignUpUniversity(University signUpUniversity) {
+        this.signUpUniversity = signUpUniversity;
+    }
+
+    /**
+     * @return the goodAccountInsert
+     */
+    public boolean isGoodAccountInsert() {
+        return badAccountInsert;
+    }
+
+    /**
+     * @param goodAccountInsert the goodAccountInsert to set
+     */
+    public void setGoodAccountInsert(boolean goodAccountInsert) {
+        this.badAccountInsert = goodAccountInsert;
     }
 }

@@ -14,8 +14,12 @@
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
         <div class="container my-3">
-            <h1>Access Denied</h1>
-            <h:commandButton value="Back" onclick="history.go(-1); return false;"/>
+            <h:form>
+                <div class="text-center">
+                    <h2 class="my-lg-3">Access Denied</h2>
+                    <h:commandButton class="btn btn-primary my-md-3" value="Home" action="home?faces-redirect=true"/>
+                </div>
+            </h:form>
         </div>
     </h:body>
 </html>
