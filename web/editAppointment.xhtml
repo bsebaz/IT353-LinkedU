@@ -24,6 +24,7 @@
     </h:head>
 
     <f:event listener="#{accountController.checkIfNotLoggedIn()}" type="preRenderView" />
+    <f:event listener="#{accountController.checkIfRecruiter()}" type="preRenderView" />
 
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>

@@ -6,8 +6,6 @@
 package controller;
 
 import dao.AccountDAO;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -62,12 +60,11 @@ public class AccountController implements java.io.Serializable {
         }
     }
 
-    public void checkIfAdmin() {
-        if (!user.isAdmin()) {
-            accessDenied = true;
+    public void checkIfRecruiter() {
+        if (!user.getAccountType().equals("recruiter")) {
             FacesContext fc = FacesContext.getCurrentInstance();
             ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
-            nav.performNavigation("accessDenied");
+            nav.performNavigation("accessDenied?faces-redirect=true");
         }
     }
 
@@ -89,6 +86,19 @@ public class AccountController implements java.io.Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); // the above is unnecessary once the session is invalidated
         return "home?faces-redirect=true";
     }
+    
+    public String createLogin()
+    {
+        String dest;
+        
+        boolean isSuccessful;
+        
+        isSuccessful = user.attemptUserSignUp();
+        
+        return "home?faces-redirect=true";
+    }
+    
+
 
     /**
      * @return the user

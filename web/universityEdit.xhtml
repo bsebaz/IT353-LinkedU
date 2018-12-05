@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>LinkedU</title>
+        <h:outputStylesheet name="css/bootstrap.min.css"/>
+        <h:outputStylesheet name="css/LinkedU.css"/>
+        <h:outputScript name="js/bootstrap.min.js"/>
+        <h:outputScript name="js/jquery-3.3.1.min.js"/>
+    </h:head>
+    <h:body>
+        <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
+
+        <div class="container">
+            <h:form rendered="#{!(universityDetailController.university == null)}">
+                <div class="row">
+                    <div class="col-md-12 detailInfo">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="universityDetailBanner">
+                                </div>
+                                <div class="form-group col-6">
+                                    <h:outputLabel for="universityName" value="University Name"/>
+                                    <h:inputText id="universityName" class="form-control" value="#{universityDetailController.university.name}">
+                                        <!-- Validator here, if any -->
+                                    </h:inputText>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <h:outputLabel for="city" value="City"/>
+                                        <h:inputText id="city" class="form-control" value="#{universityDetailController.university.city}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <h:outputLabel for="state" value="State"/>
+                                        <h:inputText id="state" class="form-control" value="#{universityDetailController.university.state}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <h:outputLabel for="studentPopulation" value="Student Population"/>
+                                        <h:inputText id="studentPopulation" class="form-control" value="#{universityDetailController.university.studentPopulation}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <h:outputLabel for="cost" value="Cost"/>
+                                        <h:inputText id="cost" class="form-control" value="#{universityDetailController.university.cost}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ui:repeat value="#{universityDetailController.universityDetails}" var="details">
+                            <div class="row">
+                                <div class="detailDescription row">
+                                    <div class="col-6">
+                                        <div class="form-group float-left">
+                                            <h:outputLabel for="detailName" value="Detail Name"/>
+                                            <h:inputText id="detailName" class="form-control" value="#{details.detailName}">
+                                                <!-- Validator here, if any -->
+                                            </h:inputText>
+                                        </div>
+                                        <div class="form-group float-left">
+                                            <h:outputLabel for="detailContent" value="Detail Content"/>
+                                            <h:inputTextarea cols="120" rows="10" id="textDetailContent" class="form-control" value="#{details.detailContent}">
+                                                <!-- Validator here, if any -->
+                                            </h:inputTextarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group float-right">
+                                            <h:outputLabel for="detailType" value="Detail Type"/>
+                                            <h:selectOneMenu value="#{details.detailType}" class="form-control">
+                                                <f:selectItem itemValue="text" itemLabel="Text" />
+                                                <f:selectItem itemValue="list" itemLabel="List" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <h:commandButton class="btn btn-outline-danger my-2 my-sm-0" value="Remove Detail" action="#{universityDetailController.removeDetail(details.detailId)}">
+                                            <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                        <div>
+                            <div class="form-group float-right">
+                                <h:commandButton class="btn btn-primary" style="margin-right: 1em;" value="Save" action="#{universityDetailController.updateUniversity()}">
+                                    <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                </h:commandButton>
+                                <h:commandButton class="btn btn-primary" value="Add New Detail" action="#{universityDetailController.addNewDetail()}">
+                                    <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

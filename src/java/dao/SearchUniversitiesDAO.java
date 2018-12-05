@@ -43,7 +43,13 @@ public class SearchUniversitiesDAO implements DAOInterface, java.io.Serializable
             ResultSet rs = pstmt.executeQuery();
             
             while(rs.next()){
-                University university = new University(rs.getInt("universityId"), rs.getString("name"), rs.getString("city"), rs.getString("state"), rs.getString("studentPopulation"), rs.getString("cost"));
+                University university = new University(rs.getInt("universityId"),
+                        rs.getInt("accountId"),
+                        rs.getString("name"), 
+                        rs.getString("city"), 
+                        rs.getString("state"), 
+                        rs.getString("studentPopulation"), 
+                        rs.getString("cost"));
                 universities.add(university);
             }
             

@@ -13,8 +13,8 @@ drop table LinkedUDB.files;
 CREATE TABLE LinkedUDB.files (
   fileId                    INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
   content                   INT, --type is placeholder for now
-  studentId                 INT, --Foreign key to tie file to student account
+  studentId                 INT  --Foreign key to tie file to student account
 
-    CONSTRAINT FK_FileStudent FOREIGN KEY (studentId)
-    REFERENCES LinkedUDB.Students(studentId)
+    --CONSTRAINT FK_FileStudent FOREIGN KEY (studentId)
+    --REFERENCES LinkedUDB.Students(studentId)
 );

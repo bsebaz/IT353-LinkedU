@@ -120,7 +120,10 @@
                             </div>
                         </ui:repeat>
                         <div>
-                            <div class="float-right">
+                            <div class="form-group float-right">
+                                <h:commandButton class="btn btn-primary" style="margin-right: 1em;" value="Save" action="#{studentDetailController.updateStudent()}">
+                                    <f:param name="studentId" value="#{studentDetailController.student.studentId}"/>
+                                </h:commandButton>
                                 <h:commandButton class="btn btn-primary" value="Add New Detail" action="#{studentDetailController.addNewDetail()}">
                                     <f:param name="studentId" value="#{studentDetailController.student.studentId}"/>
                                 </h:commandButton>
