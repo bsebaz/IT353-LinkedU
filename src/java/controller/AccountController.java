@@ -7,6 +7,7 @@ package controller;
 
 import dao.AccountDAO;
 import dao.StudentDAO;
+import dao.UniversityDAO;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -97,11 +98,12 @@ public class AccountController implements java.io.Serializable {
     }
 
     public String attemptUserSignUp() {
+        AccountDAO accountDB = new AccountDAO();
         badAccountInsert = false;
         int accountId = -1;
 
-        if (!AccountDAO.checkIfUserExists(this.user)) {
-            accountId = AccountDAO.insertAccount(this.user);
+        if (!AccountDAO.checkIfUserExists(user)) {
+            accountId = accountDB.insertAccount(user, "student");
         }
 
         if (accountId == -1) //username exists already
@@ -109,21 +111,39 @@ public class AccountController implements java.io.Serializable {
             return "createAccount?faces-redirect=true";
         }
 
-        badAccountInsert = StudentDAO.insertStudent(this.student, accountId);
+        badAccountInsert = StudentDAO.insertStudent(student, accountId);
 
         if (badAccountInsert == true && accountId != -1) {
-            return "home?faces-redirect=true";
+            return login();
         } else {
             return "createAccount?faces-redirect=true";
         }
     }
 
     public String createUniversityAccount() {
-        return "";
-    }
+        AccountDAO accountDB = new AccountDAO();
+        UniversityDAO universityDB = new UniversityDAO();
+        badAccountInsert = false;
+        int accountId = -1;
+        int universityID;
 
-    private int CreateAccount() {
-        return 0;
+        if (!AccountDAO.checkIfUserExists(user)) {
+            accountId = accountDB.insertAccount(user, "recruiter");
+        }
+
+        //username exists already
+        if (accountId == -1) {
+            badAccountInsert = true;
+            return "createUniversityAccount?faces-redirect=true";
+        }
+
+        universityID = universityDB.insertUniversity(signUpUniversity, accountId);
+
+        if (badAccountInsert == true && accountId != -1) {
+            return "createUniversityAccount?faces-redirect=true";
+        } else {
+            return "universityDetail.xhtml?faces-redirect=true&universityId=" + universityID;
+        }
     }
 
     /**

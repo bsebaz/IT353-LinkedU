@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="email" value="E-mail"/>
-                    <h:inputText id="email" class="form-control" value = "#{accountController.user.username}">
+                    <h:inputText id="email" class="form-control" value = "#{accountController.user.email}">
                         <!-- Validator here, if any -->
                     </h:inputText>
                 </div>
@@ -59,9 +59,7 @@
                     </h:inputText>
                 </div>
                 <div class="form-group">
-                    <h:commandButton class="btn btn-primary btn-block" value="Sign Up" action="#{accountController.user.attemptUserSignUp()}"> <!--add back action=-->
-                        <f:actionListener binding="#{accountController.createUniversityAccount()}" />
-                    </h:commandButton>
+                    <h:commandButton class="btn btn-primary btn-block" value="Sign Up" action="#{accountController.createUniversityAccount()}"/>
                 </div>
             </h:form>
         </div>
