@@ -30,6 +30,7 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @SessionScoped
+@ViewScoped
 public class StudentDetailController implements DetailsInterface, java.io.Serializable {
 
     private Student student;
@@ -96,14 +97,6 @@ public class StudentDetailController implements DetailsInterface, java.io.Serial
         }
     }
 
-    public void refreshDetails() {
-        try {
-            studentDetails = DB.getStudentDetails(student.getStudentId());
-        } catch (SQLException e) {
-            System.out.println("Couldn't refresh details");
-        }
-    }
-
     public String updateStudent() {
         DB.updateStudent(student);
         DB.updateStudentDetails(studentDetails);
@@ -111,15 +104,11 @@ public class StudentDetailController implements DetailsInterface, java.io.Serial
     }
 
     public String addNewDetail() throws SQLException {
-        DB.updateStudent(student);
-        DB.updateStudentDetails(studentDetails);
         DB.addNewDetail(student);
         return "studentEdit?redirect=true&studentId=" + student.getStudentId();
     }
 
     public String removeDetail(int detailId) throws SQLException {
-        DB.updateStudent(student);
-        DB.updateStudentDetails(studentDetails);
         DB.removeDetail(detailId);
         return "studentEdit?redirect=true&studentId=" + student.getStudentId();
     }
