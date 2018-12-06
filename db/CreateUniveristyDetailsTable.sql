@@ -17,3 +17,8 @@ CREATE TABLE LinkedUDB.universityDetails (
   detailName                VARCHAR(50),
   detailContent             VARCHAR(500)
 );
+
+INSERT INTO LinkedUDB.universityDetails (universityId, detailType, detailName, detailContent) 
+VALUES (1, 'text', 'Description', 'This school is great, everyone loves it!');
+INSERT INTO LinkedUDB.universityDetails (universityId, detailType, detailName, detailContent) 
+VALUES (1, 'list', 'Clubs', 'Computer, Climbing, Game Dev, Anime');

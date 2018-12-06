@@ -23,3 +23,6 @@ CREATE TABLE LinkedUDB.appointments (
 --    REFERENCES LinkedUDB.STUDENTS (studentId)
 );
 
+INSERT INTO LinkedUDB.appointments (startTime, endTime, aptDate, universityId) 
+VALUES ('15:18:17', '16:00:00', '2018-12-05', 1);
+
