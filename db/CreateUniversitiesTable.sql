@@ -20,7 +20,8 @@ CREATE TABLE LinkedUDB.universities (
   cost                 VARCHAR(50),
   accentColor          VARCHAR(6),
   applicationUrl       VARCHAR(50),
-  featured             SMALLINT
+  featured             SMALLINT,
+  imagePath            VARCHAR(255)
 );
 
 INSERT INTO LinkedUDB.universities (accountId, name, city, state, studentPopulation, cost, accentColor, featured) 

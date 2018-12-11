@@ -59,13 +59,33 @@ and open the template in the editor.
     box-shadow: 5px 5px 10px #999;
 }
 
+.studentDetailImage img {
+    height: 215px;
+    width: 215px;
+    border-radius: 5px;
+}
+
 .universityDetailBanner{
     height: 180px;
     width: 100%;
+    max-width: 1108px;
     margin-bottom: 1em;
     border: solid 1px #555;
     border-radius: 5px;
     box-shadow: 5px 5px 10px #999;
+}
+
+.universityDetailBanner img {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.featuredBanner img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 .homeCardTop {

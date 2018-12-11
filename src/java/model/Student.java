@@ -20,12 +20,13 @@ public class Student implements java.io.Serializable {
     private String school;
     private String graduationYear;
     private String gpa;
+    private String filePath;
     
     public Student (){
         
     }
     
-    public Student(int userId, int studentId, String firstName, String lastName, String age, String school, String graduationYear, String gpa){
+    public Student(int userId, int studentId, String firstName, String lastName, String age, String school, String graduationYear, String gpa, String filePath){
         this.userId = userId;
         this.studentId = studentId;
         this.firstName = firstName;
@@ -34,6 +35,7 @@ public class Student implements java.io.Serializable {
         this.school = school;
         this.graduationYear = graduationYear;
         this.gpa = gpa;
+        this.filePath = filePath;
     }
 
     /**
@@ -146,6 +148,20 @@ public class Student implements java.io.Serializable {
      */
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    /**
+     * @return the filePath
+     */
+    public String getFilePath() {
+        return filePath;
+    }
+
+    /**
+     * @param filePath the filePath to set
+     */
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
     
 }

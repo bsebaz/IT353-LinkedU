@@ -21,6 +21,7 @@ public class University implements java.io.Serializable {
     private String accentColor;
     private boolean featured;
     private String applicationUrl;
+    private String imagePath;
 
     public University() {
 
@@ -36,11 +37,12 @@ public class University implements java.io.Serializable {
         this.cost = cost;
     }
 
-    public University(int universityId, int accountId, String name, String city, String state, String studentPopulation, String cost, String accentColor, boolean featured, String applicationUrl) {
+    public University(int universityId, int accountId, String name, String city, String state, String studentPopulation, String cost, String accentColor, boolean featured, String applicationUrl, String imagePath) {
         this(universityId, accountId, name, city, state, studentPopulation, cost);
         this.accentColor = accentColor;
         this.featured = featured;
         this.applicationUrl = applicationUrl;
+        this.imagePath = imagePath;
     }
 
     /**
@@ -181,6 +183,20 @@ public class University implements java.io.Serializable {
      */
     public void setApplicationUrl(String applicationUrl) {
         this.applicationUrl = applicationUrl;
+    }
+
+    /**
+     * @return the imagePath
+     */
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    /**
+     * @param imagePath the imagePath to set
+     */
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
 }

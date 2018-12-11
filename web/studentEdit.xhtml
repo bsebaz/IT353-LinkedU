@@ -26,7 +26,11 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="studentDetailImage">
-
+                                    <h:graphicImage name="#{studentDetailController.student.filePath}"/>
+                                </div>
+                                <div class="my-2">
+                                    <p:fileUpload value="#{studentDetailController.file}" mode="simple" skinSimple="true"/>
+                                    <p:commandButton value="Submit" ajax="false" action="#{studentDetailController.upload()}" />
                                 </div>
                             </div>
                             <div class="col-md-9" style="border-left: solid 1px #777">

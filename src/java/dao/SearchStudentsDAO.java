@@ -64,7 +64,9 @@ public class SearchStudentsDAO implements DAOInterface, java.io.Serializable {
                         rs.getString("age"), 
                         rs.getString("school"), 
                         rs.getString("yearGraduated"), 
-                        rs.getString("gpa"));
+                        rs.getString("gpa"),
+                        rs.getString("imagePath")
+                );
                 
                 students.add(student);
             }

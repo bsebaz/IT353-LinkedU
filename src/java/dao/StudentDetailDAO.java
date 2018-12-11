@@ -41,7 +41,9 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
                         rs.getString("age"),
                         rs.getString("school"),
                         rs.getString("yearGraduated"),
-                        rs.getString("gpa"));
+                        rs.getString("gpa"),
+                        rs.getString("imagePath")
+                );
             }
             rs.close();
             pstmt.close();
@@ -223,5 +225,28 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
         }
 
         return studentDetails;
+    }
+    
+    public void updateStudentImagePath(String path, int studentId){
+        try (Connection db = connect()) {
+            int rowCount = 0;
+
+            String query = "UPDATE LinkedUDB.students SET imagePath = ? WHERE studentId = ?";
+            PreparedStatement pstmt = null;
+
+            pstmt = db.prepareStatement(query);
+            pstmt.setString(1, path);
+            pstmt.setInt(2, studentId);
+            rowCount = pstmt.executeUpdate();
+
+            if (rowCount == 1) {
+                FacesContext.getCurrentInstance().addMessage("studentEdit:success", new FacesMessage("Profile updated successfully"));
+            } else {
+                FacesContext.getCurrentInstance().addMessage("studentEdit:error", new FacesMessage("Error updating profile"));
+            }
+            db.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

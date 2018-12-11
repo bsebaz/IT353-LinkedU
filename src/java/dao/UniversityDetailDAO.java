@@ -186,7 +186,8 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
                         rs.getString("cost"),
                         rs.getString("accentColor"),
                         rs.getBoolean("featured"),
-                        rs.getString("applicationUrl")
+                        rs.getString("applicationUrl"),
+                        rs.getString("imagePath")
                 );
             }
             rs.close();
@@ -227,5 +228,28 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
         }
         
         return universityDetails;
+    }
+    
+        public void updateUniversityImagePath(String path, int universityId){
+        try (Connection db = connect()) {
+            int rowCount = 0;
+
+            String query = "UPDATE LinkedUDB.universities SET imagePath = ? WHERE universityId = ?";
+            PreparedStatement pstmt = null;
+
+            pstmt = db.prepareStatement(query);
+            pstmt.setString(1, path);
+            pstmt.setInt(2, universityId);
+            rowCount = pstmt.executeUpdate();
+
+            if (rowCount == 1) {
+                FacesContext.getCurrentInstance().addMessage("universityEdit:success", new FacesMessage("Profile updated successfully"));
+            } else {
+                FacesContext.getCurrentInstance().addMessage("universityEdit:error", new FacesMessage("Error updating profile"));
+            }
+            db.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

@@ -19,7 +19,8 @@ CREATE TABLE LinkedUDB.students (
   age                       VARCHAR(50),
   school                    VARCHAR(128),
   yearGraduated             VARCHAR(50),
-  gpa                       VARCHAR(50)
+  gpa                       VARCHAR(50),
+  imagePath                 VARCHAR(255)
 
 
 -- uncomment this block once we're ready to connect tables

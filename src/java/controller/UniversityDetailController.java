@@ -6,6 +6,11 @@
 package controller;
 
 import dao.UniversityDetailDAO;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +19,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.mail.MessagingException;
 import model.University;
 import model.UniversityDetails;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -30,6 +37,7 @@ public class UniversityDetailController implements DetailsInterface, java.io.Ser
     @ManagedProperty(value = "#{accountController.user.userID}")
     private int userID;
     private List<UniversityDetails> universityDetails;
+    private UploadedFile file;
 
     @PostConstruct
     public void viewDetails() {
@@ -68,6 +76,39 @@ public class UniversityDetailController implements DetailsInterface, java.io.Ser
             System.out.println("Couldn't refresh details");
         }
     }
+    
+    public void upload() throws IOException, MessagingException {
+        try (InputStream input = file.getInputstream()) {
+            String fileName = file.getFileName();
+
+            try {
+                // write the inputStream to a FileOutputStream
+                System.out.println(System.getProperty("user.dir"));
+                
+                //File path is defined locally, must change to location of image folder within project.
+                OutputStream out = new FileOutputStream(new File("C:\\Users\\Bailey\\Documents\\GitHub\\IT353-LinkedU\\web\\resources\\image\\" + fileName));
+
+                int read = 0;
+                byte[] bytes = new byte[1024];
+
+                while ((read = input.read(/*bytes*/)) != -1) {
+                    out.write(read);//bytes, 0, read);
+                }
+
+                input.close();
+                out.flush();
+                out.close();
+                
+                DB.updateUniversityImagePath("image/"+fileName, university.getUniversityId());
+
+                System.out.println("New file created!");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } catch (IOException e) {
+            System.out.print(e);
+        }
+    }    
 
     public String updateUniversity() {
         DB.updateUniversity(university);
@@ -122,5 +163,19 @@ public class UniversityDetailController implements DetailsInterface, java.io.Ser
      */
     public void setUniversityDetails(List<UniversityDetails> universityDetails) {
         this.universityDetails = universityDetails;
+    }
+
+    /**
+     * @return the file
+     */
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(UploadedFile file) {
+        this.file = file;
     }
 }

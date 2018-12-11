@@ -23,7 +23,9 @@
                             <ui:repeat value="#{homeController.featuredUniversities}" var="university">
                                 <h:form>
                                     <div class="card my-3">
-                                        <div class="card-img-top homeCardTop" style="background-color: ##{university.accentColor}"></div>
+                                        <div class="card-img-top homeCardTop featuredBanner" style="background-color: ##{university.accentColor}">
+                                            <h:graphicImage name="#{university.imagePath}" rendered="#{university.imagePath != null and university.imagePath.trim() != ''}"/>
+                                        </div>
                                         <div class="card-body">
                                             <h5 class="card-title"><h:outputText value="#{university.name}"/></h5>
                                             <p>

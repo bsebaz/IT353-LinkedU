@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,8 @@ public class StudentDetailController implements DetailsInterface, java.io.Serial
             try {
                 // write the inputStream to a FileOutputStream
                 System.out.println(System.getProperty("user.dir"));
+                
+                //File path is defined locally, must change to location of image folder within project.
                 OutputStream out = new FileOutputStream(new File("C:\\Users\\Bailey\\Documents\\GitHub\\IT353-LinkedU\\web\\resources\\image\\" + fileName));
 
                 int read = 0;
@@ -86,6 +89,8 @@ public class StudentDetailController implements DetailsInterface, java.io.Serial
                 input.close();
                 out.flush();
                 out.close();
+                
+                DB.updateStudentImagePath("image/"+fileName, student.getStudentId());
 
                 System.out.println("New file created!");
             } catch (IOException e) {
