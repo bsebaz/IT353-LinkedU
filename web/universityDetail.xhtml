@@ -39,16 +39,16 @@
                                     </div>
                                 </h:form>
                             </c:if>
-                            <c:if test="#{(accountController.user ne null) and (accountController.user.accountType == 'student')}">
+                            <c:if test="#{accountController.user.accountType == 'student'}">
                                 <h:form>
                                     <div class="float-right">
                                         <h:commandButton class="btn btn-primary my-2 my-sm-0" value="Schedule an Appointment" action="#{scheduleAppointmentsController.viewAppointments(universityDetailController.university)}"/>
                                     </div>
                                 </h:form>
                             </c:if>
-                            <c:if test="#{(universityDetailController.university.accountId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')}">
+                            <c:if test="#{((universityDetailController.university.accountId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')) or accountController.user.admin}">
                                 <div class="float-right">
-                                    <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="universityEdit.xhtml">Edit
+                                    <h:outputLink class="btn btn-outline-success mx-1 my-2 my-sm-0" value="universityEdit.xhtml">Edit
                                         <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
                                     </h:outputLink>
                                 </div>

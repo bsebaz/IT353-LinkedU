@@ -43,7 +43,7 @@
                                         <h:outputText value="#{studentDetailController.student.gpa} GPA"/><br></br>
                                     </h5>
                                 </div>
-                                <c:if test="#{(studentDetailController.student.userId == accountController.user.userID)}">
+                                <c:if test="#{(studentDetailController.student.userId == accountController.user.userID) or accountController.user.admin}">
                                     <div class="float-right">
                                         <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="studentEdit.xhtml">Edit
                                             <f:param name="studentId" value="#{studentDetailController.student.studentId}"/>
