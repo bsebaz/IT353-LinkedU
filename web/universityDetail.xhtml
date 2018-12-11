@@ -32,6 +32,13 @@
                                     <h2>University Not Found</h2>
                                 </h:form>
                             </div>
+                            <c:if test="#{((universityDetailController.university.accountId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')) or accountController.user.admin}">
+                                <div class="float-right mx-1">
+                                    <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="universityEdit.xhtml">Edit
+                                        <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                    </h:outputLink>
+                                </div>
+                            </c:if>
                             <c:if test="#{universityDetailController.university.applicationUrl != null and universityDetailController.university.applicationUrl.trim().length() > 0}">
                                 <h:form rendered="#{accountController.user.accountType == 'student'}">
                                     <div class="float-right mx-1">
@@ -45,13 +52,6 @@
                                         <h:commandButton class="btn btn-primary my-2 my-sm-0" value="Schedule an Appointment" action="#{scheduleAppointmentsController.viewAppointments(universityDetailController.university)}"/>
                                     </div>
                                 </h:form>
-                            </c:if>
-                            <c:if test="#{((universityDetailController.university.accountId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')) or accountController.user.admin}">
-                                <div class="float-right mx-1">
-                                    <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="universityEdit.xhtml">Edit
-                                        <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
-                                    </h:outputLink>
-                                </div>
                             </c:if>
                         </div>
                     </div>
