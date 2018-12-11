@@ -24,7 +24,14 @@ public class UniversalController implements java.io.Serializable {
     private final UniversityDAO UNIVERSITY_DB = new UniversityDAO();
 
     public String formatNumber(String number) {
-        return NF.format(Double.parseDouble(number));
+        double num;
+        try {
+            num = Double.parseDouble(number);
+        }
+        catch(NumberFormatException e) {
+            return number;
+        }
+        return NF.format(num);
     }
     
     public String getFormattedStudentName(int userID) {
