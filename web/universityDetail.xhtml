@@ -40,7 +40,7 @@
                                 </div>
                             </c:if>
                             <c:if test="#{universityDetailController.university.applicationUrl != null and universityDetailController.university.applicationUrl.trim().length() > 0}">
-                                <h:form rendered="#{accountController.user.accountType == 'student'}">
+                                <h:form rendered="#{accountController.user.accountType == 'student' or accountController.user.userID == universityDetailController.university.accountId}">
                                     <div class="float-right mx-1">
                                         <h:outputLink class="btn btn-success my-2 my-sm-0" value="#{universityDetailController.university.applicationUrl}">Apply</h:outputLink>
                                     </div>
