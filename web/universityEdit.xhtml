@@ -22,9 +22,9 @@
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
         <div class="container">
-            <h:form rendered="#{!(universityDetailController.university == null)}">
-                <div class="row">
-                    <div class="col-md-12 detailInfo">
+            <div class="row">
+                <div class="col-md-12 detailInfo">
+                    <h:form rendered="#{!(universityDetailController.university == null)}">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="universityDetailBanner"></div>
@@ -133,9 +133,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </h:form>
+                    <h:form rendered="#{universityDetailController.university == null}">
+                        <h2>University Not Found</h2>
+                    </h:form>
                 </div>
-            </h:form>
+            </div>
         </div>
     </h:body>
 </html>

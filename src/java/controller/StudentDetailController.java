@@ -76,6 +76,9 @@ public class StudentDetailController implements DetailsInterface, java.io.Serial
                 System.out.println("Couldn't find requested user");
             }
         }
+        if(student == null && studentDetails != null) {
+            studentDetails.clear();
+        }
     }
 
     public void upload() throws IOException, MessagingException {

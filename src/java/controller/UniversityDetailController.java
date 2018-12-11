@@ -58,6 +58,9 @@ public class UniversityDetailController implements DetailsInterface, java.io.Ser
                 System.out.println("Couldn't find requested university");
             }
         }
+        if(university == null && universityDetails != null) {
+            universityDetails.clear();
+        }
     }
 
     public String updateUniversity() throws SQLException {

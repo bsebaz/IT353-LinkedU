@@ -97,7 +97,7 @@
                                         </div>
                                         <!--<c:if test="#{details.detailType == 'text'}">-->
                                         <div class="form-group float-left">
-                                            <h:outputLabel for="detailContent" value="Detail Content"/>
+                                            <h:outputLabel for="textDetailContent" value="Detail Content"/>
                                             <h:inputTextarea cols="120" rows="10" id="textDetailContent" class="form-control" value="#{details.detailContent}">
                                                 <!-- Validator here, if any -->
                                             </h:inputTextarea>
@@ -107,7 +107,7 @@
                                     <div class="col-6">
                                         <div class="form-group float-right">
                                             <h:outputLabel for="detailType" value="Detail Type"/>
-                                            <h:selectOneMenu value="#{details.detailType}" class="form-control">
+                                            <h:selectOneMenu value="#{details.detailType}" id="detailType" class="form-control">
                                                 <f:selectItem itemValue="text" itemLabel="Text" />
                                                 <f:selectItem itemValue="list" itemLabel="List" />
                                             </h:selectOneMenu>
@@ -132,6 +132,9 @@
                                 </h:commandButton>
                             </div>
                         </div>
+                    </h:form>
+                    <h:form rendered="#{studentDetailController.student == null}">
+                        <h2>Student Not Found</h2>
                     </h:form>
                 </div>
             </div>

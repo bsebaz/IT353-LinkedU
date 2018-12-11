@@ -36,20 +36,21 @@
                                 </h:form>
                             </div>
                             <!-- Controls -->
-                            <h:form rendered="#{((universityDetailController.university.accountId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')) or accountController.user.admin}">
+                            <h:form rendered="#{universityDetailController.university ne null and (((universityDetailController.university.accountId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')) or accountController.user.admin)}">
                                 <div class="float-right mx-1">
                                     <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="universityEdit.xhtml">Edit
                                         <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
                                     </h:outputLink>
                                 </div>
                             </h:form>
-                            <h:form rendered="#{(universityDetailController.university.applicationUrl != null and universityDetailController.university.applicationUrl.trim().length() > 0) 
-                                                and (accountController.user.accountType == 'student' or accountController.user.userID == universityDetailController.university.accountId)}">
+                            <h:form rendered="#{universityDetailController.university ne null and
+                                                (universityDetailController.university.applicationUrl != null and universityDetailController.university.applicationUrl.trim().length() > 0) and
+                                                (accountController.user.accountType == 'student' or accountController.user.userID == universityDetailController.university.accountId)}">
                                 <div class="float-right mx-1">
                                     <h:outputLink class="btn btn-success my-2 my-sm-0" value="#{universityDetailController.university.applicationUrl}">Apply</h:outputLink>
                                 </div>
                             </h:form>
-                            <h:form rendered="#{accountController.user.accountType == 'student'}">
+                            <h:form rendered="#{universityDetailController.university ne null and accountController.user.accountType == 'student'}">
                                 <div class="float-right mx-1">
                                     <h:commandButton class="btn btn-primary my-2 my-sm-0" value="Schedule an Appointment" action="#{scheduleAppointmentsController.viewAppointments(universityDetailController.university)}"/>
                                 </div>
