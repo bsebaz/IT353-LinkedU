@@ -20,12 +20,12 @@
                             <h:commandLink class="nav-link" value="Home" action="home?faces-redirect=true"/>
                         </li>
                         <!-- Search Page -->
-                        <c:if test="#{(accountController.user ne null and accountController.user.accountType == 'student') or not accountController.loggedIn}">
+                        <c:if test="#{accountController.user.accountType == 'student' or not accountController.loggedIn or accountController.user.admin}">
                             <li class="nav-item">
                                 <h:commandLink class="nav-link" value="University Search" action="searchUniversities.xhtml?faces-redirect=true"/>
                             </li>
                         </c:if>
-                        <c:if test="#{accountController.user ne null and accountController.user.accountType == 'recruiter'}">
+                        <c:if test="#{accountController.user.accountType == 'recruiter' or accountController.user.admin}">
                             <li class="nav-item">
                                 <h:commandLink class="nav-link" value="Student Search" action="searchStudents.xhtml?faces-redirect=true"/>
                             </li>
@@ -37,12 +37,12 @@
                             </li>
                         </c:if>
                         <!-- Admin Controls -->
-                        <c:if test="#{(accountController.user ne null) and(accountController.user.admin) and (accountController.user.accountType == 'student')}">
+                        <c:if test="#{accountController.user.admin and accountController.user.accountType == 'student'}">
                             <li class="nav-item">
                                 <h:commandLink class="nav-link" value="View as Recruiter" action="#{accountController.user.setAccountType('recruiter')}"/>
                             </li>
                         </c:if>
-                        <c:if test="#{(accountController.user ne null) and (accountController.user.admin) and (accountController.user.accountType == 'recruiter')}">
+                        <c:if test="#{accountController.user.admin and accountController.user.accountType == 'recruiter'}">
                             <li class="nav-item">
                                 <h:commandLink class="nav-link" value="View as Student" action="#{accountController.user.setAccountType('student')}"/>
                             </li>
@@ -58,7 +58,7 @@
                         <!-- Logged Im -->
                         <!-- User Page -->
                         <li class="nav-item">
-                            <c:if test="#{accountController.user ne null and accountController.user.accountType == 'student'}">
+                            <c:if test="#{accountController.user.accountType == 'student'}">
                                 <h:outputLink class="nav-link" value="studentDetail.xhtml">
                                     #{universalController.getFormattedStudentName(accountController.user.userID)}
                                     <f:param name="studentId" value="#{accountController.studentID}"/>
