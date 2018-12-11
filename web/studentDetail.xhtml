@@ -13,13 +13,12 @@
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
     </h:head>
-    
+
     <f:event listener="#{accountController.checkIfNotLoggedIn()}" type="preRenderView" />
-    
+    <f:event listener="#{studentDetailController.checkStudentViewable(accountController.user.userID, accountController.user.accountType, accountController.user.admin)}" type="preRenderView" />
+
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
-        <!-- Try Getting the Requested Student -->
-        <h:form><h:outputText value="#{studentDetailController.viewDetails()}"/></h:form>
         <div class="container">
             <div class="row">
                 <div class="col-md-12 detailInfo">
@@ -43,13 +42,12 @@
                                         <h:outputText value="#{studentDetailController.student.gpa} GPA"/><br></br>
                                     </h5>
                                 </div>
-                                <c:if test="#{(studentDetailController.student.userId == accountController.user.userID) or accountController.user.admin}">
-                                    <div class="float-right">
-                                        <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="studentEdit.xhtml">Edit
-                                            <f:param name="studentId" value="#{studentDetailController.student.studentId}"/>
-                                        </h:outputLink>
-                                    </div>
-                                </c:if>
+                                <div class="float-right">
+                                    <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="studentEdit.xhtml" rendered="#{(studentDetailController.student.userId == accountController.user.userID) or accountController.user.admin}">
+                                        Edit
+                                        <f:param name="studentId" value="#{studentDetailController.student.studentId}"/>
+                                    </h:outputLink>
+                                </div>
                             </h:form>
                             <h:form rendered="#{(studentDetailController.student == null)}">
                                 <h1>Student Not Found</h1>
@@ -58,7 +56,7 @@
                     </div>
                     <c:if test="#{studentDetailController.studentDetails.size() == 0}">
                         <div class="my-3">
-                            
+
                         </div>
                     </c:if>
                     <ui:repeat value="#{studentDetailController.studentDetails}" var="details">

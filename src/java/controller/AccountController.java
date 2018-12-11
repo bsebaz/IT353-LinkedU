@@ -25,6 +25,7 @@ import model.User;
 public class AccountController implements java.io.Serializable {
 
     AccountDAO db;
+    StudentDAO studentDB;
     private User user;
     private University signUpUniversity;
     private Student student;
@@ -41,6 +42,7 @@ public class AccountController implements java.io.Serializable {
         badLogin = false;
         badAccountInsert = false;
         db = new AccountDAO();
+        studentDB = new StudentDAO();
         signUpUniversity = new University();
     }
 
@@ -56,16 +58,17 @@ public class AccountController implements java.io.Serializable {
             nav.performNavigation("login?faces-redirect=true");
         }
     }
-    
+
     public String checkUsername() {
         AccountDAO accountDAO = new AccountDAO();    // Creating a new object each time.
         boolean status = accountDAO.checkIfUserExists(user); // Doing anything with the object after this?
-        if (!status)
+        if (!status) {
             return "";
-        else
-            return "User ID already in use."; 
+        } else {
+            return "User ID already in use.";
+        }
     }
-    
+
     /**
      * Redirects the user to the home page if they try to access a "not logged
      * in" page
@@ -81,6 +84,14 @@ public class AccountController implements java.io.Serializable {
 
     public void checkIfRecruiter() {
         if (!user.getAccountType().equals("recruiter") && !user.isAdmin()) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
+            nav.performNavigation("accessDenied?faces-redirect=true");
+        }
+    }
+
+    public void checkIfAccountOwner(int id) {
+        if (user.getUserID() != id && !user.isAdmin()) {
             FacesContext fc = FacesContext.getCurrentInstance();
             ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
             nav.performNavigation("accessDenied?faces-redirect=true");
@@ -159,12 +170,12 @@ public class AccountController implements java.io.Serializable {
         StudentDAO studentDB = new StudentDAO();
         return studentDB.getStudentID(user.getUserID());
     }
-    
+
     public int getUniversityID() {
         UniversityDAO universityDB = new UniversityDAO();
         return universityDB.getUniversityID(user.getUserID());
     }
-    
+
     /**
      * @return the user
      */

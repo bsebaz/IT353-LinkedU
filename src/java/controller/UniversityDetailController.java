@@ -9,11 +9,8 @@ import dao.UniversityDetailDAO;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import model.University;
 import model.UniversityDetails;
 
@@ -27,12 +24,13 @@ public class UniversityDetailController implements DetailsInterface, java.io.Ser
 
     private University university;
     private final UniversityDetailDAO DB = new UniversityDetailDAO();
-    @ManagedProperty(value = "#{accountController.user.userID}")
-    private int userID;
     private List<UniversityDetails> universityDetails;
+    private int userID;
 
-    @PostConstruct
-    public void viewDetails() {
+    public void viewDetails(int userID) {
+        //Set userID
+        this.setUserID(userID);
+
         //Get universityId from URL
         Map<String, String> params = getParamsFromURL();
         String id = params.get("universityId");
@@ -45,55 +43,43 @@ public class UniversityDetailController implements DetailsInterface, java.io.Ser
                 if (university != null) {
                     universityDetails = DB.getUniversityDetails(university.getUniversityId());
                 }
-            } catch (SQLException e) {
-                System.out.println("Couldn't find requested university");
-            } catch (NumberFormatException e) {
+            } catch (SQLException | NumberFormatException e) {
                 System.out.println("Couldn't find requested university");
                 e.getLocalizedMessage();
             }
         } //Otherwise, return the current user's page
         else if (userID > 0) {
             try {
-                university = DB.getUniversity(userID);
+                university = DB.getUniversityByUser(userID);
+                if (university != null) {
+                    universityDetails = DB.getUniversityDetails(university.getUniversityId());
+                }
             } catch (SQLException e) {
                 System.out.println("Couldn't find requested university");
             }
         }
     }
 
-    public void refreshDetails() {
-        try {
-            universityDetails = DB.getUniversityDetails(university.getUniversityId());
-        } catch (SQLException e) {
-            System.out.println("Couldn't refresh details");
-        }
-    }
-
-    public String updateUniversity() {
+    public String updateUniversity() throws SQLException {
         DB.updateUniversity(university);
         DB.updateUniversityDetails(universityDetails);
+        university = DB.getUniversity(university.getUniversityId());
+        universityDetails = DB.getUniversityDetails(university.getUniversityId());
         return "universityEdit?universityId=" + university.getUniversityId();
     }
 
     public String addNewDetail() throws SQLException {
-        DB.updateUniversity(university);
         DB.updateUniversityDetails(universityDetails);
-        DB.addNewDetail(university);
+        DB.addNewDetail(university); 
+        universityDetails = DB.getUniversityDetails(university.getUniversityId());
         return "universityEdit?redirect=true&universityId=" + university.getUniversityId();
     }
 
     public String removeDetail(int detailId) throws SQLException {
-        DB.updateUniversity(university);
         DB.updateUniversityDetails(universityDetails);
         DB.removeDetail(detailId);
+        universityDetails = DB.getUniversityDetails(university.getUniversityId());
         return "universityEdit?redirect=true&universityId=" + university.getUniversityId();
-    }
-
-    /**
-     * @param userID the userID to set
-     */
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     /**
@@ -122,5 +108,19 @@ public class UniversityDetailController implements DetailsInterface, java.io.Ser
      */
     public void setUniversityDetails(List<UniversityDetails> universityDetails) {
         this.universityDetails = universityDetails;
+    }
+
+    /**
+     * @return the userID
+     */
+    public int getUserID() {
+        return userID;
+    }
+
+    /**
+     * @param userID the userID to set
+     */
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 }
