@@ -8,7 +8,6 @@
  * Created: Nov 26, 2018
  */
 
-drop table LinkedUDB.APPOINTMENTS;
 drop table LinkedUDB.students;
 
 CREATE TABLE LinkedUDB.students (
