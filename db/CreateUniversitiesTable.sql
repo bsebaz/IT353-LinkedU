@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -24,7 +24,7 @@ CREATE TABLE LinkedUDB.universities (
   imagePath            VARCHAR(255)
 );
 
-INSERT INTO LinkedUDB.universities (accountId, name, city, state, studentPopulation, cost, accentColor, featured) 
+INSERT INTO LinkedUDB.universities (accountId, name, city, state, studentPopulation, cost, accentColor, featured)
 VALUES (1, 'Illinois State University', 'Normal', 'IL', '18000', '25000', 'CE1126', 1);
 INSERT INTO LinkedUDB.universities (accountId, name, city, state, studentPopulation, cost, accentColor, featured)
 VALUES (20, 'University of Illinois at Urbana–Champaign', 'Champaign-Urbana', 'IL', '34000', '31000', 'E84A27', 1);

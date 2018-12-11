@@ -19,9 +19,46 @@
                         <li class="nav-item">
                             <h:commandLink class="nav-link" value="Home" action="home?faces-redirect=true"/>
                         </li>
+                        <!-- Search Page -->
+                        <c:if test="#{accountController.user.accountType == 'student' or not accountController.loggedIn or accountController.user.admin}">
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link" value="University Search" action="searchUniversities.xhtml?faces-redirect=true"/>
+                            </li>
+                        </c:if>
+                        <c:if test="#{accountController.user.accountType == 'recruiter' or accountController.user.admin}">
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link" value="Student Search" action="searchStudents.xhtml?faces-redirect=true"/>
+                            </li>
+                        </c:if>
+                        <!-- Appointments -->
+                        <c:if test="#{accountController.loggedIn}">
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link" value="Appointments" action="appointments.xhtml?faces-redirect=true"/>
+                            </li>
+                        </c:if>
+                        <!-- Admin Controls -->
+                        <c:if test="#{accountController.user.admin and accountController.user.accountType == 'student'}">
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link" value="View as Recruiter" action="#{accountController.user.setAccountType('recruiter')}"/>
+                            </li>
+                        </c:if>
+                        <c:if test="#{accountController.user.admin and accountController.user.accountType == 'recruiter'}">
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link" value="View as Student" action="#{accountController.user.setAccountType('student')}"/>
+                            </li>
+                        </c:if>
+                    </ul>
+                    <!-- Navbar Right -->
+                    <ul class="navbar-nav">
+                        <!-- Not Logged In -->
+                        <c:if test="#{!accountController.loggedIn}">
+                            <h:commandButton class="btn btn-primary" value="Sign Up" action="createAccount?faces-redirect=true"/>&nbsp;
+                            <h:commandButton class="btn btn-primary" value="Log In" action="login?faces-redirect=true"/>
+                        </c:if>
+                        <!-- Logged Im -->
                         <!-- User Page -->
                         <li class="nav-item">
-                            <c:if test="#{accountController.user ne null and accountController.user.accountType == 'student'}">
+                            <c:if test="#{accountController.user.accountType == 'student'}">
                                 <h:outputLink class="nav-link" value="studentDetail.xhtml">
                                     #{universalController.getFormattedStudentName(accountController.user.userID)}
                                     <f:param name="studentId" value="#{accountController.studentID}"/>
@@ -34,46 +71,9 @@
                                 </h:outputLink>
                             </c:if>
                         </li>
-                        <!-- Search Page -->
-                        <c:if test="#{(accountController.user ne null and accountController.user.accountType == 'student') or not accountController.loggedIn}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="University Search" action="searchUniversities.xhtml?faces-redirect=true"/>
-                            </li>
-                        </c:if>
-                        <c:if test="#{accountController.user ne null and accountController.user.accountType == 'recruiter'}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="Student Search" action="searchStudents.xhtml?faces-redirect=true"/>
-                            </li>
-                        </c:if>
-                        <!-- Appointments -->
-                        <c:if test="#{accountController.loggedIn}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="Appointments" action="appointments.xhtml?faces-redirect=true"/>
-                            </li>
-                        </c:if>
-                        <!-- Admin Controls -->
-                        <c:if test="#{(accountController.user ne null) and(accountController.user.admin) and (accountController.user.accountType == 'student')}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="View as Recruiter" action="#{accountController.user.setAccountType('recruiter')}"/>
-                            </li>
-                        </c:if>
-                        <c:if test="#{(accountController.user ne null) and (accountController.user.admin) and (accountController.user.accountType == 'recruiter')}">
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link" value="View as Student" action="#{accountController.user.setAccountType('student')}"/>
-                            </li>
-                        </c:if>
-                    </ul>
-                    <!-- Navbar Right -->
-                    <ul class="navbar-nav">
-                        <!-- Not Logged In -->
                         <c:if test="#{accountController.user.admin}">
                             <h:commandButton class="btn btn-primary" value="Create University Account" action="createUniversityAccount?faces-redirect=true"/>&nbsp;
                         </c:if>
-                        <c:if test="#{!accountController.loggedIn}">
-                            <h:commandButton class="btn btn-primary" value="Sign Up" action="createAccount?faces-redirect=true"/>&nbsp;
-                            <h:commandButton class="btn btn-primary" value="Log In" action="login?faces-redirect=true"/>
-                        </c:if>
-                        <!-- Logged Im -->
                         <c:if test="#{accountController.loggedIn}">
                             <h:commandLink class="btn btn-primary" value="Log Out" action="#{accountController.logout()}"/>
                         </c:if>

@@ -15,11 +15,10 @@ import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 import model.Student;
 import model.StudentDetails;
@@ -37,11 +36,20 @@ public class StudentDetailController implements DetailsInterface, java.io.Serial
     private final StudentDetailDAO DB = new StudentDetailDAO();
     private List<StudentDetails> studentDetails;
     private UploadedFile file;
-    @ManagedProperty(value = "#{accountController.user.userID}")
     private int userID;
 
-    @PostConstruct
-    public void viewDetails() {
+    public void checkStudentViewable(int userID, String accountType, boolean admin) {
+        viewDetails(userID);
+        if (student != null && student.getUserId() != userID && !accountType.equals("recruiter") && !admin) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
+            nav.performNavigation("accessDenied?faces-redirect=true");
+        }
+    }
+
+    private void viewDetails(int userID) {
+        this.userID = userID;
+
         //Get studentId from URL
         Map<String, String> params = getParamsFromURL();
         String id = params.get("studentId");
@@ -61,10 +69,16 @@ public class StudentDetailController implements DetailsInterface, java.io.Serial
         } //Otherwise, return the current user's page
         else {
             try {
-                student = DB.getStudent(userID);
+                student = DB.getStudentByUser(userID);
+                if (student != null) {
+                    studentDetails = DB.getStudentDetails(student.getStudentId());
+                }
             } catch (SQLException e) {
                 System.out.println("Couldn't find requested user");
             }
+        }
+        if(student == null && studentDetails != null) {
+            studentDetails.clear();
         }
     }
 
@@ -101,31 +115,25 @@ public class StudentDetailController implements DetailsInterface, java.io.Serial
         }
     }
 
-    public void refreshDetails() {
-        try {
-            studentDetails = DB.getStudentDetails(student.getStudentId());
-        } catch (SQLException e) {
-            System.out.println("Couldn't refresh details");
-        }
-    }
-
-    public String updateStudent() {
+    public String updateStudent() throws SQLException {
         DB.updateStudent(student);
         DB.updateStudentDetails(studentDetails);
+        student = DB.getStudent(student.getStudentId());
+        studentDetails = DB.getStudentDetails(student.getStudentId());
         return "studentEdit?studentId=" + student.getStudentId();
     }
 
     public String addNewDetail() throws SQLException {
-        DB.updateStudent(student);
         DB.updateStudentDetails(studentDetails);
         DB.addNewDetail(student);
+        studentDetails = DB.getStudentDetails(student.getStudentId());
         return "studentEdit?redirect=true&studentId=" + student.getStudentId();
     }
 
     public String removeDetail(int detailId) throws SQLException {
-        DB.updateStudent(student);
         DB.updateStudentDetails(studentDetails);
         DB.removeDetail(detailId);
+        studentDetails = DB.getStudentDetails(student.getStudentId());
         return "studentEdit?redirect=true&studentId=" + student.getStudentId();
     }
 
@@ -176,5 +184,12 @@ public class StudentDetailController implements DetailsInterface, java.io.Serial
      */
     public void setFile(UploadedFile file) {
         this.file = file;
+    }
+
+    /**
+     * @return the userID
+     */
+    public int getUserID() {
+        return userID;
     }
 }

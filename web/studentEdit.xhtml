@@ -13,9 +13,10 @@
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
     </h:head>
-    
+
     <f:event listener="#{accountController.checkIfNotLoggedIn()}" type="preRenderView" />
-    
+    <f:event listener="#{studentDetailController.checkStudentViewable(accountController.user.userID, accountController.user.accountType, accountController.user.admin)}" type="preRenderView" />
+
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
 
@@ -90,7 +91,6 @@
                                 </div>
                             </div>
                         </div>
-                        <h:outputText value="#{studentDetailController.refreshDetails()}"/>
                         <ui:repeat value="#{studentDetailController.studentDetails}" var="details">
                             <div class="row">
                                 <div class="detailDescription row">
@@ -102,24 +102,24 @@
                                             </h:inputText>
                                         </div>
                                         <!--<c:if test="#{details.detailType == 'text'}">-->
-                                            <div class="form-group float-left">
-                                                <h:outputLabel for="detailContent" value="Detail Content"/>
-                                                <h:inputTextarea cols="120" rows="10" id="textDetailContent" class="form-control" value="#{details.detailContent}">
-                                                    <!-- Validator here, if any -->
-                                                </h:inputTextarea>
-                                            </div>
+                                        <div class="form-group float-left">
+                                            <h:outputLabel for="textDetailContent" value="Detail Content"/>
+                                            <h:inputTextarea cols="120" rows="10" id="textDetailContent" class="form-control" value="#{details.detailContent}">
+                                                <!-- Validator here, if any -->
+                                            </h:inputTextarea>
+                                        </div>
                                         <!--</c:if>-->
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group float-right">
                                             <h:outputLabel for="detailType" value="Detail Type"/>
-                                            <h:selectOneMenu value="#{details.detailType}" class="form-control">
+                                            <h:selectOneMenu value="#{details.detailType}" id="detailType" class="form-control">
                                                 <f:selectItem itemValue="text" itemLabel="Text" />
                                                 <f:selectItem itemValue="list" itemLabel="List" />
                                             </h:selectOneMenu>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <h:commandButton class="btn btn-outline-danger my-2 my-sm-0" value="Remove Detail" action="#{studentDetailController.removeDetail(details.detailId)}">
                                             <f:param name="studentId" value="#{studentDetailController.student.studentId}"/>
@@ -139,9 +139,11 @@
                             </div>
                         </div>
                     </h:form>
+                    <h:form rendered="#{studentDetailController.student == null}">
+                        <h2>Student Not Found</h2>
+                    </h:form>
                 </div>
             </div>
         </div>
     </h:body>
 </html>
-

@@ -13,17 +13,20 @@
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
     </h:head>
-    
+
+    <!-- Try Getting the Requested University -->
+    <h:form><h:outputText value="#{universityDetailController.viewDetails(accountController.user.userID)}"/></h:form>
     <f:event listener="#{accountController.checkIfNotLoggedIn()}" type="preRenderView" />
     <f:event listener="#{accountController.checkIfRecruiter()}" type="preRenderView" />
-    
+    <f:event listener="#{accountController.checkIfAccountOwner(universityDetailController.university.accountId)}" type="preRenderView" />
+
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
-
         <div class="container">
-            <h:form rendered="#{!(universityDetailController.university == null)}" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-md-12 detailInfo">
+
+              <div class="row">
+                  <div class="col-md-12 detailInfo">
+                    <h:form rendered="#{!(universityDetailController.university == null)}" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="universityDetailBanner">
@@ -74,14 +77,20 @@
                                             <!-- Validator here, if any -->
                                         </h:inputText>
                                     </div>
-                                    <div class="form-check col-4 my-3" style="margin-left: 1em;">
-                                        <h:selectBooleanCheckbox rendered="#{accountController.user.admin}" id="featuredUniversity" class="form-check-input" value="#{universityDetailController.university.featured}"/>
-                                        <h:outputLabel rendered="#{accountController.user.admin}" for="featuredUniversity" class="form-check-label" value="Featured University"/>
+                                    <div class="form-check col-4">
+                                        <h:outputLabel rendered="#{accountController.user.admin}" for="featuredUniversity" value="Featured University"/>
+                                        <h:selectBooleanCheckbox rendered="#{accountController.user.admin}" id="featuredUniversity" class="mb-1 align-middle" style="margin-left: 10px;" value="#{universityDetailController.university.featured}"/>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group float-right">
+                                            <h:commandButton class="btn btn-primary mt-5" style="margin-right: 1em;" value="Save" action="#{universityDetailController.updateUniversity()}">
+                                                <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                            </h:commandButton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <h:outputText value="#{universityDetailController.refreshDetails()}"/>
                         <ui:repeat value="#{universityDetailController.universityDetails}" var="details">
                             <div class="row">
                                 <div class="detailDescription row">
@@ -93,7 +102,7 @@
                                             </h:inputText>
                                         </div>
                                         <div class="form-group float-left">
-                                            <h:outputLabel for="detailContent" value="Detail Content"/>
+                                            <h:outputLabel for="textDetailContent" value="Detail Content"/>
                                             <h:inputTextarea cols="120" rows="10" id="textDetailContent" class="form-control" value="#{details.detailContent}">
                                                 <!-- Validator here, if any -->
                                             </h:inputTextarea>
@@ -102,13 +111,12 @@
                                     <div class="col-6">
                                         <div class="form-group float-right">
                                             <h:outputLabel for="detailType" value="Detail Type"/>
-                                            <h:selectOneMenu value="#{details.detailType}" class="form-control">
+                                            <h:selectOneMenu value="#{details.detailType}" class="form-control" id="detailType">
                                                 <f:selectItem itemValue="text" itemLabel="Text" />
                                                 <f:selectItem itemValue="list" itemLabel="List" />
                                             </h:selectOneMenu>
                                         </div>
                                     </div>
-                                    
                                     <div class="form-group">
                                         <h:commandButton class="btn btn-outline-danger my-2 my-sm-0" value="Remove Detail" action="#{universityDetailController.removeDetail(details.detailId)}">
                                             <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
@@ -117,20 +125,26 @@
                                 </div>
                             </div>
                         </ui:repeat>
-                        <div>
-                            <div class="form-group float-right">
-                                <h:commandButton class="btn btn-primary" style="margin-right: 1em;" value="Save" action="#{universityDetailController.updateUniversity()}">
-                                    <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
-                                </h:commandButton>
-                                <h:commandButton class="btn btn-primary" value="Add New Detail" action="#{universityDetailController.addNewDetail()}">
-                                    <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
-                                </h:commandButton>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group float-right">
+                                        <h:commandButton class="btn btn-primary" style="margin-right: 1em;" value="Save" action="#{universityDetailController.updateUniversity()}" rendered="#{universityDetailController.universityDetails.size() gt 0}">
+                                            <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                        </h:commandButton>
+                                        <h:commandButton class="btn btn-primary" value="Add New Detail" action="#{universityDetailController.addNewDetail()}">
+                                            <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
+                                        </h:commandButton>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </h:form>
+                    <h:form rendered="#{universityDetailController.university == null}">
+                        <h2>University Not Found</h2>
+                    </h:form>
                 </div>
-            </h:form>
+            </div>
         </div>
     </h:body>
 </html>
-

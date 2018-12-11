@@ -12,13 +12,16 @@
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
     </h:head>
+
+    <!-- Try Getting the Requested University -->
+    <h:form><h:outputText value="#{universityDetailController.viewDetails(accountController.user.userID)}"/></h:form>
+
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
-        <!-- Try Getting the Requested University -->
-        <h:form><h:outputText value="#{universityDetailController.viewDetails()}"/></h:form>
         <div class="container">
             <div class="row">
                 <div class="col-md-12 detailInfo">
+                    <!-- Top -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="universityDetailBanner">
@@ -32,34 +35,30 @@
                                     <h2>University Not Found</h2>
                                 </h:form>
                             </div>
-                            <c:if test="#{universityDetailController.university.applicationUrl != null and universityDetailController.university.applicationUrl.trim().length() > 0}">
-                                <h:form>
-                                    <div class="float-right" style="margin-left: 1em;">
-                                        <h:outputLink class="btn btn-success my-2 my-sm-0" value="#{universityDetailController.university.applicationUrl}">Apply</h:outputLink>
-                                    </div>
-                                </h:form>
-                            </c:if>
-                            <c:if test="#{(accountController.user ne null) and (accountController.user.accountType == 'student')}">
-                                <h:form>
-                                    <div class="float-right">
-                                        <h:commandButton class="btn btn-primary my-2 my-sm-0" value="Schedule an Appointment" action="#{scheduleAppointmentsController.viewAppointments(universityDetailController.university)}"/>
-                                    </div>
-                                </h:form>
-                            </c:if>
-                            <c:if test="#{(universityDetailController.university.accountId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')}">
-                                <div class="float-right">
+                            <!-- Controls -->
+                            <h:form rendered="#{universityDetailController.university ne null and (((universityDetailController.university.accountId == accountController.user.userID) and (accountController.user.accountType == 'recruiter')) or accountController.user.admin)}">
+                                <div class="float-right mx-1">
                                     <h:outputLink class="btn btn-outline-success my-2 my-sm-0" value="universityEdit.xhtml">Edit
                                         <f:param name="universityId" value="#{universityDetailController.university.universityId}"/>
                                     </h:outputLink>
                                 </div>
-                            </c:if>
+                            </h:form>
+                            <h:form rendered="#{universityDetailController.university ne null and
+                                                (universityDetailController.university.applicationUrl != null and universityDetailController.university.applicationUrl.trim().length() > 0) and
+                                                (accountController.user.accountType == 'student' or accountController.user.userID == universityDetailController.university.accountId)}">
+                                <div class="float-right mx-1">
+                                    <h:outputLink class="btn btn-success my-2 my-sm-0" value="#{universityDetailController.university.applicationUrl}">Apply</h:outputLink>
+                                </div>
+                            </h:form>
+                            <h:form rendered="#{universityDetailController.university ne null and accountController.user.accountType == 'student'}">
+                                <div class="float-right mx-1">
+                                    <h:commandButton class="btn btn-primary my-2 my-sm-0" value="Schedule an Appointment" action="#{scheduleAppointmentsController.viewAppointments(universityDetailController.university)}"/>
+                                </div>
+                            </h:form>
                         </div>
                     </div>
-                    <c:if test="#{universityDetailController.universityDetails.size() == 0}">
-                        <div class="my-3">
-
-                        </div>
-                    </c:if>
+                    <!-- Details -->
+                    <h:form rendered="#{universityDetailController.universityDetails.size() == 0}" class="my-3"/>
                     <ui:repeat value="#{universityDetailController.universityDetails}" var="details">
                         <h:panelGroup rendered="#{details.detailContent != null and details.detailContent.trim().length() > 0}">
                             <div class="row">

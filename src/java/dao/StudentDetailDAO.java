@@ -53,18 +53,47 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
         return student;
     }
 
+    public Student getStudentByUser(int id) throws SQLException {
+        Student student = null;
+
+        try (Connection db = connect()) {
+            String query = "SELECT * FROM LinkedUDB.students WHERE ACCOUNTID = ?";
+            PreparedStatement pstmt = null;
+
+            pstmt = db.prepareStatement(query);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                student = new Student(rs.getInt("accountId"),
+                        rs.getInt("studentId"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("age"),
+                        rs.getString("school"),
+                        rs.getString("yearGraduated"),
+                        rs.getString("gpa"));
+            }
+            rs.close();
+            pstmt.close();
+            db.close();
+        }
+
+        return student;
+    }
+
     public int updateStudent(Student student) {
 
         int rowCount = 0;
         try (Connection db = connect()) {
 
             int studentId = student.getStudentId();
-            String firstName = student.getFirstName().replaceAll("\\s+","");
-            String lastName = student.getLastName().replaceAll("\\s+","");
-            String age = student.getAge().replaceAll("\\s+","");
+            String firstName = student.getFirstName().replaceAll("\\s+", "");
+            String lastName = student.getLastName().replaceAll("\\s+", "");
+            String age = student.getAge().replaceAll("\\s+", "");
             String school = student.getSchool().trim();
-            String graduationYear = student.getGraduationYear().replaceAll("\\s+","");
-            String gpa = student.getGpa().replaceAll("\\s+","");
+            String graduationYear = student.getGraduationYear().replaceAll("\\s+", "");
+            String gpa = student.getGpa().replaceAll("\\s+", "");
 
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
@@ -80,7 +109,7 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
             if (age.length() < 2 || age.length() > 25) {
                 valid = false;
             }
-            if (school.length() < 2 || school.length() > 25) {
+            if (school.length() < 2 || school.length() > 128) {
                 valid = false;
             }
             if (graduationYear.length() < 2 || graduationYear.length() > 25) {

@@ -21,13 +21,13 @@ import model.UniversityDetails;
  * @author slfx7
  */
 public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
-    
-    public int addNewDetail(University university){
+
+    public int addNewDetail(University university) {
         int rowCount = 0;
-        try (Connection db = connect()){
-            
+        try (Connection db = connect()) {
+
             int universityId = university.getUniversityId();
-                
+
             String query = "INSERT INTO LinkedUDB.universityDetails (universityId) VALUES (?)";
             PreparedStatement pstmt = null;
 
@@ -39,15 +39,15 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        
+
         return rowCount;
     }
-    
-    public int updateUniversity(University university){
-        
+
+    public int updateUniversity(University university) {
+
         int rowCount = 0;
-        try (Connection db = connect()){
-            
+        try (Connection db = connect()) {
+
             int universityId = university.getUniversityId();
             String name = university.getName().trim();
             String cost = university.getCost().trim();
@@ -56,27 +56,27 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
             String studentPopulation = university.getStudentPopulation().trim();
             String applicationUrl = university.getApplicationUrl();
             boolean featured = university.isFeatured();
-            
+
             boolean valid = true;
-            
-            if (name.length() < 2 || name.length() > 48){
+
+            if (name.length() < 2 || name.length() > 48) {
                 valid = false;
             }
-            if (cost.length() < 2 || cost.length() > 25){
+            if (cost.length() < 2 || cost.length() > 25) {
                 valid = false;
             }
-            if (city.length() < 2 || city.length() > 25){
+            if (city.length() < 2 || city.length() > 25) {
                 valid = false;
             }
-            if (state.length() < 2 || state.length() > 25){
+            if (state.length() < 2 || state.length() > 25) {
                 valid = false;
             }
-            if (studentPopulation.length() < 2 || studentPopulation.length() > 25){
+            if (studentPopulation.length() < 2 || studentPopulation.length() > 25) {
                 valid = false;
             }
-            
-            if (valid){
-                
+
+            if (valid) {
+
                 String query = "UPDATE LinkedUDB.universities SET name = ?, cost = ?, city = ?, state = ?, studentPopulation = ?, applicationUrl = ?, featured = ? WHERE universityId = ?";
                 PreparedStatement pstmt = null;
 
@@ -90,34 +90,33 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
                 pstmt.setBoolean(7, featured);
                 pstmt.setInt(8, universityId);
                 rowCount = pstmt.executeUpdate();
-                
-                if (rowCount == 1){
+
+                if (rowCount == 1) {
                     FacesContext.getCurrentInstance().addMessage("universityEdit:success", new FacesMessage("Profile updated successfully"));
-                }
-                else{
+                } else {
                     FacesContext.getCurrentInstance().addMessage("universityEdit:error", new FacesMessage("Error updating profile"));
                 }
-                
+
                 db.close();
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        
+
         return rowCount;
     }
-        
-    public int updateUniversityDetails(List<UniversityDetails> universityDetails){
-        
+
+    public int updateUniversityDetails(List<UniversityDetails> universityDetails) {
+
         int rowCount = 0;
-        try (Connection db = connect()){
-            
-            for (UniversityDetails universityDetail: universityDetails){
+        try (Connection db = connect()) {
+
+            for (UniversityDetails universityDetail : universityDetails) {
                 int detailId = universityDetail.getDetailId();
                 String detailType = universityDetail.getDetailType();
                 String detailName = universityDetail.getDetailName();
                 String detailContent = universityDetail.getDetailContent();
-                
+
                 String query = "UPDATE LinkedUDB.universityDetails SET detailType = ?, detailName = ?, detailContent = ? WHERE detailID = ?";
                 PreparedStatement pstmt = null;
 
@@ -127,28 +126,27 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
                 pstmt.setString(3, detailContent);
                 pstmt.setInt(4, detailId);
                 rowCount = pstmt.executeUpdate();
-                
-                if (rowCount == 1){
+
+                if (rowCount == 1) {
                     FacesContext.getCurrentInstance().addMessage("studentEdit:success", new FacesMessage("Profile updated successfully"));
-                }
-                else{
+                } else {
                     FacesContext.getCurrentInstance().addMessage("studentEdit:error", new FacesMessage("Error updating profile"));
                     break;
                 }
             }
-                
+
             db.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        
+
         return rowCount;
     }
-    
-    public int removeDetail(int detailId){
+
+    public int removeDetail(int detailId) {
         int rowCount = 0;
-        try (Connection db = connect()){
-                
+        try (Connection db = connect()) {
+
             String query = "DELETE FROM LinkedUDB.universityDetails WHERE detailId = ?";
             PreparedStatement pstmt = null;
 
@@ -160,13 +158,13 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        
+
         return rowCount;
     }
-        
+
     public University getUniversity(int id) throws SQLException {
         University university = null;
-        
+
         try (Connection db = connect()) {
             String query = "SELECT * FROM LinkedUDB.universities WHERE UNIVERSITYID = ?";
             PreparedStatement pstmt = null;
@@ -194,39 +192,70 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
             pstmt.close();
             db.close();
         }
-
         return university;
     }
-    
-    public List<UniversityDetails> getUniversityDetails(int universityId) throws SQLException{
-            
+
+    public University getUniversityByUser(int id) throws SQLException {
+        University university = null;
+
+        try (Connection db = connect()) {
+            String query = "SELECT * FROM LinkedUDB.universities WHERE ACCOUNTID = ?";
+            PreparedStatement pstmt = null;
+
+            pstmt = db.prepareStatement(query);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                university = new University(
+                        rs.getInt("universityId"),
+                        rs.getInt("accountId"),
+                        rs.getString("name"),
+                        rs.getString("city"),
+                        rs.getString("state"),
+                        rs.getString("studentPopulation"),
+                        rs.getString("cost"),
+                        rs.getString("accentColor"),
+                        rs.getBoolean("featured"),
+                        rs.getString("applicationUrl")
+                );
+            }
+            rs.close();
+            pstmt.close();
+            db.close();
+        }
+        return university;
+    }
+
+    public List<UniversityDetails> getUniversityDetails(int universityId) throws SQLException {
+
         List<UniversityDetails> universityDetails = new ArrayList<UniversityDetails>();
-        
+
         try (Connection DBConn = connect()) {
             String insertString = "";
-            
+
             PreparedStatement pstmt = null;
-            
+
             insertString = "SELECT * FROM LinkedUDB.universityDetails WHERE UNIVERSITYID = ?";
-                
-            pstmt = DBConn.prepareStatement( insertString );
+
+            pstmt = DBConn.prepareStatement(insertString);
             pstmt.setInt(1, universityId);
             ResultSet rs = pstmt.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 UniversityDetails universityDetail = new UniversityDetails(
                         rs.getInt("detailId"),
-                        rs.getInt("universityId"), 
-                        rs.getString("detailType"), 
-                        rs.getString("detailName"), 
+                        rs.getInt("universityId"),
+                        rs.getString("detailType"),
+                        rs.getString("detailName"),
                         rs.getString("detailContent"));
-                
+
                 universityDetails.add(universityDetail);
             }
-            
+
             DBConn.close();
         }
-        
+
         return universityDetails;
     }
     
