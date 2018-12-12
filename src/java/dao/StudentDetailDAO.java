@@ -257,8 +257,8 @@ public class StudentDetailDAO implements DAOInterface, java.io.Serializable {
 
         return studentDetails;
     }
-    
-    public void updateStudentImagePath(String path, int studentId){
+
+    public void updateStudentImagePath(String path, int studentId) {
         try (Connection db = connect()) {
             int rowCount = 0;
 

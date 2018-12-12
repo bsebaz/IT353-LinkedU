@@ -24,23 +24,25 @@
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
         <div class="container">
 
-              <div class="row">
-                  <div class="col-md-12 detailInfo">
+            <div class="row">
+                <div class="col-md-12 detailInfo">
                     <h:form rendered="#{!(universityDetailController.university == null)}" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="universityDetailBanner">
-                                    <h:graphicImage name="#{universityDetailController.university.imagePath}"/>
+                                    <h:graphicImage rendered="#{universityDetailController.university.imagePath ne null}" name="#{universityDetailController.university.imagePath}"/>
                                 </div>
                                 <div class="my-2">
                                     <p:fileUpload value="#{universityDetailController.file}" mode="simple" skinSimple="true"/>
                                     <p:commandButton value="Submit" ajax="false" action="#{universityDetailController.upload()}" />
                                 </div>
-                                <div class="form-group col-6">
-                                    <h:outputLabel for="universityName" value="University Name"/>
-                                    <h:inputText id="universityName" class="form-control" value="#{universityDetailController.university.name}">
-                                        <!-- Validator here, if any -->
-                                    </h:inputText>
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <h:outputLabel for="universityName" value="University Name"/>
+                                        <h:inputText id="universityName" class="form-control" value="#{universityDetailController.university.name}">
+                                            <!-- Validator here, if any -->
+                                        </h:inputText>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-4">

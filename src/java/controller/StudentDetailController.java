@@ -91,7 +91,7 @@ public class StudentDetailController implements DetailsInterface, java.io.Serial
                 System.out.println(System.getProperty("user.dir"));
                 
                 //File path is defined locally, must change to location of image folder within project.
-                OutputStream out = new FileOutputStream(new File("C:\\Users\\Bailey\\Documents\\GitHub\\IT353-LinkedU\\web\\resources\\image\\" + fileName));
+                OutputStream out = new FileOutputStream(new File("C:\\Users\\mmchug1\\Downloads\\IT 353 Group Project\\IT353-LinkedU\\web\\resources\\image\\" + fileName));
 
                 int read = 0;
                 byte[] bytes = new byte[1024];

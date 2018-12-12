@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="universityDetailBanner">
-                                <h:graphicImage name="#{universityDetailController.university.imagePath}"/>
+                                <h:graphicImage rendered="#{universityDetailController.university.imagePath ne null}" name="#{universityDetailController.university.imagePath}"/>
                             </div>
                             <div class="float-left">
                                 <h:form rendered="#{!(universityDetailController.university == null)}">

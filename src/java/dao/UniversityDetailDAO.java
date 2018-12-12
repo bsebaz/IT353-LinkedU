@@ -259,8 +259,8 @@ public class UniversityDetailDAO implements DAOInterface, java.io.Serializable {
 
         return universityDetails;
     }
-    
-        public void updateUniversityImagePath(String path, int universityId){
+
+    public void updateUniversityImagePath(String path, int universityId) {
         try (Connection db = connect()) {
             int rowCount = 0;
 
