@@ -40,11 +40,11 @@ public class StudentDAO implements DAOInterface, java.io.Serializable {
             stmt = DBConn.createStatement();
             stmt.executeUpdate(insertString);
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
 
             e.printStackTrace();
 
-            System.out.println("EXCEPTION: unable to insert user");
+            System.out.println("EXCEPTION: unable to insert student");
             return false;
         }
 

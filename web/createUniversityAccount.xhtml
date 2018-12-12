@@ -8,13 +8,20 @@
     <h:head>
         <title>Create Account</title>
         <h:outputStylesheet name="css/bootstrap.min.css"/>
+        <h:outputStylesheet name="css/LinkedU.css"/>
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jquery-3.3.1.min.js"/>
     </h:head>
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
-        <div id="signup">
-            <h:form style="width: 340px; margin: 50px auto;">
+        <div id="signup" class="searchBox" style="width: 390px; margin: 1.5em auto;">
+            <h:form style="width: 340px; margin: auto" rendered="#{accountController.badAccountInsert}">
+                <div class="alert alert-danger" role="alert">
+                    Failed to create account. Please double check that the information entered is valid.
+                    <h:outputText value ="#{accountController.setBadAccountInsert(false)}"/>
+                </div>
+            </h:form>
+            <h:form style="width: 340px; margin: auto;">
                 <h2 style="text-align: left;">Create Recruiter / University Account</h2>       
                 <div class="form-group">
                     <h:outputLabel for="username" value="Username"/>

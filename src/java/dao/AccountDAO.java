@@ -73,7 +73,7 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
                 accountId = result.getInt(1);
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("EXCEPTION: unable to insert user");
             return -1;
@@ -105,5 +105,11 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
             System.err.println(e.getMessage());
         }
         return false;
+    }
+
+    public void removeAccount(int accountId) {
+        ArrayList vars = new ArrayList(Arrays.asList(accountId));
+        String query = "DELETE FROM LinkedUDB.accounts WHERE accountId = ?";
+        updateDB(query, vars);
     }
 }
