@@ -24,7 +24,9 @@ import model.User;
 @SessionScoped
 public class AccountController implements java.io.Serializable {
 
-    private final AccountDAO DB;
+    private final AccountDAO DB = new AccountDAO();
+    private final StudentDAO STUDENT_DB = new StudentDAO();
+    private final UniversityDAO UNIVERSITY_DB = new UniversityDAO();
     private User user;
     private University signUpUniversity;
     private Student student;
@@ -40,7 +42,6 @@ public class AccountController implements java.io.Serializable {
         accessDenied = false;
         badLogin = false;
         badAccountInsert = false;
-        DB = new AccountDAO();
         signUpUniversity = new University();
     }
 
@@ -58,8 +59,7 @@ public class AccountController implements java.io.Serializable {
     }
 
     public String checkUsername() {
-        AccountDAO accountDAO = new AccountDAO();    // Creating a new object each time.
-        boolean status = accountDAO.checkIfUserExists(user); // Doing anything with the object after this?
+        boolean status = DB.checkIfUserExists(user); // Doing anything with the object after this?
         if (!status) {
             return "";
         } else {
@@ -111,12 +111,11 @@ public class AccountController implements java.io.Serializable {
     }
 
     public String createStudentAccount() {
-        AccountDAO accountDB = new AccountDAO();
         boolean success;
         int accountId = -1;
 
-        if (!accountDB.checkIfUserExists(user)) {
-            accountId = accountDB.insertAccount(user, "student");
+        if (!DB.checkIfUserExists(user)) {
+            accountId = DB.insertAccount(user, "student");
         }
 
         if (accountId == -1) //username exists already
@@ -125,7 +124,7 @@ public class AccountController implements java.io.Serializable {
             return "createAccount?faces-redirect=true";
         }
 
-        success = StudentDAO.insertStudent(student, accountId);
+        success = STUDENT_DB.insertStudent(student, accountId);
 
         if (success == true && accountId != -1) {
             return login();
@@ -137,14 +136,12 @@ public class AccountController implements java.io.Serializable {
     }
 
     public String createUniversityAccount() {
-        AccountDAO accountDB = new AccountDAO();
-        UniversityDAO universityDB = new UniversityDAO();
         badAccountInsert = false;
         int accountId = -1;
         int universityID;
 
-        if (!accountDB.checkIfUserExists(user)) {
-            accountId = accountDB.insertAccount(user, "recruiter");
+        if (!DB.checkIfUserExists(user)) {
+            accountId = DB.insertAccount(user, "recruiter");
         }
 
         //If account insert failed
@@ -153,7 +150,7 @@ public class AccountController implements java.io.Serializable {
             return "createUniversityAccount?faces-redirect=true";
         }
 
-        universityID = universityDB.insertUniversity(signUpUniversity, accountId);
+        universityID = UNIVERSITY_DB.insertUniversity(signUpUniversity, accountId);
 
         //If university insert failed
         if (universityID == -1) {
@@ -170,13 +167,11 @@ public class AccountController implements java.io.Serializable {
     }
 
     public int getStudentID() {
-        StudentDAO studentDB = new StudentDAO();
-        return studentDB.getStudentID(user.getUserID());
+        return STUDENT_DB.getStudentID(user.getUserID());
     }
 
     public int getUniversityID() {
-        UniversityDAO universityDB = new UniversityDAO();
-        return universityDB.getUniversityID(user.getUserID());
+        return UNIVERSITY_DB.getUniversityID(user.getUserID());
     }
 
     /**

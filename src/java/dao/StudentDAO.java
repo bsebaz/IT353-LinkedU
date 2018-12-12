@@ -10,7 +10,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
 import model.Student;
 
 /**
@@ -19,36 +20,11 @@ import model.Student;
  */
 public class StudentDAO implements DAOInterface, java.io.Serializable {
 
-    public static boolean insertStudent(Student student, int accountId) {
-        String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
-        Connection DBConn = null;
-        Statement stmt = null;
-
-        String insertString = "INSERT INTO LINKEDUDB.Students(ACCOUNTID, FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA) "
-                + "VALUES(" + accountId + ",'"
-                + student.getFirstName() + "','"
-                + student.getLastName() + "','"
-                + student.getAge() + "','"
-                + student.getSchool() + "','"
-                + student.getGraduationYear() + "','"
-                + student.getGpa() + "')";
-
-        try {
-            DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
-            //stmt = DBConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            System.out.println(insertString);
-            stmt = DBConn.createStatement();
-            stmt.executeUpdate(insertString);
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-
-            System.out.println("EXCEPTION: unable to insert student");
-            return false;
-        }
-
-        return true;
+    public boolean insertStudent(Student student, int accountId) {
+        ArrayList vars = new ArrayList(Arrays.asList(accountId, student.getFirstName(), student.getLastName(), student.getAge(), student.getSchool(), student.getGraduationYear(), student.getGpa()));
+        String query = "INSERT INTO LINKEDUDB.Students(ACCOUNTID, FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA) "
+                + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+        return updateDB(query, vars);
     }
 
     public String getStudentName(int userID) {

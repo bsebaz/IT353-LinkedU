@@ -82,29 +82,23 @@ public class AccountDAO implements DAOInterface, java.io.Serializable {
     }
 
     public boolean checkIfUserExists(User user) {
-        String myDB = "jdbc:derby://localhost:1527/LinkedUDB";// connection string
-        Connection DBConn = null;
-
-        try {
-            String givenUsername = user.getUsername();
-
-            DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
-
+        boolean result = false;
+        try(Connection db = connect()) {
             String sql = "SELECT * FROM LINKEDUDB.ACCOUNTS WHERE USERNAME = ?";
-            PreparedStatement pstmt = DBConn.prepareStatement(sql);
-            pstmt.setString(1, givenUsername);
+            PreparedStatement pstmt = db.prepareStatement(sql);
+            pstmt.setString(1, user.getUsername());
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 //User already exists in DB
-                return true;
+                result = true;
             }
             rs.close();
             pstmt.close();
-            //db.close();
+            db.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return false;
+        return result;
     }
 
     public void removeAccount(int accountId) {

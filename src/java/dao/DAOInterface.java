@@ -39,22 +39,34 @@ public interface DAOInterface {
      */
     default boolean updateDB(String query, ArrayList vars) {
         previewSQL(query, vars); //Debugging
-        Connection db = connect();
         boolean success = false;
+        PreparedStatement stmt = null;
+        Connection db = null;
         try {
+            db = connect();
             db.setAutoCommit(false);
-            PreparedStatement stmt = db.prepareStatement(query);
+            stmt = db.prepareStatement(query);
             setVars(stmt, vars);
             stmt.executeUpdate();
             stmt.close();
-            db.commit();
             success = true;
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL update");
+            try {
+                if (stmt != null && !stmt.isClosed()) {
+                    stmt.close();
+                }
+            } catch (SQLException f) {
+                System.err.println(f.getMessage());
+                f.printStackTrace();
+            }
+            System.err.println(e.getMessage());
             e.printStackTrace();
         }
         try {
-            db.close();
+            if (db != null && !db.isClosed()) {
+                db.commit();
+                db.close();
+            }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }

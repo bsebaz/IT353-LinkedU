@@ -2,28 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/dao/StudentDAO.java</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/db/CreateUniversitiesTable.sql</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/dao/StudentDetailDAO.java</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/dao/SearchStudentsDAO.java</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/model/University.java</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/controller/UniversityDetailController.java</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/dao/SearchUniversitiesDAO.java</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/universityDetail.xhtml</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/dao/UniversityDetailDAO.java</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/controller/UniversityAppointmentsController.java</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/studentEdit.xhtml</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/studentDetail.xhtml</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/nav.xhtml</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/dao/HomeDAO.java</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/db/CreateStudentTable.sql</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/universityEdit.xhtml</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/createUniversityAccount.xhtml</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/home.xhtml</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/controller/StudentDetailController.java</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/web/resources/css/LinkedU.css</file>
-            <file>file:/C:/Users/Bailey/Documents/GitHub/IT353-LinkedU/src/java/model/Student.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
