@@ -28,6 +28,7 @@
                             <div class="col-md-3">
                                 <div class="studentDetailImage">
                                     <h:graphicImage rendered="#{studentDetailController.student.filePath ne null}" name="#{studentDetailController.student.filePath}"/>
+                                    <h:graphicImage rendered="#{studentDetailController.student.filePath eq null}" name="image/blank.png"/>
                                 </div>
                                 <div class="my-2">
                                     <p:fileUpload value="#{studentDetailController.file}" mode="simple" skinSimple="true"/>

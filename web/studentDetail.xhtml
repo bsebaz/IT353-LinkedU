@@ -26,6 +26,7 @@
                         <div class="col-md-3">
                             <div class="studentDetailImage">
                                 <h:graphicImage rendered="#{studentDetailController.student.filePath ne null}" name="#{studentDetailController.student.filePath}"/>
+                                <h:graphicImage rendered="#{studentDetailController.student.filePath eq null}" name="image/blank.png"/>
                             </div>
                         </div>
                         <div class="col-md-9" style="border-left: solid 1px #777">
@@ -54,11 +55,7 @@
                             </h:form>
                         </div>
                     </div>
-                    <c:if test="#{studentDetailController.studentDetails.size() == 0}">
-                        <div class="my-3">
-
-                        </div>
-                    </c:if>
+                    <h:form rendered="#{studentDetailController.studentDetails.size() != 0}" class="my-3"/>
                     <ui:repeat value="#{studentDetailController.studentDetails}" var="details">
                         <h:panelGroup rendered="#{details.detailContent != null and details.detailContent.trim().length() > 0}">
                             <div class="row">

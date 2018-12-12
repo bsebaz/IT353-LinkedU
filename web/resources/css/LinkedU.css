@@ -54,21 +54,21 @@ and open the template in the editor.
 .studentDetailImage {
     width: 220px;
     height: 220px;
-    border: 1px solid #777;
     border-radius: 5px;
     box-shadow: 5px 5px 10px #999;
 }
 
 .studentDetailImage img {
-    height: 215px;
-    width: 215px;
+    height: 220px;
+    width: 220px;
     border-radius: 5px;
+    border: 1px solid #777;
 }
 
 .universityDetailBanner{
-    height: 180px;
+    min-height: 180px;
+    max-height: 320px;
     width: 100%;
-    max-width: 1108px;
     margin-bottom: 1em;
     border: solid 1px #555;
     border-radius: 5px;
@@ -76,7 +76,7 @@ and open the template in the editor.
 }
 
 .universityDetailBanner img {
-    height: 100%;
+    max-height: 320px;
     width: 100%;
     border-radius: 5px;
     object-fit: cover;
