@@ -77,7 +77,8 @@ public class SearchStudentsDAO implements DAOInterface, java.io.Serializable {
         return students;
     }
     
-    public void removeUniversity(int universityId){
+    public void removeUniversity(int universityId, int accountId){
+        
         try (Connection db = connect()) {
 
             String query = "DELETE FROM LinkedUDB.students WHERE studentId = ?";
@@ -86,6 +87,20 @@ public class SearchStudentsDAO implements DAOInterface, java.io.Serializable {
             pstmt = db.prepareStatement(query);
             pstmt.setInt(1, universityId);
             int rowCount = pstmt.executeUpdate();
+            
+            query = "DELETE FROM LinkedUDB.studentDetails WHERE studentId = ?";
+            pstmt = null;
+
+            pstmt = db.prepareStatement(query);
+            pstmt.setInt(1, universityId);
+            rowCount = pstmt.executeUpdate();
+            
+            query = "DELETE FROM LinkedUDB.accounts WHERE accountId = ?";
+            pstmt = null;
+
+            pstmt = db.prepareStatement(query);
+            pstmt.setInt(1, accountId);
+            rowCount = pstmt.executeUpdate();
 
             db.close();
         } catch (SQLException e) {

@@ -81,7 +81,7 @@
                                     </h:column>
                                     <h:column rendered="#{accountController.user.admin}">
                                         <f:facet name="header">Remove</f:facet>
-                                        <h:commandButton class="btn btn-outline-danger my-2 my-sm-0" value="Remove" action="#{searchUniversitiesController.removeUniversity(universities.universityId)}"/>
+                                        <h:commandButton class="btn btn-outline-danger my-2 my-sm-0" value="Remove" action="#{searchUniversitiesController.removeUniversity(universities.universityId, universities.accountId)}" rendered="#{universities.accountId != accountController.user.userID}"/>
                                     </h:column>
                                 </h:dataTable>
                             </div>

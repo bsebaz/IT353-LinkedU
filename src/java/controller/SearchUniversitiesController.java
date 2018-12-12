@@ -58,8 +58,8 @@ public class SearchUniversitiesController implements java.io.Serializable {
         return "compareUniversities?faces-redirect=true&universityId1=" + selectedIDs[0] + "&universityId2=" + selectedIDs[1];
     }
     
-    public void removeUniversity(int universityId){
-        searchUniversitiesDAO.removeUniversity(universityId);
+    public void removeUniversity(int universityId, int accountId){
+        searchUniversitiesDAO.removeUniversity(universityId, accountId);
     }
     
     public void saveFeatured(){
