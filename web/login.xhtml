@@ -9,27 +9,28 @@
         <title>Login</title>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
         <h:outputScript library="js" name="bootstrap.min.js"/>
+        <h:outputStylesheet name="css/LinkedU.css"/>
         <h:outputScript library="js" name="jquery-3.3.1.min.js"/>
     </h:head>
     <!-- TODO implement pre-renderer to direct already logged in users to homepage -->
     <h:body>
         <ui:insert><ui:include src="nav.xhtml"/></ui:insert>
         <!-- Notifications -->
-        <h:form style="width: 340px; margin: 50px auto;" rendered="#{accountController.badLogin}">
-        <div class="alert alert-danger" role="alert">
-            Invalid Username or Password
-            <h:outputText value ="#{accountController.setBadLogin(false)}"/>
-        </div>
-        </h:form>
-        <h:form style="width: 340px; margin: 50px auto;" rendered="#{accountController.accessDenied}">
-        <div class="alert alert-warning" role="alert">
-            Must be logged in to view page
-            <h:outputText value ="#{accountController.setAccessDenied(false)}"/>
-        </div>
-        </h:form>
-        <!-- Login Form -->
-        <div id="login">
-            <h:form style="width: 340px; margin: 50px auto;">
+        <div id="login" class="searchBox" style="width: 390px; margin: 1.5em auto;">
+            <h:form style="width: 340px; margin: auto;" rendered="#{accountController.badLogin}">
+                <div class="alert alert-danger" role="alert">
+                    Invalid Username or Password
+                    <h:outputText value ="#{accountController.setBadLogin(false)}"/>
+                </div>
+            </h:form>
+            <h:form style="width: 340px; margin: auto;" rendered="#{accountController.accessDenied}">
+                <div class="alert alert-warning" role="alert">
+                    Must be logged in to view page
+                    <h:outputText value ="#{accountController.setAccessDenied(false)}"/>
+                </div>
+            </h:form>
+            <!-- Login Form -->
+            <h:form style="width: 340px; margin: auto;">
                 <h2 style="text-align: center;">Log in</h2>       
                 <div class="form-group">
                     <h:outputLabel for="username" value="Username"/>

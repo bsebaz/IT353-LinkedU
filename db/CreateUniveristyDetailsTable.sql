@@ -18,7 +18,11 @@ CREATE TABLE LinkedUDB.universityDetails (
   detailContent             VARCHAR(500)
 );
 
-INSERT INTO LinkedUDB.universityDetails (universityId, detailType, detailName, detailContent) 
-VALUES (1, 'text', 'Description', 'This school is great, everyone loves it!');
-INSERT INTO LinkedUDB.universityDetails (universityId, detailType, detailName, detailContent) 
-VALUES (1, 'list', 'Clubs', 'Computer, Climbing, Game Dev, Anime');
+INSERT INTO LINKEDUDB.UNIVERSITYDETAILS (UNIVERSITYID, DETAILTYPE, DETAILNAME, DETAILCONTENT) 
+	VALUES (1, 'text', 'Description', 'This school is great, everyone loves it!');
+INSERT INTO LINKEDUDB.UNIVERSITYDETAILS (UNIVERSITYID, DETAILTYPE, DETAILNAME, DETAILCONTENT) 
+	VALUES (1, 'list', 'Clubs', 'Computer, Climbing, Game Dev, Anime');
+INSERT INTO LINKEDUDB.UNIVERSITYDETAILS (UNIVERSITYID, DETAILTYPE, DETAILNAME, DETAILCONTENT) 
+	VALUES (4, 'text', 'Chicago''s Public Research University', 'Located in the heart of one of the world’s great cities, the University of Illinois at Chicago is a vital part of the educational, technological and cultural fabric of the region. As Chicago’s only public research university with 30,000 students, 15 colleges, a hospital and a health sciences system, UIC provides you access to excellence and opportunity.');
+INSERT INTO LINKEDUDB.UNIVERSITYDETAILS (UNIVERSITYID, DETAILTYPE, DETAILNAME, DETAILCONTENT) 
+	VALUES (4, 'text', 'Value Diversity', 'UIC is proud to be recognized as having one of the most ethnically and culturally rich college campuses in America. Our welcoming environment and diverse student body engender deeper learning and provide new perspectives on life. Come experience the strength of multiple voices, races, cultures, beliefs, identities, orientations and points of view.');

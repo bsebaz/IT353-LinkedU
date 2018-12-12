@@ -27,13 +27,16 @@ CREATE TABLE LinkedUDB.students (
 --    REFERENCES LinkedUDB.accounts(accountId)
 );
 
-INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa) 
-VALUES (1, 'bruce', 'macklin', '17', 'SC Prep', '2018', '4.0');
-INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
-VALUES (20, 'jenice', 'hepher', '17', 'St. Charles North', '2018', '4.2');
-INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
-VALUES (30, 'peter', 'franklin', '18', 'St. Charles North', '2018', '3.8');
-INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
-VALUES (40, 'Stephen', 'king', '17', 'St. Chalres North', '2018', '3.6');
-INSERT INTO LinkedUDB.students (accountId, firstName, lastName, age, school, yearGraduated, gpa)
-VALUES (50, 'kyle', 'mercer', '18', 'St. Charles North', '2018', '4.6');
+INSERT INTO LINKEDUDB.STUDENTS (ACCOUNTID, FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA, IMAGEPATH) 
+	VALUES (1, 'Bruce', 'Macklin', '17', 'SC Prep', '2018', '4.0', NULL);
+INSERT INTO LINKEDUDB.STUDENTS (ACCOUNTID, FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA, IMAGEPATH) 
+	VALUES (20, 'Jenice', 'Hepher', '17', 'St. Charles North', '2018', '4.2', NULL);
+INSERT INTO LINKEDUDB.STUDENTS (ACCOUNTID, FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA, IMAGEPATH) 
+	VALUES (30, 'Peter', 'Franklin', '18', 'St. Charles North', '2018', '3.8', NULL);
+INSERT INTO LINKEDUDB.STUDENTS (ACCOUNTID, FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA, IMAGEPATH) 
+	VALUES (40, 'Stephen', 'King', '17', 'St. Chalres North', '2018', '3.6', NULL);
+INSERT INTO LINKEDUDB.STUDENTS (ACCOUNTID, FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA, IMAGEPATH) 
+	VALUES (50, 'Kyle', 'Mercer', '18', 'St. Charles North', '2018', '4.6', NULL);
+INSERT INTO LINKEDUDB.STUDENTS (ACCOUNTID, FIRSTNAME, LASTNAME, AGE, SCHOOL, YEARGRADUATED, GPA, IMAGEPATH) 
+	VALUES (2, 'Michael', 'McHugh', '21', 'Naperville North High School', '2015', '3.93', 'image/42840328_1059631164245427_4066358934296854528_n.jpg');
+

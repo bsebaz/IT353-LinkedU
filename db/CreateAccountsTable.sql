@@ -19,5 +19,10 @@ CREATE TABLE LinkedUDB.accounts (
   isAdmin              SMALLINT
 );
 
-INSERT INTO LinkedUDB.accounts(username, password, email, accountType, isAdmin) VALUES ('user', 'password', 'mmchug1@outlook.com', 'student', 1);
+INSERT INTO LINKEDUDB.ACCOUNTS (USERNAME, PASSWORD, EMAIL, ACCOUNTTYPE, ISADMIN) 
+	VALUES ('user', 'password', 'mmchug1@outlook.com', 'student', 1);
+INSERT INTO LINKEDUDB.ACCOUNTS (USERNAME, PASSWORD, EMAIL, ACCOUNTTYPE, ISADMIN) 
+	VALUES ('student', 'password', 'mmchug1@outlook.com', 'student', 0);
+INSERT INTO LINKEDUDB.ACCOUNTS (USERNAME, PASSWORD, EMAIL, ACCOUNTTYPE, ISADMIN) 
+	VALUES ('university', 'password', 'mmchug1@outlook.com', 'recruiter', 0);
 
